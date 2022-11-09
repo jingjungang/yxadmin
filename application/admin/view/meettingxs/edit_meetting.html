@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>会议详情</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <css href="/static/css/admin/bootstrap.min14ed.css"/>
+    <css href="/static/css/admin/font-awesome.min93e3.css"/>
+    <css href="/static/css/admin/animate.min.css"/>
+    <css href="/static/css/admin/plugins/summernote/new_sumnote.css"/>
+    <css href="/static/css/admin/plugins/summernote/summernote-bs3.css"/>
+    <css href="/static/css/admin/plugins/chosen/chosen.css"/>
+    <css href="/static/css/admin/plugins/datapicker/datepicker3.css"/>
+    <css href="/static/css/admin/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"/>
+    <css href="/static/css/admin/style.min862f.css"/>
+    <link href="/static/css/admin/admincommon.css?v=20181116" rel='stylesheet' type='text/css'/>
+    <css href="/static/css/admin/meetting.css"/>
+
+
+</head>
+<style type="text/css">
+    .chosen-container-multi {
+        margin-left: 16px;
+    }
+</style>
+<body class="gray-bg">
+
+<div id="myTabContent" class="tab-content">
+
+    <div class="wrapper wrapper-content tab-pane fade in active" id="home">
+
+
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本信息</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">关联医院</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-3" aria-expanded="false">会议议程</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-4" aria-expanded="false">组织员工</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-5" aria-expanded="false">参会客户</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-6" aria-expanded="false">费用清单</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-7" aria-expanded="false">会后总结</a></li>
+            </ul>
+            <div class="hr-line-dashed" style="border:0.5px dashed #bfbaba;"></div>
+            <div class="tab-content">
+
+
+                <!-- -------------------------------------1.会议详情------------------------------------------ -->
+
+                <div id="tab-1" class="tab-pane active mytab">
+                    <form id="article_form" class="form-horizontal" onsubmit="return false;">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">会议名称</label>
+                                <div class="input-group col-sm-5">
+                                    <input type="text" placeholder="日期+地区+类型" name="name"
+                                           value="{$meetting['name']}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+
+                                <label class="col-sm-1 control-label">类型：</span></label>
+                                <div class="input-group col-sm-5">
+                                    <select data-placeholder="选择类型" class="chosen-select" style="width:700px;"
+                                            name="type2" id="type2">
+                                        <if condition="$meetting['type2']==1">
+                                            <option value="1" selected>城市会</option>
+                                            <elseif condition="$meetting['type2']==2"/>
+                                            <option value="2" selected>科室会</option>
+                                            <else/>
+                                            <option value="3" selected>病例分享会</option>
+                                        </if>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">日期：</span></label>
+                                <div class="input-group date col-sm-5">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control mdate"
+                                           value="{$meetting['mdate']|default= date('Y-m-d')}" id="mdate"
+                                           name="mdate">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">起止时间：</span></label>
+                                <div class="input-group date col-sm-5">
+                                    <input type="text" class="col-sm-2 mtime"
+                                           value="{$meetting['starttime']|default= '09:00'}" id="starttime"
+                                           name="starttime">
+                                    <span class="col-sm-1"><i>-</i></span>
+                                    <input type="text" class="col-sm-2 mtime"
+                                           value="{$meetting['endtime']|default= '12:00'}" id="endtime"
+                                           name="endtime">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">地址：</span></label>
+                                <div class="input-group col-sm-6">
+                                    <div id="cnMap">
+                                        <div class="col-sm-3">
+                                            <select name="province" class="province form-control"
+                                                    data-first-title="选择省份" id="province">
+                                                <option value="{$meetting['province']}" selected>
+                                                    {$meetting['province']}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select name="city" id="city" class="city form-control">
+                                                <option value="{$meetting['city']}" selected>{$meetting['city']}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select name="area" id="area" class="region form-control">
+                                                <option value="{$meetting['area']}" selected>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">详细地址：</span></label>
+                                <div class="input-group  col-sm-5">
+                                    <input type="text" placeholder="x小区x单元x栋x楼"
+                                           value="{$meetting['addressdetail']}" class="form-control addressdetail"
+                                           id="addressdetail" name="addressdetail">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">创建员工：</span></label>
+                                <div class="input-group  col-sm-5">
+                                    <select data-placeholder="选择员工" class="chosen-select" multiple
+                                            style="width:350px;" name="uid" id="uid">
+                                        <volist name='userlist' id='parent'>
+                                            <if condition="$meetting['uid']==$parent['user_id']">
+                                                <option value="{$parent['user_id']}" selected>
+                                                    {$parent['user_nicename']}
+                                                </option>
+                                                <else/>
+                                                <option value="{$parent['user_id']}">{$parent['user_nicename']}
+                                                </option>
+                                            </if>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">创建时间：</span></label>
+                                <div class="input-group  col-sm-5">
+                                    <input type="text" name="add_time" class="form-control"
+                                           value="{$meetting['mdate']|default= date('Y-m-d H:i:s')}" disabled="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">会议状态：</label>
+                                <div class="col-sm-5">
+                                    <if condition="$meetting['status']==1">
+                                        <input type="radio" checked="checked" value="1" id="status"
+                                               name="status">未审核</label style="padding-left: 100px;">
+                                        <else/>
+                                        <input type="radio" checked="checked" value="1" id="status"
+                                               name="status">已审核</label style="padding-left: 100px;">
+                                    </if>
+                                </div>
+                            </div>
+                            <div><input type="text" name="id" id="mid" value="{$meetting['id']}"
+                                        style="display: none;">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:15px">
+                            <div class="col-sm-2 col-sm-offset-2">
+                                <input type="hidden" id="meetting_id" name="meetting_id"
+                                       value="{$meetting['id'] | default = ''}"/>
+                                <button class="btn btn-primary" type="submit"
+                                        onclick="publishArticleSubmit();">保存内容
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- -------------------------------------2.关联医院------------------------------------------ -->
+
+
+                <div id="tab-2" class="tab-pane mytab">
+                    <div>
+                        <if condition="check_auth('admin/Meettingxs/addHospital')">
+                            <button id="toggle_modal" class="btn btn-primary btn-circle" type="button"
+                                    style="margin-bottom:0px;margin-left:10px;position:relative;top:-5px;"
+                                    title="添加医院">
+                                <i class="fa fa-user-md"></i>+
+                            </button>
+                        </if>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead align="center">
+                            <tr>
+                                <th style="text-align:center;">序号</th>
+                                <th style="text-align:center;">医院编码</th>
+                                <th style="text-align:center;">医院名称</th>
+                                <th style="text-align:center;">性质</th>
+                                <th style="text-align:center;">级别</th>
+                                <th style="text-align:center;">开发情况</th>
+                                <th style="text-align:center;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="Hospitals" id="vo" key="i">
+                                <tr class="gradeX" id="hospital-{$vo['id']}">
+                                    <td align="center">{$i}</td>
+                                    <td align="center">{$vo['code']}</td>
+                                    <td align="center">
+                                        <if condition="mb_strlen($vo['name'],'utf-8') egt 20">
+                                            {$vo.name|msubstr=###,0,20,'utf-8'}
+                                            <else/>
+                                            {$vo.name}
+                                        </if>
+                                    </td>
+                                    <td align="center">{$vo['quality']}</td>
+                                    <td align="center">{$vo['level']}</td>
+                                    <td align="center">{$vo['development']}</td>
+                                    <td class="center" align="center">
+                                        <div class="btn-group">
+                                            <button data-toggle="dropdown"
+                                                    class="btn btn-primary btn-xs dropdown-toggle"
+                                                    aria-expanded="false">操作 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <if condition="check_auth('admin/Meettingxs/delMeetting')">
+                                                    <li data-id="{$vo['id']}"
+                                                        class="font-bold del-meetting"><a
+                                                            href="javascript:;">删除</a></li>
+                                                </if>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+
+                        </table>
+                        {$page1}
+                    </div>
+                </div>
+
+                <!-- -------------------------------------3.会议议程------------------------------------------ -->
+
+                <div id="tab-3" class="tab-pane mytab">
+                    <div>
+                        <if condition="check_auth('admin/Meettingxs/addProcess')">
+                            <button id="toggle_modal_process" class="btn btn-primary btn-circle" type="button"
+                                    style="margin-bottom:0px;margin-left:10px;position:relative;top:-5px;"
+                                    title="添加议程">
+                                <i class="fa fa-user-md"></i>+
+                            </button>
+                        </if>
+                    </div>
+                    <div class="panel-body">
+                        <table id="mytable"
+                               class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead align="center">
+                            <tr>
+                                <th style="text-align:center;">序号</th>
+                                <th style="text-align:center;">日期</th>
+                                <th style="text-align:center;">时间段</th>
+                                <th style="text-align:center;">演讲课题</th>
+                                <th style="text-align:center;">讲者</th>
+                                <th style="text-align:center;">照片</th>
+                                <th style="text-align:center;">讲稿</th>
+                                <th style="text-align:center;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="Process" id="vo" key="i">
+                                <tr class="gradeX" id="Process-{$vo['id']}">
+                                    <td align="center">{$i}</td>
+                                    <td align="center">{$vo['mdate']}</td>
+                                    <td align="center">{$vo['start']}-{$vo['end']}</td>
+                                    <td align="center">{$vo['theme']}</td>
+                                    <td align="center">{$vo['speaker']}</td>
+                                    <td align="center"><a href="{$vo['photo']}" target="_blank">
+                                        <image style="width: 45px;height: 45px;" src="{$vo['photo']}">
+                                        </image>
+                                    </a></td>
+                                    <td align="center">
+                                        <if condition="$vo['ppt'] != ''">
+                                            <a href="{$vo['ppt']}">
+                                                <image src="/static/images/ppt.jpg"></image>
+                                            </a>
+                                        </if>
+                                    </td>
+                                    <td class="center" align="center">
+                                        <div class="btn-group">
+                                            <button data-toggle="dropdown"
+                                                    class="btn btn-primary btn-xs dropdown-toggle"
+                                                    aria-expanded="false">操作 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <if condition="check_auth('admin/Meettingxs/editProcess')">
+                                                    <li data-id="{$vo['id']}" class="font-bold edit-Process">
+                                                        <a href="javascript:;">编辑</a>
+                                                    </li>
+                                                </if>
+                                                <if condition="check_auth('admin/Meettingxs/delProcess')">
+                                                    <li data-id="{$vo['id']}" class="font-bold del-Process">
+                                                        <a href="javascript:;">删除</a>
+                                                    </li>
+                                                </if>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+
+                        </table>
+                        {$page2}
+                    </div>
+                </div>
+
+                <!-- -------------------------------------4.组织员工------------------------------------------ -->
+
+
+                <div id="tab-4" class="tab-pane mytab">
+                    <div>
+                        <if condition="check_auth('admin/Meettingxs/addEmployee')">
+                            <button id="toggle_modal_employee" class="btn btn-primary btn-circle" type="button"
+                                    style="margin-bottom:0px;margin-left:10px;position:relative;top:-5px;"
+                                    title="添加员工">
+                                <i class="fa fa-user-md"></i>+
+                            </button>
+                        </if>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead align="center">
+                            <tr>
+                                <th style="text-align:center;">序号</th>
+                                <th style="text-align:center;">姓名</th>
+                                <th style="text-align:center;">部门</th>
+                                <th style="text-align:center;">职称</th>
+                                <th style="text-align:center;">电话</th>
+                                <th style="text-align:center;">账号</th>
+                                <th style="text-align:center;">会务工作</th>
+                                <th style="text-align:center;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="$li_employee" id="vo" key="i">
+                                <tr class="gradeX" id="employee-{$vo['id']}">
+                                    <td align="center">{$i}</td>
+                                    <td align="center">{$vo['user_nicename']}</td>
+                                    <td align="center">{$vo['part']}</td>
+                                    <td align="center"> {$vo['job']}</td>
+                                    <td align="center">{$vo['user_phone']}</td>
+                                    <td align="center"></td>
+                                    <td align="center">{$vo['work']}</td>
+                                    <td style="display: none"> {$vo['user_id']}</td>
+                                    <td class="center" align="center">
+                                        <div class="btn-group">
+                                            <button data-toggle="dropdown"
+                                                    class="btn btn-primary btn-xs dropdown-toggle"
+                                                    aria-expanded="false">操作 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <if
+                                                        condition="check_auth('admin/Meettingxs/updateEmployee')">
+                                                    <li data-id="{$vo['id']}" class="font-bold edit-employee"><a
+                                                            href="javascript:;">修改</a>
+                                                    </li>
+                                                </if>
+                                                <if condition="check_auth('admin/Meettingxs/delEmployee')">
+                                                    <li data-id="{$vo['id']}" class="font-bold del-employee">
+                                                        <a href="javascript:;">删除</a>
+                                                    </li>
+                                                </if>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+
+                        </table>
+                        {$page3}
+                    </div>
+                </div>
+
+                <!-- -------------------------------------5.参会客户------------------------------------------ -->
+
+                <div id="tab-5" class="tab-pane mytab">
+                    <div>
+                        <if condition="check_auth('admin/Meettingxs/addCustomer')">
+                            <button id="toggle_modal_customer" class="btn btn-primary btn-circle" type="button"
+                                    style="margin-bottom:0px;margin-left:10px;position:relative;top:-5px;"
+                                    title="添加客户">
+                                <i class="fa fa-user-md"></i>+
+                            </button>
+                        </if>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead align="center">
+                            <tr>
+                                <th style="text-align:center;">序号</th>
+                                <th style="text-align:center;">姓名</th>
+                                <th style="text-align:center;">性别</th>
+                                <th style="text-align:center;">职称</th>
+                                <th style="text-align:center;">手机号</th>
+                                <th style="text-align:center;">医院</th>
+                                <th style="text-align:center;">科室</th>
+                                <th style="text-align:center;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="li_customer" id="vo" key="i">
+                                <tr class="gradeX" id="customer-{$vo['id']}">
+                                    <td align="center">{$i}</td>
+                                    <td align="center">{$vo['name']}</td>
+                                    <td align="center">{$vo['sex']}</td>
+                                    <td align="center">{$vo['title']}</td>
+                                    <td align="center">{$vo['phone']}</td>
+                                    <td align="center">{$vo['hname']}</td>
+                                    <td align="center">{$vo['depart']}</td>
+                                    <td align="center" style="display: none">{$vo['hospitalid']}</td>
+                                    <td align="center" style="display: none">{$vo['job']}</td>
+                                    <td class="center" align="center">
+                                        <div class="btn-group">
+                                            <button data-toggle="dropdown"
+                                                    class="btn btn-primary btn-xs dropdown-toggle"
+                                                    aria-expanded="false">操作 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <if condition="check_auth('admin/Meettingxs/updateCustomer')">
+                                                    <li><a href="javascript:;" data-id="{$vo['id']}"
+                                                           class="font-bold edit-customer">修改</a>
+                                                    </li>
+                                                </if>
+                                                <if condition="check_auth('admin/Meettingxs/delCustomer')">
+                                                    <li data-id="{$vo['id']}" class="font-bold del-customer">
+                                                        <a href="javascript:;">删除</a>
+                                                    </li>
+                                                </if>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+
+                        </table>
+                        {$page4}
+                    </div>
+                </div>
+
+                <!-- -------------------------------------6.费用清单------------------------------------------ -->
+
+                <div id="tab-6" class="tab-pane mytab">
+                    <if condition="check_auth('admin/Meettingxs/addFee')">
+                        <button id="toggle_modal_fee" class="btn btn-primary btn-circle" type="button"
+                                style="margin-bottom:0px;margin-left:10px;position:relative;top:-5px;"
+                                title="添加费用">
+                            <i class="fa fa-user-md"></i>+
+                        </button>
+                    </if>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead align="center">
+                            <tr>
+                                <th style="text-align:center;">序号</th>
+                                <th style="text-align:center;">科目</th>
+                                <th style="text-align:center;">明细</th>
+                                <th style="text-align:center;">金额(元)</th>
+                                <th style="text-align:center;">票据(张)</th>
+                                <th style="text-align:center;">报销人</th>
+                                <th style="text-align:center;">备注</th>
+                                <th style="text-align:center;">状态</th>
+                                <th style="text-align:center;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="li_fee" id="vo" key="i">
+                                <tr class="gradeX" id="fee-{$vo['id']}">
+                                    <td align="center">{$i}</td>
+                                    <td align="center">{$vo['content']}</td>
+                                    <td align="center">{$vo['details']}</td>
+                                    <td align="center">{$vo['money']}</td>
+                                    <td align="center">{$vo['number']}</td>
+                                    <td align="center">{$vo['username']}</td>
+                                    <td align="center">{$vo['mark']}</td>
+                                    <td align="center">{$vo['status']}</td>
+                                    <td class="center" align="center">
+                                        <div class="btn-group">
+                                            <button data-toggle="dropdown"
+                                                    class="btn btn-primary btn-xs dropdown-toggle"
+                                                    aria-expanded="false">操作 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <if condition="check_auth('admin/Meettingxs/updateFee')">
+                                                    <li><a href="javascript:;" data-id="{$vo['id']}"
+                                                           class="font-bold edit-fee">修改</a>
+                                                    </li>
+                                                </if>
+                                                <if condition="check_auth('admin/Meettingxs/delFee')">
+                                                    <li data-id="{$vo['id']}" class="font-bold del-fee">
+                                                        <a href="javascript:;">删除</a>
+                                                    </li>
+                                                </if>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+
+                        </table>
+                        {$page5}
+                    </div>
+                </div>
+
+                <!-- -------------------------------------7.会后总结------------------------------------------ -->
+
+
+                <div id="tab-7" class="tab-pane mytab">
+                    <if condition="check_auth('admin/Meettingxs/addSummary')">
+                        <button id="toggle_modal_Summary" class="btn btn-primary btn-circle" type="button"
+                                style="margin-bottom:0px;margin-left:10px;position:relative;top:-5px;"
+                                title="添加总结">
+                            <i class="fa fa-user-md"></i>+
+                        </button>
+                    </if>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead align="center">
+                            <tr>
+                                <th style="text-align:center;">序号</th>
+                                <th style="text-align:center;">员工</th>
+                                <th style="text-align:center;">内容</th>
+                                <th style="text-align:center;">时间</th>
+                                <th style="text-align:center;">图片</th>
+                                <th style="text-align:center;">评分</th>
+                                <th style="text-align:center;">状态</th>
+                                <th style="text-align:center;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="li_summary" id="vo" key="keyid">
+                                <tr class="gradeX" id="summary-{$vo['id']}">
+                                    <td align="center">{$keyid}</td>
+                                    <td align="center">{$vo['username']}</td>
+                                    <td align="center">{$vo['content']}</td>
+                                    <td align="center">{$vo['timing']}</td>
+                                    <td align="center">
+                                        <div style="display: inline;align-items: center">
+                                            <?php if($vo['urls']!=''){ $urls = $vo['urls']; $arr = explode(',',$urls); for($i=0;$i<count($arr);$i++){ $item=$arr[$i]; ?>
+                                            <image style="width: 35px;height: 35px" src="<?php echo($item);?>"></image>
+                                            <?php }} ?>
+                                        </div>
+                                    </td>
+                                    <td align="center">{$vo['judge']}</td>
+                                    <td align="center">{$vo['status']}</td>
+                                    <td class="center" align="center">
+                                        <div class="btn-group">
+                                            <button data-toggle="dropdown"
+                                                    class="btn btn-primary btn-xs dropdown-toggle"
+                                                    aria-expanded="false">操作 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <if condition="check_auth('admin/Meettingxs/updateSummary')">
+                                                    <li><a href="javascript:;" data-id="{$vo['id']}"
+                                                           class="font-bold edit-Summary">修改</a>
+                                                    </li>
+                                                </if>
+                                                <if condition="check_auth('admin/Meettingxs/delSummary')">
+                                                    <li data-id="{$vo['id']}" class="font-bold del-Summary">
+                                                        <a href="javascript:;">删除</a>
+                                                    </li>
+                                                </if>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+
+                        </table>
+                        {$page6}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <js href="/static/js/admin/jquery.min.js"/>
+    <js href="/static/js/admin/bootstrap.min.js"/>
+    <js href="/static/js/admin/content.min.js"/>
+    <js href="/static/js/admin/plugins/chosen/chosen.jquery.js"/>
+    <js href="/static/js/admin/plugins/summernote/new_sumnote.js"/>
+    <js href="/static/js/admin/plugins/summernote/summernote-zh-CN.js"/>
+    <js href="/static/js/admin/plugins/layui/layer/layer.js"/>
+    <js href="/static/js/admin/plugins/datapicker/bootstrap-datepicker.js"/>
+    <js href="/static/js/admin/meetting.js"/>
+    <js href="/static/js/cxjs/jquery.cxselect.min.js"/>
+
+    <!-- modals-1.医院新增 -->
+    <div id="user-modal-form" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="user_form" action="" method="post" onsubmit="return false;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">添加医院</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>医院名称：</label>
+                                    <div class="form-control" style="padding: 0; margin: 0;">
+                                        <input type="text" placeholder="医院名称" name="hname"
+                                               class="form-control hname" autocomplete="off" list="aaa"
+                                               onblur="getHospital()">
+                                        <datalist id="aaa" style="width:100px" size=10>
+                                            <volist id="li_hospital" name="li_hospital">
+                                                <option>{$li_hospital['name']}</option>
+                                            </volist>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <input id="w_id" name="w_id" style="display: none;">
+                                <div class="form-group">
+                                    <label>其他名称：</label>
+                                    <input type="text" placeholder="" readonly class="form-control"
+                                           id="w_othername">
+                                </div>
+                                <div class="form-group">
+                                    <label>性质：</label>
+                                    <input type="text" placeholder="" readonly class="form-control"
+                                           id="w_quality">
+                                </div>
+                                <div class="form-group">
+                                    <label>省市区 ：</label>
+                                    <input type="text" placeholder="" readonly class="form-control"
+                                           id="w_province">
+                                </div>
+                                <div class="form-group">
+                                    <label>是否分院：</label>
+                                    <input type="text" placeholder="" readonly class="form-control"
+                                           id="w_divided">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label id="user_pass_tip">医院编码：</label>
+                                    <input type="text" placeholder="" readonly class="form-control"
+                                           id="w_code">
+                                </div>
+                                <div class="form-group">
+                                    <label>级别：</label>
+                                    <input type="text" placeholder="" readonly class="form-control"
+                                           id="w_level">
+                                </div>
+                                <div class="form-group">
+                                    <label>详细地址：</label>
+                                    <input type="text" placeholder="" readonly class="form-control"
+                                           id="w_address">
+                                </div>
+                                <div class="form-group">
+                                    <label>开发情况：</label>
+                                    <input type="text" placeholder="" readonly class="form-control"
+                                           id="w_development">
+                                </div>
+                                <div class="form-group">
+                                    <label>主院名称：</label>
+                                    <input type="text" placeholder="" readonly class="form-control"
+                                           id="w_hostname">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="user_id" name="user_id" value=""/>
+                        <input type="hidden" id="handle_type" name="handle_type" value="add"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary" onclick="addhospital();">确定</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- modals-2.议程新增 -->
+    <div id="process-modal-form" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="process_form" action="" enctype="multipart/form-data" method="post"
+                      onsubmit="return false;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title">议程信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>日期：</label>
+                                    <input type="text" class="form-control" id="m_mdate" name="mdate">
+                                </div>
+                                <div class="form-group">
+                                    <label>开始时间：</label>
+                                    <input type="text" class="form-control" id="m_start" name="start">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>演讲课题：</label>
+                                    <input type="text" class="form-control" id="m_theme" name="theme">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>照片：</label>
+                                    <label class="fileContainer">
+                                        <input type="file" name="image[]" class="form-control"
+                                               accept="image/png, image/jpeg, image/gif, image/jpg"
+                                               id="m_photo"></label>
+                                    <a id="old_pic_a" target="_blank" style="display: none;">
+                                        <image style="width: 40px;height: 40px" id="old_pic"></image>
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <label>演讲稿：</label>
+                                    <label class="fileContainer">
+                                        <input type="file" name="image[]" class="form-control"></label>
+                                    <a id="old_ppt" style="display: none;">
+                                        <image style="width: 40px;height: 40px"
+                                               src="/static/images/ppt.jpg"></image>
+                                    </a>
+                                </div>
+                                <input name="id" style="display: none" id="processid">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>讲者：</label>
+                                    <input type="text" placeholder="" class="form-control" name="speaker"
+                                           id="m_speaker">
+                                </div>
+                                <div class="form-group">
+                                    <label>结束时间：</label>
+                                    <input type="text" class="form-control" name="end" id="m_end">
+                                </div>
+                            </div>
+                            <input type="hidden" id="meetting_id" name="mid" value="{$meetting['id']}"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary" onclick="addprocess();">确定</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- modals-3.新增员工 -->
+    <div id="employee-modal-form" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="employee_form" action="" method="post" onsubmit="return false;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title">员工信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>姓名：</label>
+                                    <div class="form-control">
+                                        <select data-placeholder="选择员工" name="employeeid" id="c_eid"
+                                                style="width: 100%;height: 100%;outline:none;border:none;">
+                                            <option value="">选择员工</option>
+                                            <volist name='userlist' id='parent'>
+                                                <option value="{$parent['user_id']}">{$parent['user_nicename']}
+                                                </option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>职称：</label>
+                                    <input type="text" class="form-control" id="e_job" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>账号：</label>
+                                    <input type="text" class="form-control" id="e_account" readonly>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>部门：</label>
+                                    <input type="text" class="form-control" id="e_depart" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>手机号：</label>
+                                    <input type="text" class="form-control" id="e_phone" readonly>
+                                </div>
+                            </div>
+                            <input type="hidden" name="meettingid" value="{$meetting['id']}"/>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">会务工作：</label>
+                                    <div class="col-sm-9">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="work[]" value="签到"
+                                                   id="inlineCheckbox1" class="ckbox">签到</label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="work[]" value="会场"
+                                                   id="inlineCheckbox2" class="ckbox">会场</label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="work[]" value="行程"
+                                                   id="inlineCheckbox3" class="ckbox">行程</label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="work[]" value="讲稿"
+                                                   id="inlineCheckbox4" class="ckbox">讲稿</label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="work[]" value="餐饮"
+                                                   id="inlineCheckbox5" class="ckbox">餐饮</label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="work[]" value="接送"
+                                                   id="inlineCheckbox6" class="ckbox">接送</label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="work[]" value="车辆"
+                                                   id="inlineCheckbox7" class="ckbox">车辆</label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="work[]" value="陪同"
+                                                   id="inlineCheckbox8" class="ckbox">陪同</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary" onclick="addEmployee();">确定</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- modals-4.新增客户 -->
+    <div id="customer-modal-form" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="customer_form" action="" method="post" onsubmit="return false;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title">客户信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>姓名*：</label>
+                                    <input type="text" class="form-control" id="c_name" name="name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>性别：</label>
+                                    <div class="radios">
+                                        <label class="radio-inline">
+                                            <input type="radio" checked value="男" id="sex1"
+                                                   name="sex">男</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" value="女" id="sex2" name="sex">女</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>职业：</label>
+                                    <div class="radios">
+                                        <label class="radio-inline">
+                                            <input type="radio" checked value="医师" id="job1"
+                                                   name="job">医师</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" value="药师" id="job2" name="job">药师</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" value="其他" id="job3" name="job">其他</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>医院：</label>
+                                    <input type="text" placeholder="医院名称" name="hname" id="c_hname"
+                                           class="form-control hname" autocomplete="off" list="bbb">
+                                    <datalist id="bbb" style="width:100px" size=10>
+                                        <volist id="vo" name="arr_hospital">
+                                            <option>{$vo.name}</option>
+                                        </volist>
+                                    </datalist>
+
+                                </div>
+                                <div class="form-group">
+                                    <label>职称：</label>
+                                    <select type="text" class="form-control" name="title" id="c_title">
+                                        <option value="住院医师">住院医师</option>
+                                        <option value="主治医师">主治医师</option>
+                                        <option value="副主任医师">副主任医师</option>
+                                        <option value="主任医师">主任医师</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>科室：</label>
+                                    <input type="text" class="form-control" id="c_depart" name="depart">
+                                </div>
+                                <div class="form-group">
+                                    <label>手机：</label>
+                                    <input type="text" class="form-control" id="c_phone" name="phone">
+                                </div>
+                                <div class="form-group">
+                                    <label>微信：</label>
+                                    <input type="text" class="form-control" id="c_wxid" name="wxid">
+                                </div>
+                            </div>
+                            <input type="hidden" name="meettingid" value="{$meetting['id']}"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary" onclick="addCustomer();">确定</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- modals-5.新增费用 -->
+    <div id="fee-modal-form" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="fee_form" action="" method="post" onsubmit="return false;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title">费用信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>科目：</label>
+                                    <select id="fee_content" name="content" class="form-control">
+                                        <option value="市内交通费">市内交通费</option>
+                                        <option value="招待费">招待费</option>
+                                        <option value="餐饮费">餐饮费</option>
+                                        <option value="物料制作费">物料制作费</option>
+                                    </select>
+
+                                </div>
+                                <div class="form-group">
+                                    <label>明细：</label>
+                                    <input type="text" name="details" id="fee_details" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>报销人：</label>
+                                    <select class="form-control" id="fee_user" name="uid">
+                                        <volist name="userlist" id="vo">
+                                            <option value="{$vo['user_id']}">{$vo['user_nicename']}</option>
+                                        </volist>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>金额：</label>
+                                    <input type="text" class="form-control" id="fee_money" name="money">
+                                </div>
+                                <div class="form-group">
+                                    <label>票据张数：</label>
+                                    <input type="text" class="form-control" id="fee_number" name="number">
+                                </div>
+                                <div class="form-group">
+                                    <label>备注：</label>
+                                    <input type="text" class="form-control" id="fee_mark" name="mark">
+                                </div>
+                            </div>
+                            <input type="hidden" name="meettingid" value="{$meetting['id']}"/>
+                            <input type="hidden" name="id" id="fee_id"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label"
+                                       style="margin-left: 30px;align-content: center">审核：</label>
+                                <div class="radios" style="margin-left: 30px;">
+                                    <label class="radio-inline">
+                                        <input type="radio" checked value="通过" id="fee_status1"
+                                               name="status"
+                                               style="vertical-align:middle; margin-top:2px;">通过</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="不通过" id="fee_status2"
+                                               name="status"
+                                               style="vertical-align:middle; margin-top:2px;">不通过</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="待办" id="fee_status3"
+                                               name="status"
+                                               style="vertical-align:middle; margin-top:2px;">待办</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary" onclick="addFee();">确定</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- modals-6.新增总结 -->
+    <div id="Summary-modal-form" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="Summary_form" action="" method="post" onsubmit="return false;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title">总结</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>员工：</label>
+                                    <select id="s_uid" name="uid" class="form-control">
+                                        <volist name="userlist" id="v1">
+                                            <option value="{$v1['user_id']}">{$v1['user_nicename']}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>内容：</label>
+                                    <textarea rows="3" cols="20" name="content" id="s_content"
+                                              class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>图片：</label>
+                                    <input type="file" class="form-control file-loading" id="s_urls1"
+                                           name="image[]">
+                                    <input type="file" class="form-control file-loading" id="s_urls2"
+                                           name="image[]">
+                                    <input type="file" class="form-control file-loading" id="s_urls3"
+                                           name="image[]">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>时间：</label>
+                                    <input type="date" class="form-control" id="s_timing" name="timing"
+                                           value="date()">
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label>评分：</label>
+                                    <select class="form-control" id="s_judge" name="judge">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>审核：</label>
+                                    <div class="radios" style="margin-left: 30px;">
+                                        <label class="radio-inline">
+                                            <input type="radio" checked value="通过" id="s_status1"
+                                                   name="status"
+                                                   style="vertical-align:middle; margin-top:2px;">通过</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" value="不通过" id="s_status2"
+                                                   name="status"
+                                                   style="vertical-align:middle; margin-top:2px;">不通过</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" value="待办" id="s_status3"
+                                                   name="status"
+                                                   style="vertical-align:middle; margin-top:2px;">待办</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="meettingid" value="{$meetting['id']}"/>
+                            <input type="hidden" name="id" id="s_id"/>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary" onclick="addSummary();">确定</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

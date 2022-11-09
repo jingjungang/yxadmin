@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title></title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <css href="/static/css/admin/bootstrap.min14ed.css"/>
+    <css href="/static/css/admin/font-awesome.min93e3.css"/>
+    <css href="/static/css/admin/animate.min.css"/>
+    <css href="/static/css/admin/plugins/summernote/new_sumnote.css"/>
+    <css href="/static/css/admin/plugins/summernote/summernote-bs3.css"/>
+    <css href="/static/css/admin/plugins/chosen/chosen.css"/>
+    <css href="/static/css/admin/plugins/datapicker/datepicker3.css"/>
+    <css href="/static/css/admin/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"/>
+    <css href="/static/css/admin/style.min862f.css"/>
+    <link href="/static/css/admin/admincommon.css?v=20181116" rel='stylesheet' type='text/css'/>
+</head>
+<style type="text/css">
+    .chosen-container-multi {
+        margin-left: 16px;
+    }
+</style>
+<body class="gray-bg">
+
+<div id="myTabContent" class="tab-content">
+
+    <div class="wrapper wrapper-content tab-pane fade in active" id="home">
+        <form id="article_form" class="form-horizontal" onsubmit="return false;">
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">会议名称</label>
+                        <div class="input-group col-sm-5">
+                            <input type="text" placeholder="日期+地区+类型" name="name" value="{$meetting['name']}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label class="col-sm-1 control-label">类型：</span></label>
+                        <div class="input-group col-sm-5">
+                            <select data-placeholder="选择类型" class="chosen-select" style="width:700px;" name="type2"
+                                    id="type2">
+                                <if condition="$meetting['type2']==1">
+                                    <option value="1" selected>城市会</option>
+                                    <elseif condition="$meetting['type2']==2"/>
+                                    <option value="2" selected>科室会</option>
+                                    <else/>
+                                    <option value="3" selected>病例分享会</option>
+                                </if>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">日期：</span></label>
+                        <div class="input-group date col-sm-5">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input type="text" class="form-control mdate"
+                                   value="{$meetting['mdate']|default= date('Y-m-d')}" id="mdate" name="mdate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">起止时间：</span></label>
+                        <div class="input-group date col-sm-5">
+                            <input type="text" class="col-sm-2 mtime" value="{$meetting['starttime']|default= '09:00'}"
+                                   id="starttime" name="starttime">
+                            <span class="col-sm-1"><i>-</i></span>
+                            <input type="text" class="col-sm-2 mtime" value="{$meetting['endtime']|default= '12:00'}"
+                                   id="endtime" name="endtime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">地址：</span></label>
+                        <div class="input-group col-sm-6">
+                            <div id="cnMap">
+                                <div class="col-sm-3">
+                                    <select name="province" class="province form-control" data-first-title="选择省份"
+                                            id="province">
+                                        <option value="{$meetting['province']}" selected>{$meetting['province']}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="city" id="city" class="city form-control">
+                                        <option value="{$meetting['city']}" selected>{$meetting['city']}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="area" id="area" class="region form-control">
+                                        <option value="{$meetting['area']}" selected>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">详细地址：</span></label>
+                        <div class="input-group  col-sm-5">
+                            <input type="text" placeholder="x小区x单元x栋x楼" value="{$meetting['addressdetail']}"
+                                   class="form-control addressdetail" id="addressdetail" name="addressdetail">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">创建员工：</span></label>
+                        <div class="input-group  col-sm-5">
+                            <select data-placeholder="选择员工" class="chosen-select" multiple style="width:350px;"
+                                    name="uid" id="uid">
+                                <volist name='userlist' id='parent'>
+                                    <if condition="$meetting['uid']==$parent['user_id']">
+                                        <option value="{$parent['user_id']}" selected>{$parent['user_nicename']}
+                                        </option>
+                                        <else/>
+                                        <option value="{$parent['user_id']}">{$parent['user_nicename']}</option>
+                                    </if>
+                                </volist>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">创建时间：</span></label>
+                        <div class="input-group  col-sm-5">
+                            <input type="text" name="add_time" class="form-control"
+                                   value="{$meetting['mdate']|default= date('Y-m-d H:i:s')}" disabled="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">会议状态：</label>
+                        <div class="col-sm-5">
+                            <if condition="$meetting['status']==1">
+                                <input type="radio" checked="checked" value="1" id="status" name="status">未审核</label
+                                style="padding-left: 100px;">
+                                <else/>
+                                <input type="radio" checked="checked" value="1" id="status" name="status">已审核</label
+                                style="padding-left: 100px;">
+                            </if>
+                        </div>
+                    </div>
+                    <div><input type="text" name="id" value="{$meetting['id']}" style="display: none;"></div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 col-sm-offset-2">
+                        <input type="hidden" id="article_id" name="article_id"
+                               value="{$article['article_id'] | default = ''}"/>
+                        <input type="hidden" id="handle_type" name="handle_type" value="{$type}"/>
+                        <button class="btn btn-primary" type="submit" onclick="publishArticleSubmit();">保存内容
+                        </button>
+                    </div>
+                </div>
+        </form>
+    </div>
+
+</div>
+<js href="/static/js/admin/jquery.min.js"/>
+<js href="/static/js/admin/bootstrap.min.js"/>
+<js href="/static/js/admin/content.min.js"/>
+<js href="/static/js/admin/plugins/chosen/chosen.jquery.js"/>
+<js href="/static/js/admin/plugins/summernote/new_sumnote.js"/>
+<js href="/static/js/admin/plugins/summernote/summernote-zh-CN.js"/>
+<js href="/static/js/admin/plugins/layui/layer/layer.js"/>
+<js href="/static/js/admin/plugins/datapicker/bootstrap-datepicker.js"/>
+
+<js href="/static/js/cxjs/jquery.cxselect.min.js">
+
+    <script>
+        $(document).ready(function () {
+
+            $('#cnMap').cxSelect({
+                url: '/static/js/cxjs/cityData.min.json',
+                selects: ['province', 'city', 'region'],
+                nodata: 'none'
+            });
+
+            $(".mdate").datepicker();
+
+            var chosen = $(".chosen-select").chosen({
+                max_selected_options: 10,
+                width: "50%"
+            });
+            chosen.bind("chosen:maxselected", function () {
+                layer.msg('最多选10项', {time: 800, icon: 2});
+            });
+        });
+
+
+        function publishArticleSubmit() {
+
+            if ($.trim($("input[name='name']").val()) == '') {
+
+                layer.msg('请填写会议名称', {time: 1000, icon: 2});
+
+                return false;
+            }
+
+
+            if (!$("#type2").val()) {
+
+                layer.msg('请选择类型', {time: 1000, icon: 2});
+
+                return false;
+            }
+
+            if (!$("#province").val()) {
+
+                layer.msg('请选择省份', {time: 1000, icon: 2});
+
+                return false;
+            }
+            if (!$("#city").val()) {
+
+                layer.msg('请选择市', {time: 1000, icon: 2});
+
+                return false;
+            }
+            if (!$("#area").val()) {
+
+                layer.msg('请选择区', {time: 1000, icon: 2});
+
+                return false;
+            }
+            if (!$("#addressdetail").val()) {
+
+                layer.msg('请填写详细地址', {time: 1000, icon: 2});
+
+                return false;
+            }
+            if (!$("#uid").val()) {
+
+                layer.msg('请选择创建员工', {time: 1000, icon: 2});
+
+                return false;
+            }
+
+            var formData = new FormData(document.getElementById('article_form'));
+            var url = "{:url('admin/Meettingxs/updateMeetting')}";
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                processData: false,  // 异步传输 formData 时要加上  processData: false  contentType: false 
+                contentType: false,  // 否则会报 Illegal invocation 非法调用错误
+                data: formData,
+                success: function (data) {
+
+                    if (data.code == 1) {
+
+                        layer.msg(data.msg, {time: 1000, icon: 6});
+
+                    } else {
+
+                        layer.msg(data.msg, {time: 1000, icon: 5});
+                    }
+                },
+                dataType: 'json'
+            });
+        }
+    </script>
+
+</html>
