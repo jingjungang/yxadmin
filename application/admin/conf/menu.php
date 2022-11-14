@@ -45,14 +45,36 @@ $menu = array(
             'child' => array(
 
                 array(
-                    'name' => '学术会议',
+                    'name' => '客户名单',
 
-                    'action' => 'admin/Meetting/meettingList',
+                    'action' => 'admin/Customer/CustomerList',
 
                     "auth" => array(
-                        array("name" => '添加', 'action' => "admin/Article/addArticle"),
-                        array("name" => '删除', 'action' => "admin/Article/delArticle"),
-                        array("name" => '修改', 'action' => "admin/Article/updateArticle"),
+                        array("name" => '添加', 'action' => "admin/Customer/addCustomer"),
+                        array("name" => '删除', 'action' => "admin/Customer/delCustomer"),
+                        array("name" => '修改', 'action' => "admin/Customer/updateCustomer"),
+                    )
+                ),
+                array(
+                    'name' => '医院名单',
+
+                    'action' => 'admin/Customer/CustomerList',
+
+                    "auth" => array(
+                        array("name" => '添加', 'action' => "admin/Customer/addCustomer"),
+                        array("name" => '删除', 'action' => "admin/Customer/delCustomer"),
+                        array("name" => '修改', 'action' => "admin/Customer/updateCustomer"),
+                    )
+                ),
+                array(
+                    'name' => '客情维护',
+
+                    'action' => 'admin/Customer/CustomerList',
+
+                    "auth" => array(
+                        array("name" => '添加', 'action' => "admin/Customer/addCustomer"),
+                        array("name" => '删除', 'action' => "admin/Customer/delCustomer"),
+                        array("name" => '修改', 'action' => "admin/Customer/updateCustomer"),
                     )
                 )
 
