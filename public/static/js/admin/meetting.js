@@ -385,6 +385,11 @@ function addCustomer() {
         alert('亲，姓名忘记填写了哦');
         return;
     }
+    if ($('#c_phone').val().trim() == '') {
+        alert('请填写手机号！');
+        return;
+    }
+
     let form = document.getElementById("customer_form");
     let fd = new FormData(form);
     $.ajax({

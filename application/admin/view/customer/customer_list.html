@@ -125,6 +125,11 @@
                                                        class="font-bold CustomerDetails">编辑</a>
                                                 </li>
                                             </if>
+                                            <if condition="check_auth('admin/Customerxs/innerMeettings')">
+                                                <li><a href="javascript:;" data-id="{$vo['id']}"
+                                                       class="font-bold innerMeettings">关联会议</a>
+                                                </li>
+                                            </if>
                                             <if condition="check_auth('admin/Customerxs/delCustomer')">
                                                 <li data-id="{$vo['id']}" class="font-bold del-article"><a
                                                         href="javascript:;">删除</a></li>
@@ -165,11 +170,11 @@
         $(".ibox-content").on('click', '.CustomerDetails', function () {
 
             var addIndex = layer.open({
-                title: '会议详情',
+                title: '详情',
                 offset: ['120px', '220px'],
                 isOutAnim: true,
                 type: 2,
-                content: "{:url('admin/Customerxs/editCustomer')}?id=" + $(this).data('id'),
+                content: "{:url('admin/Customer/editCustomer')}?id=" + $(this).data('id'),
                 area: ['800px', '400px'],
                 maxmin: true
             });
@@ -191,7 +196,6 @@
                 }, function (data) {
 
                     if (data.code == 1) {
-
                         layer.msg(data.msg, {
                             time: 1000,
                             icon: 1
@@ -230,6 +234,25 @@
             layer.full(addIndex);
 
         });
+
+        //  会议
+        $("#toggle_modal").on('click', 'innerMeettings', function () {
+
+            var addIndex = layer.open({
+                title: '会议',
+                offset: ['120px', '220px'],
+                isOutAnim: true,
+                type: 2,
+                content: "{:url('admin/Customer/innerMeettings')}?id=" + $(this).data('id'),
+                area: ['800px', '400px'],
+                maxmin: true
+            });
+
+            layer.full(addIndex);
+
+        });
+
+
     });
 
     function searchTitle(obj) {
