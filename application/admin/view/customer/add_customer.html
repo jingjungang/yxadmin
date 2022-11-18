@@ -38,22 +38,30 @@
                     <div class="form-group">
                         <label class="col-sm-1 control-label">姓名</label>
                         <div class="input-group col-sm-5">
-                            <input type="text"  name="name" id="name" class="form-control">
+                            <input type="text" name="name" id="name" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-1 control-label">性别</label>
                         <div class="input-group col-sm-5">
-                            <input type="radio" value="男" checked style="display:inline-block;padding-left: 10px;" name="sex" id="sex1"> 男</input>
-                            <input type="radio"  value="女" style="display:inline-block;margin-left: 20px;padding-left: 10px"  name="sex" id="sex2"> 女</input>
+                            <input type="radio" value="男" checked style="display:inline-block;padding-left: 10px;"
+                                   name="sex" id="sex1"> 男</input>
+                            <input type="radio" value="女"
+                                   style="display:inline-block;margin-left: 20px;padding-left: 10px" name="sex"
+                                   id="sex2"> 女</input>
                         </div>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-1 control-label">职业</label>
                         <div class="input-group col-sm-5">
-                            <input type="radio" value="医生" checked style="display:inline-block;padding-left: 10px" name="job" id="job1"> 医生</input>
-                            <input type="radio"  value="护士" style="display:inline-block;margin-left: 20px;padding-left: 10px"  name="job" id="job2"> 护士</input>
-                            <input type="radio"  value="其他" style="display:inline-block;margin-left: 20px;padding-left: 10px"  name="job" id="job3"> 其他</input>
+                            <input type="radio" value="医生" checked style="display:inline-block;padding-left: 10px"
+                                   name="job" id="job1"> 医生</input>
+                            <input type="radio" value="护士"
+                                   style="display:inline-block;margin-left: 20px;padding-left: 10px" name="job"
+                                   id="job2"> 护士</input>
+                            <input type="radio" value="其他"
+                                   style="display:inline-block;margin-left: 20px;padding-left: 10px" name="job"
+                                   id="job3"> 其他</input>
                         </div>
                     </div>
                     <div class="form-group">
@@ -71,7 +79,7 @@
                     <div class="form-group">
                         <label class="col-sm-1 control-label"><span>科室</span></label>
                         <div class="input-group col-sm-5">
-                            <input type="text"  class="form-control" name="depart"  id="depart" >
+                            <input type="text" class="form-control" name="depart" id="depart">
                         </div>
                     </div>
 
@@ -81,25 +89,25 @@
                             <input type="text" class="form-control" id="title" name="title">
                         </div>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-1 control-label"><span>手机号</span></label>
                         <div class="input-group date col-sm-5">
                             <input type="text" class="form-control" id="tel" name="tel">
                         </div>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-1 control-label"><span>邮箱</span></label>
                         <div class="input-group date col-sm-5">
                             <input type="text" class="form-control" id="email" name="email">
                         </div>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-1 control-label"><span>生日</span></label>
                         <div class="input-group col-sm-5" mdate>
                             <input type="text" class="form-control mdate" id="birthday" name="birthday">
                         </div>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-1 control-label"><span>微信授权ID</span></label>
                         <div class="input-group date col-sm-5">
                             <input type="text" class="form-control" id="wxid" name="wxid">
@@ -112,17 +120,17 @@
                                    value="{$article['mdate']|default= date('Y-m-d')}" id="addtime">
                         </div>
                     </div>
-                   
 
 
                 </div>
-                <div class="row">
-                    <div class="col-sm-2 col-sm-offset-2">
-                        <input type="hidden" id="article_id" value="{$data['id'] | default = ''}"/>
-                        <input type="hidden" id="handle_type" value="{$handle_type}"/>
-                        <button class="btn btn-primary" type="submit" onclick="save();">保存</button>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 col-sm-offset-2">
+                    <input type="hidden" id="article_id" value="{$data['id'] | default = ''}"/>
+                    <input type="hidden" id="handle_type" value="{$handle_type}"/>
+                    <button class="btn btn-primary" type="submit" onclick="save();">保存</button>
                 </div>
+            </div>
         </form>
     </div>
 
@@ -230,7 +238,9 @@
                             time: 1000,
                             icon: 6
                         });
-                        layer.closeAll("page"); 
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
                     } else {
 
                         layer.msg(data.msg, {

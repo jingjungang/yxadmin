@@ -36,8 +36,8 @@ class Customer extends AdminBase
         	$data = $_POST;
         	try{
 
-                $this->transactio->startTrans(); // 开启事务
-        		$result = $this->transactio->insert($data);
+                $this->transaction->startTrans(); // 开启事务
+        		$result = $this->transaction->insert($data);
 	        	if($result){
 	        		$infos['code'] = 1;
 	        		$infos['msg'] = '添加成功';
@@ -46,11 +46,11 @@ class Customer extends AdminBase
 	        		$infos['msg'] = '添加失败';
 	        	}
         	}catch(Exception $e){
-                $this->transactio->rollback(); // 事务回滚
+                $this->transaction->rollback(); // 事务回滚
         		$infos['code'] = 0;
         		$infos['msg'] = $e->getMessage();
         	}
-            $this->transactio->commit(); // 关闭事务
+            $this->transaction->commit(); // 关闭事务
         	return $infos;
         }else{
         	$li = db('hospital')->field('id,name,code')->select();
@@ -116,8 +116,23 @@ class Customer extends AdminBase
         }
     }
 
-    //参与会议
+    //关联会议
     public function innerMeettings(){
+
+        $meettingid = input("param.id");
+        $params['a.name']=$meettingid;
+        $result = db('meettingcustomer')->alias('a')
+            ->join('meetting m', 'm.id = a.meettingid','left')
+            ->where($params)
+            ->field('m.*')
+            ->order('m.id', 'DESC')
+            ->paginate(10, false, ['query' => $params]);
+        $t = db('meettingcustomer')->getLastSql();
+        if($result){
+            $page = $result->render();// 获取分页显示
+            $this->assign("li_meetting", $result);
+            $this->assign("page", $page);
+        }
 
         return $this->fetch();
     }

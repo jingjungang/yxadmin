@@ -883,7 +883,11 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>姓名*：</label>
-                                    <input type="text" class="form-control" id="c_name" name="name">
+                                    <select class="form-control chosen-select" name="name" id="c_name">
+                                        <volist name='Customers' id='parent'>
+                                            <option value="{$parent.id}">{$parent.name}</option>
+                                        </volist>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">

@@ -26,7 +26,7 @@ class Meettingxs extends AdminBase
         $this->assign("data", $data['data']);
         $this->assign("page", $data['page']);
         $this->assign("keywords", input('param.keywords', ''));
-        $this->assign("status", input('param.status',  $param['status']));
+        $this->assign("status", input('param.status', $param['status']));
 
         return $this->fetch();
     }
@@ -154,16 +154,27 @@ class Meettingxs extends AdminBase
             $where = array('meettingid' => $Meetting['id']);
             $arr = db('meettingcustomer')
                 ->alias('a')
-                ->join('hospital h', 'a.hospitalid = h.id')
-                ->field('h.name as hname,a.*')
+                ->join('hospital h', 'a.hospitalid = h.id','left')
+                ->join('customer c', 'a.name = c.id','left')
+                ->where($where)
+                ->field('h.name as hname,a.*,c.name')
                 ->order('id', 'DESC')
                 ->paginate(10, false, ['query' => $where]);
-
+            $t = db('meettingcustomer')->getLastSql();
             if ($arr) {
                 $page4 = $arr->render();// 获取分页显示
                 $this->assign("li_customer", $arr);
                 $this->assign("page4", $page4);
             }
+
+            $modeCustomer = db('Customer');
+            $Customers = $modeCustomer->select();
+            if ($Customers) {
+                $this->assign("Customers", $Customers);
+            } else {
+                $this->assign("Customers", array());
+            }
+
 
             // 5.费用清单
             $where = array('meettingid' => $Meetting['id']);
@@ -460,6 +471,7 @@ class Meettingxs extends AdminBase
     // 新增客户
     public function addCustomer()
     {
+
         $data = $_POST;
         $data['addtime'] = date('Y-m-d H:i:s', time());
         $transaction = db('meettingcustomer');
@@ -474,7 +486,11 @@ class Meettingxs extends AdminBase
                 }
             } else {   // 缓存文件不存在，则连接数据库进行数据调取
                 $res = db('hospital')->where('name=' . $data['hname'])->find();
-                $hid = $res['id'];
+                if ($res) {
+                    $hid = $res['id'];
+                } else {
+                    $hid = '';
+                }
             }
             $data['hospitalid'] = $hid;
 
@@ -561,7 +577,8 @@ class Meettingxs extends AdminBase
     }
 
     // 总结新增
-    function addSummary(){
+    function addSummary()
+    {
         $data = $_POST;
         $files = request()->file('image');
         $index = 0;
@@ -585,7 +602,7 @@ class Meettingxs extends AdminBase
                         // 上传失败获取错误信息
                         $errorinfo = $files[$i]->getError();
                     }
-                }else{
+                } else {
                     $errorinfo = '图片格式不正确';
                 }
 
@@ -594,13 +611,13 @@ class Meettingxs extends AdminBase
         }
 
         if ($errorinfo == '') {
-            if(count($array_images)>0){
-                $data['urls'] = implode(',',$array_images );
-            }else{
+            if (count($array_images) > 0) {
+                $data['urls'] = implode(',', $array_images);
+            } else {
                 $data['urls'] = '';
             }
             $data['addtime'] = date('Y-m-d H:i:s', time());
-            if ($data['id']!='') {
+            if ($data['id'] != '') {
                 $res = db('meettingsummary')->where('id', $data['id'])->update($data);
             } else {
                 $res = db('meettingsummary')->insert($data);
@@ -620,11 +637,12 @@ class Meettingxs extends AdminBase
     }
 
     // 总结查询
-    public function editSummary(){
+    public function editSummary()
+    {
         $id = $_POST['id'];
-        $res = db('meettingsummary')->where('id',$id)->find();
+        $res = db('meettingsummary')->where('id', $id)->find();
         $infos['code'] = 0;
-        if ($res){
+        if ($res) {
             $infos['code'] = 1;
             $infos['data'] = $res;
         }
@@ -633,51 +651,52 @@ class Meettingxs extends AdminBase
     }
 
     // 审核会议
-    public  function checkMeetting(){
+    public function checkMeetting()
+    {
 
         $data = $_POST;
         $flag = $data['flag'];
         $infos['code'] = 0;
         $transaction = db('meetting');
-        try{
+        try {
             if ($flag == 1) { //通过
                 $params['status'] = 2;
-                $res = $transaction->where('id in ('.$data['id'].')')->update($params);
+                $res = $transaction->where('id in (' . $data['id'] . ')')->update($params);
 
                 if ($res) {
                     $infos['code'] = 1;
                     $infos['msg'] = '操作成功';
-                }else{
+                } else {
                     $infos['code'] = 0;
                     $infos['msg'] = '操作失败';
                 }
-                
-            }else if ($flag == 2) { //不通过
+
+            } else if ($flag == 2) { //不通过
                 $params['status'] = 4;
-                $res = $transaction->where('id in ('.$data['id'].')')->update($params);
+                $res = $transaction->where('id in (' . $data['id'] . ')')->update($params);
                 if ($res) {
                     $infos['code'] = 1;
                     $infos['msg'] = '操作成功';
-                }else{
+                } else {
                     $infos['code'] = 0;
                     $infos['msg'] = '操作失败';
                 }
-            }else if($flag == 3) { //恢复
+            } else if ($flag == 3) { //恢复
                 $params['status'] = 1;
-                $res = $transaction->where('id in ('.$data['id'].')')->update($params);
+                $res = $transaction->where('id in (' . $data['id'] . ')')->update($params);
                 if ($res) {
                     $infos['code'] = 1;
                     $infos['msg'] = '操作成功';
-                }else{
+                } else {
                     $infos['code'] = 0;
                     $infos['msg'] = '操作失败';
                 }
-            }else if($flag == 4) { //彻底删除
-                $res = $transaction->where('id in ('.$data['id'].')')->delete();
+            } else if ($flag == 4) { //彻底删除
+                $res = $transaction->where('id in (' . $data['id'] . ')')->delete();
                 if ($res) {
                     $infos['code'] = 1;
                     $infos['msg'] = '操作成功';
-                }else{
+                } else {
                     $infos['code'] = 0;
                     $infos['msg'] = '操作失败';
                 }
@@ -688,7 +707,7 @@ class Meettingxs extends AdminBase
             $infos['code'] = 0;
             $infos['msg'] = $e->getMessage();
         }
-        
+
         return $infos;
     }
 

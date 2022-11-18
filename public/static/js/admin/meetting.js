@@ -381,11 +381,11 @@ $('.edit-customer').on('click', function () {
 
 // 添加客户
 function addCustomer() {
-    if ($('#c_name').val().trim() == '') {
+    if ($.trim($('#c_name').val()) == '') {
         alert('亲，姓名忘记填写了哦');
         return;
     }
-    if ($('#c_phone').val().trim() == '') {
+    if ($.trim($('#c_phone').val()) == '') {
         alert('请填写手机号！');
         return;
     }

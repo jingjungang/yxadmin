@@ -53,7 +53,7 @@
                                     <option value="0" selected>全部</option>
                                     <option value="1">正常</option>
                                     <option value="2">不正常</option>
-                                <elseif condition="$status==1">
+                                <elseif condition="$status==1"/>
                                     <option value="0">全部</option>
                                     <option value="1" selected>正常</option>
                                     <option value="2">不正常</option>
@@ -109,8 +109,8 @@
                                 <td align="center">{$vo['tel']}</td>
                                 <td align="center">{$vo['title']}</td>
                                 <td align="center">
-                                    <if condition="$vo['status'] == 1"><span style="color: red">正常</span>
-                                        <else/><span style="color: grey;">不通过</span>
+                                    <if condition="$vo['status'] == 1"><span style="color: green">正常</span>
+                                        <else/><span style="color: red;">不正常</span>
                                     </if>
                                 </td>
                                 <td class="center" align="center">
@@ -120,17 +120,17 @@
                                                 aria-expanded="false">操作 <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <if condition="check_auth('admin/Customerxs/CustomerDetails')">
+                                            <if condition="check_auth('admin/Customer/CustomerDetails')">
                                                 <li><a href="javascript:;" data-id="{$vo['id']}"
                                                        class="font-bold CustomerDetails">编辑</a>
                                                 </li>
                                             </if>
-                                            <if condition="check_auth('admin/Customerxs/innerMeettings')">
+                                            <if condition="check_auth('admin/Customer/innerMeettings')">
                                                 <li><a href="javascript:;" data-id="{$vo['id']}"
                                                        class="font-bold innerMeettings">关联会议</a>
                                                 </li>
                                             </if>
-                                            <if condition="check_auth('admin/Customerxs/delCustomer')">
+                                            <if condition="check_auth('admin/Customer/delCustomer')">
                                                 <li data-id="{$vo['id']}" class="font-bold del-article"><a
                                                         href="javascript:;">删除</a></li>
                                             </if>
@@ -236,7 +236,7 @@
         });
 
         //  会议
-        $("#toggle_modal").on('click', 'innerMeettings', function () {
+        $(".ibox-content").on('click', '.innerMeettings', function () {
 
             var addIndex = layer.open({
                 title: '会议',
