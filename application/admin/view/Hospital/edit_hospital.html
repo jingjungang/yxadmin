@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title></title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <css href="/static/css/admin/bootstrap.min14ed.css"/>
+    <css href="/static/css/admin/font-awesome.min93e3.css"/>
+    <css href="/static/css/admin/animate.min.css"/>
+    <css href="/static/css/admin/plugins/summernote/new_sumnote.css"/>
+    <css href="/static/css/admin/plugins/summernote/summernote-bs3.css"/>
+    <css href="/static/css/admin/plugins/chosen/chosen.css"/>
+    <css href="/static/css/admin/plugins/datapicker/datepicker3.css"/>
+    <css href="/static/css/admin/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"/>
+    <css href="/static/css/admin/style.min862f.css"/>
+    <link href="/static/css/admin/admincommon.css?v=20181116" rel='stylesheet' type='text/css'/>
+</head>
+<style type="text/css">
+    .chosen-container-multi {
+        margin-left: 16px;
+    }
+</style>
+<body class="gray-bg">
+
+<div id="myTabContent" class="tab-content">
+
+    <div class="wrapper wrapper-content tab-pane fade in active" id="home">
+        <form id="customer_form" class="form-horizontal" onsubmit="return false;">
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">姓名</label>
+                        <div class="input-group col-sm-5">
+                            <input type="text" name="name" id="name" value="{$li.name}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">性别</label>
+                        <div class="input-group col-sm-5">
+                            <if condition="$li.sex == '男'">
+                                <input type="radio" value="男" checked style="display:inline-block;padding-left: 10px;"
+                                       name="sex" id="sex1"> 男</input>
+                                <input type="radio" value="女"
+                                       style="display:inline-block;margin-left: 20px;padding-left: 10px" name="sex"
+                                       id="sex2"> 女</input>
+                                <else/>
+                                <input type="radio" value="男" style="display:inline-block;padding-left: 10px;"
+                                       name="sex" id="sex1"> 男</input>
+                                <input type="radio" value="女" checked
+                                       style="display:inline-block;margin-left: 20px;padding-left: 10px" name="sex"
+                                       id="sex2"> 女</input>
+                            </if>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">职业</label>
+                        <div class="input-group col-sm-5">
+                            <input type="radio" value="医生" <?php if($li['job']=='医生'){ echo('checked');} ?>
+                            style="display:inline-block;padding-left: 10px"
+                            name="job" id="job1"> 医生</input>
+                            <input type="radio" value="护士" <?php if($li['job']=='护士'){ echo('checked');} ?>
+                            style="display:inline-block;margin-left: 20px;padding-left: 10px" name="job"
+                            id="job2"> 护士</input>
+                            <input type="radio" value="其他" <?php if($li['job']=='其他'){ echo('checked');} ?>
+                            style="display:inline-block;margin-left: 20px;padding-left: 10px" name="job"
+                            id="job3"> 其他</input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label class="col-sm-1 control-label"><span>医院：</span></label>
+                        <div class="input-group col-sm-5">
+                            <select data-placeholder="选择医院" class="chosen-select" style="width:700px;"
+                                    name="hospitalid" id="hospitalid">
+                                <volist name="hospital" id="vo">
+                                    <if condition="$vo['id']== $li['hospitalid']">
+                                        <option value="{$vo.id}" selected>{$vo.name}</option>
+                                        <else/>
+                                        <option value="{$vo.id}">{$vo.name}</option>
+                                    </if>
+
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"><span>科室</span></label>
+                        <div class="input-group col-sm-5">
+                            <input type="text" class="form-control" value="{$li.depart}" name="depart" id="depart">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"><span>职称</span></label>
+                        <div class="input-group date col-sm-5">
+                            <input type="text" class="form-control" value="{$li.title}" id="title" name="title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"><span>手机号</span></label>
+                        <div class="input-group date col-sm-5">
+                            <input type="text" class="form-control" value="{$li.tel}" value="{$li.depart}" id="tel"
+                                   name="tel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"><span>邮箱</span></label>
+                        <div class="input-group date col-sm-5">
+                            <input type="text" class="form-control" value="{$li.email}" id="email" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"><span>生日</span></label>
+                        <div class="input-group col-sm-5" mdate>
+                            <input type="text" class="form-control mdate" value="{$li.birthday}" id="birthday"
+                                   name="birthday">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"><span>微信授权ID</span></label>
+                        <div class="input-group date col-sm-5">
+                            <input type="text" class="form-control" id="wxid" value="{$li.wxid}" name="wxid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"><span>创建时间：</span></label>
+                        <div class="input-group  col-sm-5">
+                            <input type="text" name="addtime" class="form-control mdate"
+                                   value="{$li.addtime}" id="addtime">
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 col-sm-offset-2">
+                        <input type="hidden" id="id" name="id" value="{$li.id}"/>
+                        <button class="btn btn-primary" type="submit" onclick="save();">保存</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<js href="/static/js/admin/jquery.min.js"/>
+<js href="/static/js/admin/bootstrap.min.js"/>
+<js href="/static/js/admin/content.min.js"/>
+<js href="/static/js/admin/plugins/chosen/chosen.jquery.js"/>
+<js href="/static/js/admin/plugins/summernote/new_sumnote.js"/>
+<js href="/static/js/admin/plugins/summernote/summernote-zh-CN.js"/>
+<js href="/static/js/admin/plugins/layui/layer/layer.js"/>
+<js href="/static/js/admin/plugins/datapicker/bootstrap-datepicker.js"/>
+
+<js href="/static/js/cxjs/jquery.cxselect.min.js"/>
+
+<script>
+    $(document).ready(function () {
+
+        $('#cnMap').cxSelect({
+            url: '/static/js/cxjs/cityData.min.json',
+            selects: ['province', 'city', 'region'],
+            nodata: 'none'
+        });
+
+        $(".mdate").datepicker();
+
+        var chosen = $(".chosen-select").chosen({
+            max_selected_options: 10,
+            width: "50%"
+        });
+        chosen.bind("chosen:maxselected", function () {
+            layer.msg('最多选10项', {
+                time: 800,
+                icon: 2
+            });
+        });
+    });
+
+
+    function save() {
+
+        if ($.trim($("input[name='name']").val()) == '') {
+
+            layer.msg('请填写名字', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+
+
+        if (!$("#depart").val()) {
+
+            layer.msg('请填写科室', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+
+        if (!$("#title").val()) {
+
+            layer.msg('请填写职称', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+        if (!$("#tel").val()) {
+
+            layer.msg('请填写手机号', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+        if (!$("#email").val()) {
+
+            layer.msg('请填写邮箱', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+
+        var formData = new FormData(document.getElementById('customer_form'));
+        var url = "{:url('admin/Customer/editCustomer')}";
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            processData: false, // 异步传输 formData 时要加上  processData: false  contentType: false
+            contentType: false, // 否则会报 Illegal invocation 非法调用错误
+            data: formData,
+            success: function (data) {
+
+                if (data.code == 1) {
+                    layer.msg(data.msg, {
+                        time: 1000,
+                        icon: 6
+                    });
+                    setTimeout(function() {
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    }, 1000);
+                } else {
+
+                    layer.msg(data.msg, {
+                        time: 1000,
+                        icon: 5
+                    });
+                }
+            },
+            dataType: 'json'
+        });
+    }
+</script>
+</body>
+</html>

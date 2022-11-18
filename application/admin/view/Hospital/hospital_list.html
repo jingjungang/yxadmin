@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <title>客户管理</title>
+    <title>医院名单</title>
 
     <meta name="keywords" content="">
     <meta name="description" content="">
@@ -29,10 +29,10 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>客户列表</h5>
-                    <if condition="check_auth('admin/Customerxs/addCustomer')">
+                    <h5>医院名单</h5>
+                    <if condition="check_auth('admin/Hospital/addHospital')">
                         <button id="toggle_modal" class="btn btn-primary btn-circle" type="button"
-                                style="margin-bottom:0px;margin-left:10px;position:relative;top:-5px;" title="添加客户">
+                                style="margin-bottom:0px;margin-left:10px;position:relative;top:-5px;" title="添加医院">
                             <i class="fa fa-edit"></i>+
                         </button>
                     </if>
@@ -66,7 +66,7 @@
                             <div class="form-group col-sm-3" style="padding-left:0px;"
                                  style="display: inline-block;">
                                 <input type="text" id="keywords" name="keywords" value="{$keywords}"
-                                       placeholder="输入客户名字" class="form-control" onkeyup="searchTitle(this);"/>
+                                       placeholder="输入医院名字" class="form-control" onkeyup="searchTitle(this);"/>
                             </div>
 
                             <button type="submit" class="btn btn-xm btn-primary"
@@ -79,22 +79,22 @@
                            class="table table-striped table-bordered table-hover dataTables-example">
                         <thead align="center">
                         <tr>
-
-                            <th style="text-align:center;">编号</th>
-                            <th style="text-align:center;">姓名</th>
-                            <th style="text-align:center;">授权ID</th>
-                            <th style="text-align:center;">性别</th>
-                            <th style="text-align:center;">职业</th>
-                            <th style="text-align:center;">手机号</th>
-                            <th style="text-align:center;">职称</th>
+                            <th style="text-align:center;">序号</th>
+                            <th style="text-align:center;">名称</th>
+                            <th style="text-align:center;">省</th>
+                            <th style="text-align:center;">市</th>
+                            <th style="text-align:center;">区</th>
+                            <th style="text-align:center;">级别</th>
+                            <th style="text-align:center;">编码</th>
+                            <th style="text-align:center;">性质</th>
                             <th style="text-align:center;">状态</th>
                             <th style="text-align:center;">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <volist name="data" id="vo" key="i">
-                            <tr class="gradeX" id="Customer-{$vo['id']}">
-
+                            <tr class="gradeX" id="Hospital-{$vo['id']}">
+                                
                                 <td align="center">{$i}</td>
                                 <td align="center">
                                     <if condition="mb_strlen($vo['name'],'utf-8') egt 20">
@@ -103,11 +103,12 @@
                                         {$vo.name}
                                     </if>
                                 </td>
-                                <td align="center">{$vo.wxid}</td>
-                                <td align="center">{$vo['sex']}</td>
-                                <td align="center">{$vo['job']}</td>
-                                <td align="center">{$vo['tel']}</td>
-                                <td align="center">{$vo['title']}</td>
+                                <td align="center">{$vo['province']}</td>
+                                <td align="center">{$vo['city']}</td>
+                                <td align="center">{$vo['area']}</td>
+                                <td align="center">{$vo['level']}</td>
+                                <td align="center">{$vo['code']}</td>
+                                <td align="center">{$vo['quality']}</td>
                                 <td align="center">
                                     <if condition="$vo['status'] == 1"><span style="color: green">正常</span>
                                         <else/><span style="color: red;">作废</span>
@@ -120,17 +121,12 @@
                                                 aria-expanded="false">操作 <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <if condition="check_auth('admin/Customer/CustomerDetails')">
+                                            <if condition="check_auth('admin/Hospital/HospitalDetails')">
                                                 <li><a href="javascript:;" data-id="{$vo['id']}"
-                                                       class="font-bold CustomerDetails">编辑</a>
+                                                       class="font-bold HospitalDetails">编辑</a>
                                                 </li>
                                             </if>
-                                            <if condition="check_auth('admin/Customer/innerMeettings')">
-                                                <li><a href="javascript:;" data-id="{$vo['id']}"
-                                                       class="font-bold innerMeettings">关联会议</a>
-                                                </li>
-                                            </if>
-                                            <if condition="check_auth('admin/Customer/delCustomer')">
+                                            <if condition="check_auth('admin/Hospital/delHospital')">
                                                 <li data-id="{$vo['id']}" class="font-bold del-article"><a
                                                         href="javascript:;">删除</a></li>
                                             </if>
@@ -167,14 +163,14 @@
         sessionStorage.setItem("TabNum", 0);
 
         //  详情
-        $(".ibox-content").on('click', '.CustomerDetails', function () {
+        $(".ibox-content").on('click', '.HospitalDetails', function () {
 
             var addIndex = layer.open({
                 title: '详情',
                 offset: ['120px', '220px'],
                 isOutAnim: true,
                 type: 2,
-                content: "{:url('admin/Customer/editCustomer')}?id=" + $(this).data('id'),
+                content: "{:url('admin/Hospital/editHospital')}?id=" + $(this).data('id'),
                 area: ['800px', '400px'],
                 maxmin: true
             });
@@ -184,15 +180,15 @@
 
         // 删除
         $(".ibox-content").on('click', '.del-article', function () {
-            var Customer_id = $(this).data("id");
+            var Hospital_id = $(this).data("id");
             layer.confirm("你确定要删除吗？", {
 
                 btn: ['确定', '取消'] //按钮
 
             }, function () {
 
-                $.post("{:url('admin/Customer/delCustomer')}", {
-                    id: Customer_id
+                $.post("{:url('admin/Hospital/delHospital')}", {
+                    id: Hospital_id
                 }, function (data) {
 
                     if (data.code == 1) {
@@ -201,7 +197,7 @@
                             icon: 1
                         });
 
-                        $("#Customer-" + Customer_id).remove();
+                        $("#Hospital-" + Hospital_id).remove();
 
                     } else {
 
@@ -226,7 +222,7 @@
                 offset: ['120px', '220px'],
                 isOutAnim: true,
                 type: 2,
-                content: "{:url('admin/Customer/addCustomer')}?type=add",
+                content: "{:url('admin/Hospital/addHospital')}?type=add",
                 area: ['800px', '400px'],
                 maxmin: true
             });
@@ -243,7 +239,7 @@
                 offset: ['120px', '220px'],
                 isOutAnim: true,
                 type: 2,
-                content: "{:url('admin/Customer/innerMeettings')}?id=" + $(this).data('id'),
+                content: "{:url('admin/Hospital/innerMeettings')}?id=" + $(this).data('id'),
                 area: ['800px', '400px'],
                 maxmin: true
             });

@@ -58,12 +58,12 @@ $menu = array(
                 array(
                     'name' => '医院名单',
 
-                    'action' => 'admin/Customer/CustomerList',
+                    'action' => 'admin/Hospital/HospitalList',
 
                     "auth" => array(
-                        array("name" => '添加', 'action' => "admin/Customer/addCustomer"),
-                        array("name" => '删除', 'action' => "admin/Customer/delCustomer"),
-                        array("name" => '修改', 'action' => "admin/Customer/updateCustomer"),
+                        array("name" => '添加', 'action' => "admin/Hospital/addCustomer"),
+                        array("name" => '删除', 'action' => "admin/Hospital/delCustomer"),
+                        array("name" => '修改', 'action' => "admin/Hospital/updateCustomer"),
                     )
                 ),
                 array(

@@ -5,12 +5,12 @@ namespace app\admin\model;
 use think\Model;
 use app\admin\controller\Upload;
 
-class Customer extends Model
+class Hospital extends Model
 {
 
     protected $pk = 'id';
 
-    public function getCustomer($num = 10)
+    public function getHospital($num = 10)
     {
         $keywords = input('param.keywords', '');
         $status = input('param.status');
@@ -36,17 +36,17 @@ class Customer extends Model
         }
 
 
-        $Customer = Customer::alias('a')->field('a.*')
+        $Hospital = Hospital::alias('a')->field('a.*')
             ->where($where)
             ->order('id', 'DESC')
             ->paginate($num, false, ['query' => $param]);
 
-        $page = $Customer->render();// 获取分页显示
+        $page = $Hospital->render();// 获取分页显示
 
 
-        if ($Customer) {
+        if ($Hospital) {
 
-            return ['code' => 1, 'data' => $Customer, 'msg' => '数据查询成功', 'page' => $page];
+            return ['code' => 1, 'data' => $Hospital, 'msg' => '数据查询成功', 'page' => $page];
 
         } else {
 
@@ -55,15 +55,7 @@ class Customer extends Model
 
     }
 
-    public function saveCustomer($param)
-    {
-
-        $result = $this->allowField(true)->save($param);
-        return $result;
-    }
-
-
-    public function deleteCustomer($id)
+    public function deleteHospital($id)
     {
 
         $result = $this->where('id=' . $id)->setField('status', 3); //删除状态改为3
@@ -79,7 +71,7 @@ class Customer extends Model
     }
 
 
-    public function updateCustomer($input)
+    public function updateHospital($input)
     {
 
         $save = $this->allowField(true)->save($input, $input['id']);
@@ -92,21 +84,5 @@ class Customer extends Model
 
     }
 
-
-    public function getCustomerById($Id)
-    {
-        if($Id){
-            $Meetting = $this->where("id=" . $Id)->find();
-            if ($Meetting) {
-                $Meetting = $Meetting->toArray();
-                return $Meetting;
-            } else {
-                return '';
-            }
-        }else{
-            return '';
-        }
-
-    }
 
 }
