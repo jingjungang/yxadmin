@@ -81,22 +81,24 @@
                         <label class="col-sm-1 control-label">开发情况：</label>
                         <div class="radios">
                             <label class="radio-inline">
-                                <input type="radio" checked value="1" id="development1" name="development">空白网点</label>
+                                <input type="radio" checked value="1" id="development1" class="radio"
+                                       name="development">空白网点</label>
                             <label class="radio-inline">
-                                <input type="radio" value="2" id="development2" name="development">签约网点</label>
+                                <input type="radio" value="2" id="development2" name="development" class="radio">签约网点</label>
                             <label class="radio-inline">
-                                <input type="radio" value="3" id="development3" name="development">开发网点</label>
+                                <input type="radio" value="3" id="development3" name="development" class="radio">开发网点</label>
                             <label class="radio-inline">
-                                <input type="radio" value="4" id="development4" name="development">僵尸网点</label>
+                                <input type="radio" value="4" id="development4" name="development" class="radio">僵尸网点</label>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-1 control-label">是否分院：</label>
                         <div class="radios">
                             <label class="radio-inline">
-                                <input type="radio" checked value="1" id="divided1" name="divided">是</label>
+                                <input type="radio" checked value="1" id="divided1" name="divided"
+                                       class="radio">是</label>
                             <label class="radio-inline">
-                                <input type="radio" value="2" id="divided2" name="divided">否</label>
+                                <input type="radio" value="2" id="divided2" name="divided" class="radio">否</label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -241,8 +243,10 @@
         });
     }
 </script>
-<css>
-    
-</css>
+<style>
+    .radio {
+        margin-top: -2px;
+    }
+</style>
 </body>
 </html>
