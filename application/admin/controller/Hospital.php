@@ -22,6 +22,7 @@ class Hospital extends AdminBase
             $this->assign("keywords", input('param.keywords', ''));
         	$this->assign("status", input('param.status',  $param['status']));
         }
+
         $data = model('Hospital')->getHospital(10);
         $this->assign("data", $data['data']);
         $this->assign("page", $data['page']);

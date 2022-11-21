@@ -14,9 +14,7 @@ class Customer extends Model
     {
         $keywords = input('param.keywords', '');
         $status = input('param.status');
-        if($status==''){
-            $status = 1;
-        }
+
         $where= '1=1 ';
         $param = [];
         if($status == 0){ 

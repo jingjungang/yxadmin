@@ -21,8 +21,6 @@ class Customer extends AdminBase
         if (request()->isPost()) {
             $this->assign("keywords", input('param.keywords', ''));
         	$this->assign("status", input('param.status',  $param['status']));
-        }else{
-            $this->assign("status", 1);
         }
         $data = model('Customer')->getCustomer(10);
         $this->assign("data", $data['data']);

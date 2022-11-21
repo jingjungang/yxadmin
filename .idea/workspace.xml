@@ -48,22 +48,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/phpStudy/PHPTutorial/WWW/cpms-php-master/application/admin/view",
-    "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php",
-    "settings.editor.splitter.proportion": "0.27713814",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/phpStudy/PHPTutorial/WWW/cpms-php-master/application/admin/view&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.27713814&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view" />
@@ -94,7 +94,8 @@
       <workItem from="1667805315060" duration="7444000" />
       <workItem from="1668395108100" duration="1138000" />
       <workItem from="1668491945698" duration="9008000" />
-      <workItem from="1668670954518" duration="17281000" />
+      <workItem from="1668670954518" duration="19726000" />
+      <workItem from="1669012151329" duration="4791000" />
     </task>
     <servers />
   </component>

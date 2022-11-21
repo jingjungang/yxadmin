@@ -505,6 +505,8 @@ class Meettingxs extends AdminBase
                 }
             }
 
+            $data['way'] = '手动录入';
+
             if ($res) {
                 $result = $transaction->where('id', $res['id'])->update($data);
             } else {

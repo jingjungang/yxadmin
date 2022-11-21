@@ -21,11 +21,6 @@
     <css href="/static/css/admin/style.min862f.css"/>
     <link href="/static/css/admin/admincommon.css?v=20181116" rel='stylesheet' type='text/css'/>
 </head>
-<style type="text/css">
-    .chosen-container-multi {
-        margin-left: 16px;
-    }
-</style>
 <body class="gray-bg">
 
 <div id="myTabContent" class="tab-content">
@@ -36,92 +31,80 @@
 
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">姓名</label>
+                        <label class="col-sm-1 control-label">名称</label>
                         <div class="input-group col-sm-5">
                             <input type="text" name="name" id="name" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">性别</label>
+                        <label class="col-sm-1 control-label">其他名称</label>
                         <div class="input-group col-sm-5">
-                            <input type="radio" value="男" checked style="display:inline-block;padding-left: 10px;"
-                                   name="sex" id="sex1"> 男</input>
-                            <input type="radio" value="女"
-                                   style="display:inline-block;margin-left: 20px;padding-left: 10px" name="sex"
-                                   id="sex2"> 女</input>
+                            <input type="text" name="othername" id="othername" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">职业</label>
+                        <label class="col-sm-1 control-label">地址：</span></label>
+                        <div class="input-group col-sm-6">
+                            <div id="cnMap">
+                                <div class="col-sm-3">
+                                    <select name="province" class="province form-control"
+                                            data-first-title="选择省份" id="province" style="margin-left: 0px"></select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="city" id="city" class="city form-control"></select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="area" id="area" class="region form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">详细地址</label>
                         <div class="input-group col-sm-5">
-                            <input type="radio" value="医生" checked style="display:inline-block;padding-left: 10px"
-                                   name="job" id="job1"> 医生</input>
-                            <input type="radio" value="护士"
-                                   style="display:inline-block;margin-left: 20px;padding-left: 10px" name="job"
-                                   id="job2"> 护士</input>
-                            <input type="radio" value="其他"
-                                   style="display:inline-block;margin-left: 20px;padding-left: 10px" name="job"
-                                   id="job3"> 其他</input>
+                            <input type="text" name="detaisls" id="detaisls" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-
-                        <label class="col-sm-1 control-label"><span>医院：</span></label>
+                        <label class="col-sm-1 control-label">医院编码</label>
                         <div class="input-group col-sm-5">
-                            <select data-placeholder="选择医院" class="chosen-select" style="width:700px;"
-                                    name="hospitalid" id="hospitalid">
-                                <volist name="hospital" id="vo">
-                                    <option value="{$vo.id}" selected>{$vo.name}</option>
-                                </volist>
-                            </select>
+                            <input type="text" name="code" id="code" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>科室</span></label>
+                        <label class="col-sm-1 control-label">行政级别</label>
                         <div class="input-group col-sm-5">
-                            <input type="text" class="form-control" name="depart" id="depart">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>职称</span></label>
-                        <div class="input-group date col-sm-5">
-                            <input type="text" class="form-control" id="title" name="title">
+                            <input type="text" name="level" id="level" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>手机号</span></label>
-                        <div class="input-group date col-sm-5">
-                            <input type="text" class="form-control" id="tel" name="tel">
+                        <label class="col-sm-1 control-label">开发情况：</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio" checked value="1" id="development1" name="development">空白网点</label>
+                            <label class="radio-inline">
+                                <input type="radio" value="2" id="development2" name="development">签约网点</label>
+                            <label class="radio-inline">
+                                <input type="radio" value="3" id="development3" name="development">开发网点</label>
+                            <label class="radio-inline">
+                                <input type="radio" value="4" id="development4" name="development">僵尸网点</label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>邮箱</span></label>
-                        <div class="input-group date col-sm-5">
-                            <input type="text" class="form-control" id="email" name="email">
+                        <label class="col-sm-1 control-label">是否分院：</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio" checked value="1" id="divided1" name="divided">是</label>
+                            <label class="radio-inline">
+                                <input type="radio" value="2" id="divided2" name="divided">否</label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>生日</span></label>
-                        <div class="input-group col-sm-5" mdate>
-                            <input type="text" class="form-control mdate" id="birthday" name="birthday">
+                        <label class="col-sm-1 control-label">主院名称：</label>
+                        <div class="input-group col-sm-5">
+                            <input type="text" name="hostname" id="hostname" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>微信授权ID</span></label>
-                        <div class="input-group date col-sm-5">
-                            <input type="text" class="form-control" id="wxid" name="wxid">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>创建时间：</span></label>
-                        <div class="input-group  col-sm-5">
-                            <input type="text" name="addtime" class="form-control mdate"
-                                   value="{$article['mdate']|default= date('Y-m-d')}" id="addtime">
-                        </div>
-                    </div>
-
-
                 </div>
             </div>
             <div class="row">
@@ -144,114 +127,122 @@
 <js href="/static/js/admin/plugins/layui/layer/layer.js"/>
 <js href="/static/js/admin/plugins/datapicker/bootstrap-datepicker.js"/>
 
-<js href="/static/js/cxjs/jquery.cxselect.min.js">
+<js href="/static/js/cxjs/jquery.cxselect.min.js"/>
 
-    <script>
-        $(document).ready(function () {
-
-            $('#cnMap').cxSelect({
-                url: '/static/js/cxjs/cityData.min.json',
-                selects: ['province', 'city', 'region'],
-                nodata: 'none'
-            });
-
-            $(".mdate").datepicker();
-
-            var chosen = $(".chosen-select").chosen({
-                max_selected_options: 10,
-                width: "50%"
-            });
-            chosen.bind("chosen:maxselected", function () {
-                layer.msg('最多选10项', {
-                    time: 800,
-                    icon: 2
-                });
-            });
+<script>
+    $(document).ready(function () {
+        $('#cnMap').cxSelect({
+            url: '/static/js/cxjs/cityData.min.json',
+            selects: ['province', 'city', 'region'],
+            nodata: 'none'
         });
 
+        $('#cnMap').cxSelect({
+            url: '/static/js/cxjs/cityData.min.json',
+            selects: ['province', 'city', 'region'],
+            nodata: 'none'
+        });
 
-        function save() {
+        $(".mdate").datepicker();
 
-            if ($.trim($("input[name='name']").val()) == '') {
-
-                layer.msg('请填写名字', {
-                    time: 1000,
-                    icon: 2
-                });
-
-                return false;
-            }
-
-
-            if (!$("#depart").val()) {
-
-                layer.msg('请填写科室', {
-                    time: 1000,
-                    icon: 2
-                });
-
-                return false;
-            }
-
-            if (!$("#title").val()) {
-
-                layer.msg('请填写职称', {
-                    time: 1000,
-                    icon: 2
-                });
-
-                return false;
-            }
-            if (!$("#tel").val()) {
-
-                layer.msg('请填写手机号', {
-                    time: 1000,
-                    icon: 2
-                });
-
-                return false;
-            }
-            if (!$("#email").val()) {
-
-                layer.msg('请填写邮箱', {
-                    time: 1000,
-                    icon: 2
-                });
-
-                return false;
-            }
-
-            var formData = new FormData(document.getElementById('customer_form'));
-            var url = "{:url('admin/Customer/addCustomer')}";
-
-            $.ajax({
-                url: url,
-                type: 'post',
-                processData: false, // 异步传输 formData 时要加上  processData: false  contentType: false
-                contentType: false, // 否则会报 Illegal invocation 非法调用错误
-                data: formData,
-                success: function (data) {
-
-                    if (data.code == 1) {
-
-                        layer.msg(data.msg, {
-                            time: 1000,
-                            icon: 6
-                        });
-                        window.parent.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭
-                    } else {
-
-                        layer.msg(data.msg, {
-                            time: 1000,
-                            icon: 5
-                        });
-                    }
-                },
-                dataType: 'json'
+        var chosen = $(".chosen-select").chosen({
+            max_selected_options: 10,
+            width: "50%"
+        });
+        chosen.bind("chosen:maxselected", function () {
+            layer.msg('最多选10项', {
+                time: 800,
+                icon: 2
             });
-        }
-    </script>
+        });
+    });
 
+
+    function save() {
+
+        if ($.trim($("input[name='name']").val()) == '') {
+
+            layer.msg('请填写名字', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+
+
+        if (!$("#depart").val()) {
+
+            layer.msg('请填写科室', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+
+        if (!$("#title").val()) {
+
+            layer.msg('请填写职称', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+        if (!$("#tel").val()) {
+
+            layer.msg('请填写手机号', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+        if (!$("#email").val()) {
+
+            layer.msg('请填写邮箱', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+
+        var formData = new FormData(document.getElementById('customer_form'));
+        var url = "{:url('admin/Customer/addCustomer')}";
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            processData: false, // 异步传输 formData 时要加上  processData: false  contentType: false
+            contentType: false, // 否则会报 Illegal invocation 非法调用错误
+            data: formData,
+            success: function (data) {
+
+                if (data.code == 1) {
+
+                    layer.msg(data.msg, {
+                        time: 1000,
+                        icon: 6
+                    });
+                    window.parent.location.reload();
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                } else {
+
+                    layer.msg(data.msg, {
+                        time: 1000,
+                        icon: 5
+                    });
+                }
+            },
+            dataType: 'json'
+        });
+    }
+</script>
+<css>
+    
+</css>
+</body>
 </html>
