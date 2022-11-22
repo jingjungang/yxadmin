@@ -62,7 +62,7 @@
                     <div class="form-group">
                         <label class="col-sm-1 control-label">详细地址</label>
                         <div class="input-group col-sm-5">
-                            <input type="text" name="detaisls" id="detaisls" class="form-control">
+                            <input type="text" name="details" id="details" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -81,14 +81,24 @@
                         <label class="col-sm-1 control-label">开发情况：</label>
                         <div class="radios">
                             <label class="radio-inline">
-                                <input type="radio" checked value="1" id="development1" class="radio"
+                                <input type="radio" checked value="空白网点" id="development1" class="radio"
                                        name="development">空白网点</label>
                             <label class="radio-inline">
-                                <input type="radio" value="2" id="development2" name="development" class="radio">签约网点</label>
+                                <input type="radio" value="签约网点" id="development2" name="development" class="radio">签约网点</label>
                             <label class="radio-inline">
-                                <input type="radio" value="3" id="development3" name="development" class="radio">开发网点</label>
+                                <input type="radio" value="开发网点" id="development3" name="development" class="radio">开发网点</label>
                             <label class="radio-inline">
-                                <input type="radio" value="4" id="development4" name="development" class="radio">僵尸网点</label>
+                                <input type="radio" value="僵尸网点" id="development4" name="development" class="radio">僵尸网点</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">性质：</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio" checked value="公立" id="quality1" name="quality"
+                                       class="radio">公立</label>
+                            <label class="radio-inline">
+                                <input type="radio" value="私立" id="quality2" name="quality" class="radio">私立</label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -104,7 +114,12 @@
                     <div class="form-group">
                         <label class="col-sm-1 control-label">主院名称：</label>
                         <div class="input-group col-sm-5">
-                            <input type="text" name="hostname" id="hostname" class="form-control">
+                            <input type="text" name="hostname" id="hostname" class="form-control" list="hospital">
+                            <datalist id="hospital">
+                                <volist name="hospital" id="vo">
+                                    <option>{$vo.name}</option>
+                                </volist>
+                            </datalist>
                         </div>
                     </div>
                 </div>
@@ -145,18 +160,6 @@
             nodata: 'none'
         });
 
-        $(".mdate").datepicker();
-
-        var chosen = $(".chosen-select").chosen({
-            max_selected_options: 10,
-            width: "50%"
-        });
-        chosen.bind("chosen:maxselected", function () {
-            layer.msg('最多选10项', {
-                time: 800,
-                icon: 2
-            });
-        });
     });
 
 
@@ -164,7 +167,7 @@
 
         if ($.trim($("input[name='name']").val()) == '') {
 
-            layer.msg('请填写名字', {
+            layer.msg('请填写名称', {
                 time: 1000,
                 icon: 2
             });
@@ -173,9 +176,9 @@
         }
 
 
-        if (!$("#depart").val()) {
+        if (!$("#code").val()) {
 
-            layer.msg('请填写科室', {
+            layer.msg('请填写医院编码', {
                 time: 1000,
                 icon: 2
             });
@@ -183,36 +186,29 @@
             return false;
         }
 
-        if (!$("#title").val()) {
+        if (!$("#level").val()) {
 
-            layer.msg('请填写职称', {
+            layer.msg('请填写医院级别', {
                 time: 1000,
                 icon: 2
             });
 
             return false;
         }
-        if (!$("#tel").val()) {
 
-            layer.msg('请填写手机号', {
+        if (!$("#details").val()) {
+
+            layer.msg('请填写详细地址', {
                 time: 1000,
                 icon: 2
             });
 
             return false;
         }
-        if (!$("#email").val()) {
 
-            layer.msg('请填写邮箱', {
-                time: 1000,
-                icon: 2
-            });
-
-            return false;
-        }
 
         var formData = new FormData(document.getElementById('customer_form'));
-        var url = "{:url('admin/Customer/addCustomer')}";
+        var url = "{:url('admin/Hospital/addHospital')}";
 
         $.ajax({
             url: url,

@@ -45,25 +45,31 @@
                     </div>
                 </div>
                 <div class="ibox-content">
+
                     <form action="" method="post">
-                        <div class="form-group">
+                        <div style="display: inline-block">
+                            <a type="button" href="{:url('admin/Hospital/importExcel')}" class="btn btn-xm btn-primary">批量新增</a>
+
+                            <a type="button" class="btn btn-xm btn-primary">批量更新</a>
+                        </div>
+                        <div class="form-group" style="display: inline-block">
                             <select class="form-control m-b selectnum" name="status"
                                     style="display: inline-block;width: 200px;margin-right: 25px;">
                                 <if condition="$status==0">
                                     <option value="0" selected>全部</option>
-                                    <option value="1">正常</option>
-                                    <option value="2">作废</option>
+                                    <option value="1">存续</option>
+                                    <option value="2">注销</option>
                                     <elseif condition="$status==2"/>
                                     <option value="0">全部</option>
-                                    <option value="1">正常</option>
-                                    <option value="2" selected>作废</option>
+                                    <option value="1">存续</option>
+                                    <option value="2" selected>注销</option>
                                     <else/>
                                     <option value="0">全部</option>
-                                    <option value="1" selected>正常</option>
-                                    <option value="2">作废</option>
+                                    <option value="1" selected>存续</option>
+                                    <option value="2">注销</option>
                                 </if>
                             </select>
-                            <div class="form-group col-sm-3" style="padding-left:0px;"
+                            <div class="form-group col-sm-3" style="padding-left:0px;width: 200px;"
                                  style="display: inline-block;">
                                 <input type="text" id="keywords" name="keywords" value="{$keywords}"
                                        placeholder="输入医院名字" class="form-control" onkeyup="searchTitle(this);"/>
@@ -72,6 +78,7 @@
                             <button type="submit" class="btn btn-xm btn-primary"
                                     style="display: inline-block;">搜索
                             </button>
+
 
                         </div>
                     </form>
@@ -110,9 +117,9 @@
                                 <td align="center">{$vo['code']}</td>
                                 <td align="center">{$vo['quality']}</td>
                                 <td align="center">
-                                    <if condition="$vo['status'] == 1"><span style="color: green">正常</span>
+                                    <if condition="$vo['status'] == 1"><span style="color: green">存续</span>
                                         <else/>
-                                        <span style="color: red;">作废</span>
+                                        <span style="color: red;">注销</span>
                                     </if>
                                 </td>
                                 <td class="center" align="center">

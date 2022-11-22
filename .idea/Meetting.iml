@@ -15,6 +15,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/topthink/think-migration" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/topthink/think-helper" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/topthink/think-captcha" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/PHPExcel/PHPExcel" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

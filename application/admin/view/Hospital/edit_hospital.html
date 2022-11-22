@@ -21,11 +21,6 @@
     <css href="/static/css/admin/style.min862f.css"/>
     <link href="/static/css/admin/admincommon.css?v=20181116" rel='stylesheet' type='text/css'/>
 </head>
-<style type="text/css">
-    .chosen-container-multi {
-        margin-left: 16px;
-    }
-</style>
 <body class="gray-bg">
 
 <div id="myTabContent" class="tab-content">
@@ -36,115 +31,131 @@
 
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">姓名</label>
+                        <label class="col-sm-1 control-label">名称</label>
                         <div class="input-group col-sm-5">
-                            <input type="text" name="name" id="name" value="{$li.name}" class="form-control">
+                            <input type="text" name="name" id="name" class="form-control" value="{$li.name}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">性别</label>
+                        <label class="col-sm-1 control-label">其他名称</label>
                         <div class="input-group col-sm-5">
-                            <if condition="$li.sex == '男'">
-                                <input type="radio" value="男" checked style="display:inline-block;padding-left: 10px;"
-                                       name="sex" id="sex1"> 男</input>
-                                <input type="radio" value="女"
-                                       style="display:inline-block;margin-left: 20px;padding-left: 10px" name="sex"
-                                       id="sex2"> 女</input>
-                                <else/>
-                                <input type="radio" value="男" style="display:inline-block;padding-left: 10px;"
-                                       name="sex" id="sex1"> 男</input>
-                                <input type="radio" value="女" checked
-                                       style="display:inline-block;margin-left: 20px;padding-left: 10px" name="sex"
-                                       id="sex2"> 女</input>
-                            </if>
-
+                            <input type="text" name="othername" id="othername" class="form-control"
+                                   value="{$li.othername}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">职业</label>
-                        <div class="input-group col-sm-5">
-                            <input type="radio" value="医生" <?php if($li['job']=='医生'){ echo('checked');} ?>
-                            style="display:inline-block;padding-left: 10px"
-                            name="job" id="job1"> 医生</input>
-                            <input type="radio" value="护士" <?php if($li['job']=='护士'){ echo('checked');} ?>
-                            style="display:inline-block;margin-left: 20px;padding-left: 10px" name="job"
-                            id="job2"> 护士</input>
-                            <input type="radio" value="其他" <?php if($li['job']=='其他'){ echo('checked');} ?>
-                            style="display:inline-block;margin-left: 20px;padding-left: 10px" name="job"
-                            id="job3"> 其他</input>
+                        <label class="col-sm-1 control-label">地址：</span></label>
+                        <div class="input-group col-sm-6">
+                            <div id="cnMap">
+                                <div class="col-sm-3">
+                                    <select name="province" class="province form-control"
+                                            data-first-title="选择省份" id="province">
+                                        <option value="{$li['province']}" selected> {$li['province']}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="city" id="city" class="city form-control">
+                                        <option value="{$li['city']}" selected> {$li['city']}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="area" id="area" class="region form-control">
+                                        <option value="{$li['area']}" selected> {$li['area']}</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
-
-                        <label class="col-sm-1 control-label"><span>医院：</span></label>
+                        <label class="col-sm-1 control-label">详细地址</label>
                         <div class="input-group col-sm-5">
-                            <select data-placeholder="选择医院" class="chosen-select" style="width:700px;"
-                                    name="hospitalid" id="hospitalid">
+                            <input type="text" name="details" id="details" class="form-control" value="{$li.details}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">医院编码</label>
+                        <div class="input-group col-sm-5">
+                            <input type="text" name="code" id="code" class="form-control" value="{$li.code}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">行政级别</label>
+                        <div class="input-group col-sm-5">
+                            <input type="text" name="level" id="level" class="form-control" value="{$li.level}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">开发情况：</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio" value="空白网点" id="development1" class="radio"
+                                       name="development" <?php if($li['development'] =='空白网点'){echo('checked');} ?>
+                                >空白网点</label>
+                            <label class="radio-inline">
+                                <input type="radio" value="签约网点" id="development2" name="development"
+                                       class="radio" <?php if($li['development']=='签约网点'){echo('checked');} ?>>签约网点</label>
+                            <label class="radio-inline">
+                                <input type="radio" value="开发网点" id="development3" name="development"
+                                       class="radio" <?php if($li['development']=='开发网点'){echo('checked');} ?>>开发网点</label>
+                            <label class="radio-inline">
+                                <input type="radio" value="僵尸网点" id="development4" name="development"
+                                       class="radio" <?php if($li['development']=='僵尸网点'){echo('checked');} ?>>僵尸网点</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">性质：</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio"  <?php if($li['quality']=='公立'){echo('checked');} ?> value="公立"
+                                id="quality1" name="quality"
+                                class="radio">公立</label>
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($li['quality']=='私立'){echo('checked');} ?> value="私立"
+                                id="quality2" name="quality" class="radio">私立</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">是否分院：</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($li['divided'] == 1){echo('checked');} ?> value="1"
+                                id="divided1" name="divided"
+                                class="radio">是</label>
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($li['divided'] == 2){echo('checked');} ?> value="2"
+                                id="divided2" name="divided" class="radio">否</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">状态：</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($li['status'] == 1){echo('checked');} ?> value="1"
+                                name="status"
+                                class="radio">存续</label>
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($li['status'] == 2){echo('checked');} ?> value="2"
+                                 name="status" class="radio">注销</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">主院名称：</label>
+                        <div class="input-group col-sm-5">
+                            <input type="text" name="hostname" id="hostname" class="form-control" list="hospital"
+                                   value="{$li.hostname}">
+                            <datalist id="hospital">
                                 <volist name="hospital" id="vo">
-                                    <if condition="$vo['id']== $li['hospitalid']">
-                                        <option value="{$vo.id}" selected>{$vo.name}</option>
-                                        <else/>
-                                        <option value="{$vo.id}">{$vo.name}</option>
-                                    </if>
-
+                                    <option>{$vo.name}</option>
                                 </volist>
-                            </select>
+                            </datalist>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>科室</span></label>
-                        <div class="input-group col-sm-5">
-                            <input type="text" class="form-control" value="{$li.depart}" name="depart" id="depart">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>职称</span></label>
-                        <div class="input-group date col-sm-5">
-                            <input type="text" class="form-control" value="{$li.title}" id="title" name="title">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>手机号</span></label>
-                        <div class="input-group date col-sm-5">
-                            <input type="text" class="form-control" value="{$li.tel}" value="{$li.depart}" id="tel"
-                                   name="tel">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>邮箱</span></label>
-                        <div class="input-group date col-sm-5">
-                            <input type="text" class="form-control" value="{$li.email}" id="email" name="email">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>生日</span></label>
-                        <div class="input-group col-sm-5" mdate>
-                            <input type="text" class="form-control mdate" value="{$li.birthday}" id="birthday"
-                                   name="birthday">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>微信授权ID</span></label>
-                        <div class="input-group date col-sm-5">
-                            <input type="text" class="form-control" id="wxid" value="{$li.wxid}" name="wxid">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label"><span>创建时间：</span></label>
-                        <div class="input-group  col-sm-5">
-                            <input type="text" name="addtime" class="form-control mdate"
-                                   value="{$li.addtime}" id="addtime">
-                        </div>
-                    </div>
-
-
                 </div>
-                <div class="row">
-                    <div class="col-sm-2 col-sm-offset-2">
-                        <input type="hidden" id="id" name="id" value="{$li.id}"/>
-                        <button class="btn btn-primary" type="submit" onclick="save();">保存</button>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 col-sm-offset-2">
+                    <input type="hidden" value="{$li['id']}" name="id"/>
+                    <button class="btn btn-primary" type="submit" onclick="save();">保存</button>
                 </div>
             </div>
         </form>
@@ -164,25 +175,12 @@
 
 <script>
     $(document).ready(function () {
-
         $('#cnMap').cxSelect({
             url: '/static/js/cxjs/cityData.min.json',
             selects: ['province', 'city', 'region'],
             nodata: 'none'
         });
 
-        $(".mdate").datepicker();
-
-        var chosen = $(".chosen-select").chosen({
-            max_selected_options: 10,
-            width: "50%"
-        });
-        chosen.bind("chosen:maxselected", function () {
-            layer.msg('最多选10项', {
-                time: 800,
-                icon: 2
-            });
-        });
     });
 
 
@@ -190,7 +188,7 @@
 
         if ($.trim($("input[name='name']").val()) == '') {
 
-            layer.msg('请填写名字', {
+            layer.msg('请填写名称', {
                 time: 1000,
                 icon: 2
             });
@@ -199,9 +197,9 @@
         }
 
 
-        if (!$("#depart").val()) {
+        if (!$("#code").val()) {
 
-            layer.msg('请填写科室', {
+            layer.msg('请填写医院编码', {
                 time: 1000,
                 icon: 2
             });
@@ -209,36 +207,29 @@
             return false;
         }
 
-        if (!$("#title").val()) {
+        if (!$("#level").val()) {
 
-            layer.msg('请填写职称', {
+            layer.msg('请填写医院级别', {
                 time: 1000,
                 icon: 2
             });
 
             return false;
         }
-        if (!$("#tel").val()) {
 
-            layer.msg('请填写手机号', {
+        if (!$("#details").val()) {
+
+            layer.msg('请填写详细地址', {
                 time: 1000,
                 icon: 2
             });
 
             return false;
         }
-        if (!$("#email").val()) {
 
-            layer.msg('请填写邮箱', {
-                time: 1000,
-                icon: 2
-            });
-
-            return false;
-        }
 
         var formData = new FormData(document.getElementById('customer_form'));
-        var url = "{:url('admin/Customer/editCustomer')}";
+        var url = "{:url('admin/Hospital/editHospital')}";
 
         $.ajax({
             url: url,
@@ -249,15 +240,14 @@
             success: function (data) {
 
                 if (data.code == 1) {
+
                     layer.msg(data.msg, {
                         time: 1000,
                         icon: 6
                     });
-                    setTimeout(function() {
-                        window.parent.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭
-                    }, 1000);
+                    window.parent.location.reload();
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
                 } else {
 
                     layer.msg(data.msg, {
@@ -270,5 +260,10 @@
         });
     }
 </script>
+<style>
+    .radio {
+        margin-top: -2px;
+    }
+</style>
 </body>
 </html>

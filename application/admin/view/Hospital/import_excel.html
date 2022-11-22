@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>批量导入</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <css href="/static/css/admin/bootstrap.min14ed.css"/>
+    <css href="/static/css/admin/font-awesome.min93e3.css"/>
+    <css href="/static/css/admin/plugins/dataTables/dataTables.bootstrap.css"/>
+    <css href="/static/css/admin/animate.min.css"/>
+    <css href="/static/css/admin/style.min862f.css"/>
+    <link href="/static/css/admin/admincommon.css?v=20180820" rel='stylesheet' type='text/css'/>
+</head>
+<body>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox ibox-content" style="margin-top: 20px;margin-left: 20px">
+                <form action="importExcel" method="post" enctype="multipart/form-data">
+
+                    <input class="form-group" type="file" name="excel" id="file" accept="xls,xlsx"/>
+                    <div class="hr-line-dashed" style="border:0.5px dashed #bfbaba;"></div>
+                    <div style="display: inline-block" style="margin-top: 20px;">
+                        <input class="form-group btn btn-xm btn-primary" type="submit" name="submit" value="提交" />
+                        <input type="button" class="form-group btn btn-xm btn-primary" onclick="javascript:history.back()" value="返回"/>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
