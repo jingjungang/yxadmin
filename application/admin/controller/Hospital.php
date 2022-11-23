@@ -148,18 +148,28 @@ class Hospital extends AdminBase
         if (!request()->isPost()) {
             return $this->fetch();
         } else {
-            $this->importExc();
+            $this->importExc(1);
         }
 
     }
 
-    public function importExc()
+    //批量更新 updateExcel
+    public function updateExcel()
     {
-        $param = input();
+        if (!request()->isPost()) {
+            return $this->fetch();
+        } else {
+            $this->importExc(2);
+        }
 
-        //$root = str_replace('/thinkphp', '', './upload/hospital/');
-        $root = './upload/hospital/';
-        require('../vendor/PHPExcel/PHPExcel.php');//引用你自己路径下的文件
+    }
+
+    public function importExc($flag)
+    {
+
+        $param = input();
+        $root = './upload/hospital/'; //存放Excel目录
+        require('../vendor/PHPExcel/PHPExcel.php'); //工具包位置
 
         if (!empty($_FILES['excel']['name'])) {
             $fileName = $_FILES['excel']['name'];    //得到文件全名
@@ -224,7 +234,21 @@ class Hospital extends AdminBase
                 $data['hostname'] = (string)$objPHPExcel->getActiveSheet()->getCell("M$j")->getValue();
                 $data['details'] = (string)$objPHPExcel->getActiveSheet()->getCell("N$j")->getValue();
                 $data['add_time'] = date('Y-m-d H:i:s');
-                $ret['mdata'] = db('hospital')->insert($data);
+                if($flag == 1){
+                    //插入
+                    $ret['mdata'] = db('hospital')->insert($data);
+                }else{
+                    //更新
+                    $code = $data['code']; //根据code去查询
+                    $res = db('hospital')->where('code',$code)->find();
+                    if($res){
+                        $id= $res['id'];
+                        $ret['mdata'] = db('hospital')->where('id',$id)->update($data);
+                    }else{
+                        $ret['mdata'] = db('hospital')->insert($data);
+                    }
+                }
+
 
                 if ($ret['mdata'] && !is_Bool($ret['mdata'])) {
                     $ar[$i] = $ret['mdata'];
