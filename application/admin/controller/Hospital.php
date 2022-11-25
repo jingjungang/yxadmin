@@ -234,17 +234,17 @@ class Hospital extends AdminBase
                 $data['hostname'] = (string)$objPHPExcel->getActiveSheet()->getCell("M$j")->getValue();
                 $data['details'] = (string)$objPHPExcel->getActiveSheet()->getCell("N$j")->getValue();
                 $data['add_time'] = date('Y-m-d H:i:s');
-                if($flag == 1){
+                if ($flag == 1) {
                     //插入
                     $ret['mdata'] = db('hospital')->insert($data);
-                }else{
+                } else {
                     //更新
                     $code = $data['code']; //根据code去查询
-                    $res = db('hospital')->where('code',$code)->find();
-                    if($res){
-                        $id= $res['id'];
-                        $ret['mdata'] = db('hospital')->where('id',$id)->update($data);
-                    }else{
+                    $res = db('hospital')->where('code', $code)->find();
+                    if ($res) {
+                        $id = $res['id'];
+                        $ret['mdata'] = db('hospital')->where('id', $id)->update($data);
+                    } else {
                         $ret['mdata'] = db('hospital')->insert($data);
                     }
                 }
@@ -253,15 +253,15 @@ class Hospital extends AdminBase
                 if ($ret['mdata'] && !is_Bool($ret['mdata'])) {
                     $ar[$i] = $ret['mdata'];
                     $i++;
-                }else{
+                } else {
                     $li[] = $i;
                 }
             }
             if ($i > 0) {
-                print_r('导入完成，共导入'.$importRows.'行数据');
-                if(count($li) > 0){
-                    print_r('错误行数：'.$li);
-                }else{
+                print_r('导入完成，共导入' . $importRows . '行数据');
+                if (count($li) > 0) {
+                    print_r('错误行数：' . $li);
+                } else {
                     $this->success("上传文件完成!", '/admin/Hospital/HospitalList', 1);
                 }
             }
@@ -273,6 +273,20 @@ class Hospital extends AdminBase
             //return json_encode($ret);
         }
 
+    }
+
+    // 医生
+    public function doctorlist()
+    {
+        $hid = input("param.id");
+        $modle = db('doctor');
+        $field = "id,name,case sex when 1 then '男' else '女' end as sex,title,depart,phone";
+        $result = $modle->where('hid', $hid)->field($field)->select();
+        $t = $modle->getLastSql();
+        if ($result) {
+            $this->assign('data', $result);
+        }
+        return $this->fetch();
     }
 
 }

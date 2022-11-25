@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title></title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <css href="/static/css/admin/bootstrap.min14ed.css"/>
+    <css href="/static/css/admin/font-awesome.min93e3.css"/>
+    <css href="/static/css/admin/animate.min.css"/>
+    <css href="/static/css/admin/plugins/summernote/new_sumnote.css"/>
+    <css href="/static/css/admin/plugins/summernote/summernote-bs3.css"/>
+    <css href="/static/css/admin/plugins/chosen/chosen.css"/>
+    <css href="/static/css/admin/plugins/datapicker/datepicker3.css"/>
+    <css href="/static/css/admin/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"/>
+    <css href="/static/css/admin/style.min862f.css"/>
+    <link href="/static/css/admin/admincommon.css?v=20181116" rel='stylesheet' type='text/css'/>
+</head>
+
+<body class="gray-bg">
+
+<div id="myTabContent" class="tab-content">
+
+    <div class="wrapper wrapper-content tab-pane fade in active" id="home">
+        <form id="customer_form" class="form-horizontal" onsubmit="return false;">
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">客户姓名</label>
+                        <div class="input-group col-sm-5">
+                            <select data-placeholder="选择客户" class="chosen-select" multiple style="width:350px;"
+                                    name="cid" id="cid">
+                                <volist name='customer' id='ct'>
+                                    <option value="{$ct['id']}">{$ct['name']}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">医院</label>
+                        <div class="input-group col-sm-5">
+                            <select data-placeholder="选择医院" class="chosen-select" multiple style="width:350px;"
+                                    name="hid" id="hid">
+                                <volist name='hospital' id='ht'>
+                                    <option value="{$ht['id']}">{$ht['name']}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"><span>维护措施</span></label>
+                        <div class="input-group col-sm-5">
+                            <input type="text" class="form-control" name="todo" id="todo">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"><span>维护目的</span></label>
+                        <div class="input-group col-sm-5">
+                            <input type="text" class="form-control" name="attention" id="attention">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">员工</label>
+                        <div class="input-group col-sm-5">
+                            <select data-placeholder="选择员工" class="chosen-select" multiple style="width:350px;"
+                                    name="employeeid" id="employeeid">
+                                <volist name='hospital' id='ht'>
+                                    <option value="{$ht['id']}">{$ht['name']}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"><span>日期</span></label>
+                        <div class="input-group col-sm-5" mdate>
+                            <input type="text" class="form-control mdate" id="dates" name="dates">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">状态</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio" checked value="1" id="status1" name="status" class="radio">待审
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" value="2" id="status2" name="status" class="radio">通过</label>
+                            <label class="radio-inline">
+                                <input type="radio" value="3" id="status3" name="status" class="radio">不通过</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">照片(点击图片可删除)</label>
+                        <div class="field-content uppic" id="uppic">
+                            <div class="uploadImgBtn" id="uploadImgBtn">
+                                <input class="uploadImg" type="file" name="file[]" multiple id="file" accept="image/jpeg ,image/png,image/gif">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 col-sm-offset-2">
+                    <input type="hidden" value="{$data['id']}"/>
+                    <button class="btn btn-primary" type="submit" onclick="save();">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<js href="/static/js/admin/jquery.min.js"/>
+<js href="/static/js/admin/bootstrap.min.js"/>
+<js href="/static/js/admin/content.min.js"/>
+<js href="/static/js/admin/plugins/chosen/chosen.jquery.js"/>
+<js href="/static/js/admin/plugins/summernote/new_sumnote.js"/>
+<js href="/static/js/admin/plugins/summernote/summernote-zh-CN.js"/>
+<js href="/static/js/admin/plugins/layui/layer/layer.js"/>
+<js href="/static/js/admin/plugins/datapicker/bootstrap-datepicker.js"/>
+<js href="/static/js/cxjs/jquery.cxselect.min.js"/>
+<js href="/static/js/admin/customer.js"/>
+
+<css href="/static/css/admin/customerrelation.css"/>
+
+<script>
+    $(document).ready(function () {
+
+        $('#cnMap').cxSelect({
+            url: '/static/js/cxjs/cityData.min.json',
+            selects: ['province', 'city', 'region'],
+            nodata: 'none'
+        });
+
+        $(".mdate").datepicker();
+
+        var chosen = $(".chosen-select").chosen({
+            max_selected_options: 1,
+            width: "50%"
+        });
+        chosen.bind("chosen:maxselected", function () {
+            layer.msg('最多选1项', {
+                time: 800,
+                icon: 2
+            });
+        });
+    });
+
+
+    function save() {
+
+        if (!$("#cid").val()) {
+
+            layer.msg('请选择客户名字', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+
+
+        if (!$("#hid").val()) {
+
+            layer.msg('请选择医院', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+
+        if (!$("#employeeid").val()) {
+
+            layer.msg('请选择员工', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+        if (!$("#todo").val()) {
+
+            layer.msg('请填写维护措施', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+        if (!$("#attention").val()) {
+
+            layer.msg('请填写维护目的', {
+                time: 1000,
+                icon: 2
+            });
+
+            return false;
+        }
+
+        var formData = new FormData(document.getElementById('customer_form'));
+        var url = "{:url('admin/Customerrelation/addCustomerrelation')}";
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            processData: false, // 异步传输 formData 时要加上  processData: false  contentType: false
+            contentType: false, // 否则会报 Illegal invocation 非法调用错误
+            data: formData,
+            success: function (data) {
+
+                if (data.code == 1) {
+
+                    layer.msg(data.msg, {
+                        time: 1000,
+                        icon: 6
+                    });
+                    window.parent.location.reload();
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                } else {
+
+                    layer.msg(data.msg, {
+                        time: 1000,
+                        icon: 5
+                    });
+                }
+            },
+            dataType: 'json'
+        });
+    }
+</script>
+</body>
+</html>

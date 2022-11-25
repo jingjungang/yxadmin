@@ -165,10 +165,10 @@
                                 <label class="col-sm-1 control-label">会议状态：</label>
                                 <div class="col-sm-5">
                                     <if condition="$meetting['status']==1">
-                                        <input type="radio" checked="checked" value="1" id="status"
+                                        <input type="radio" checked="checked" value="1" id="status1"
                                                name="status">未审核</label style="padding-left: 100px;">
                                         <else/>
-                                        <input type="radio" checked="checked" value="1" id="status"
+                                        <input type="radio" checked="checked" value="1" id="status2"
                                                name="status">已审核</label style="padding-left: 100px;">
                                     </if>
                                 </div>
@@ -732,21 +732,19 @@
 
                                 <div class="form-group">
                                     <label>照片：</label>
-                                    <label class="fileContainer">
-                                        <input type="file" name="image[]" class="form-control"
-                                               accept="image/png, image/jpeg, image/gif, image/jpg"
-                                               id="m_photo"></label>
+
+                                    <input type="file" name="image[]" class="form-control"
+                                           accept="image/png, image/jpeg, image/gif, image/jpg"
+                                           id="m_photo">
                                     <a id="old_pic_a" target="_blank" style="display: none;">
                                         <image style="width: 40px;height: 40px" id="old_pic"></image>
                                     </a>
                                 </div>
                                 <div class="form-group">
                                     <label>演讲稿：</label>
-                                    <label class="fileContainer">
-                                        <input type="file" name="image[]" class="form-control"></label>
+                                    <input type="file" name="image[]" class="form-control">
                                     <a id="old_ppt" style="display: none;">
-                                        <image style="width: 40px;height: 40px"
-                                               src="/static/images/ppt.jpg"></image>
+                                        <image style="width: 40px;height: 40px" src="/static/images/ppt.jpg"></image>
                                     </a>
                                 </div>
                                 <input name="id" style="display: none" id="processid">

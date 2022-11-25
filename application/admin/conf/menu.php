@@ -69,12 +69,12 @@ $menu = array(
                 array(
                     'name' => '客情维护',
 
-                    'action' => 'admin/Customer/CustomerList',
+                    'action' => 'admin/Customerrelation/CustomerrelationList',
 
                     "auth" => array(
-                        array("name" => '添加', 'action' => "admin/Customer/addCustomer"),
-                        array("name" => '删除', 'action' => "admin/Customer/delCustomer"),
-                        array("name" => '修改', 'action' => "admin/Customer/updateCustomer"),
+                        array("name" => '添加', 'action' => "admin/Customerrelation/addCustomerrelation"),
+                        array("name" => '删除', 'action' => "admin/Customerrelation/delCustomerrelation"),
+                        array("name" => '修改', 'action' => "admin/Customerrelation/updateCustomerrelation"),
                     )
                 )
 

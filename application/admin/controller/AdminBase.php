@@ -51,4 +51,46 @@ class AdminBase extends Controller
 
     }
 
+    /**
+     *  post存图和表单
+     * @param $imagename input的name
+     * @param $filename 存到哪个文件去
+     * @param $key 存图的字段
+     * @return array
+     */
+    public function uploadToDB($imagename, $filename, $key)
+    {
+        $data = $_POST;
+        $files = request()->file($imagename);
+        $index = 0;
+        $len = count($_FILES[$imagename]['name']);
+        $ar = [];// 放图片路径
+        for ($i = 0; $i < $len; $i++) {
+            $param = [];
+            if ($files[$i]) {
+                // 移动到框架应用根目录/upload/ 目录下
+                $info = $files[$i]->validate(['size' => 2402712, 'ext' => 'jpg,png,jpeg,ppt,pptx'])->move(ROOT_PATH . DS . 'public' . DS . 'upload' . DS . $filename);
+                $savename = $info->getSaveName();
+                $array = explode('.', $savename);
+                $filetype = array_pop($array); //获取后缀
+                $allow1 = ['jpg', 'png', 'jpeg'];
+                if ($info) {
+                    $imgpath = DS . 'upload' . DS . $filename . DS . $savename;
+                    $param['url'] = str_replace(DS, "/", $imgpath);
+                    if (in_array($filetype, $allow1)) {
+                        $ar[] = $param['url'];
+                    }
+                } else {
+                    // 上传失败获取错误信息
+                    $errorinfo = $files[$i]->getError();
+                }
+            }
+            $index = $index + 1;
+        }
+        if (count($ar) > 0) {
+            $data[$key] = implode(',', $ar);
+        }
+        return $data;
+    }
+
 }

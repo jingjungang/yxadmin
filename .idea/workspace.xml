@@ -15,6 +15,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -62,7 +63,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/phpStudy/PHPTutorial/WWW/cpms-php-master/public/upload/modle",
+    "last_opened_file_path": "D:/phpStudy/PHPTutorial/WWW/cpms-php-master/public/static/images",
     "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php",
     "settings.editor.splitter.proportion": "0.27713814",
     "vue.rearranger.settings.migration": "true"
@@ -75,11 +76,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\public\static\images" />
+      <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view" />
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\public\upload\modle" />
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\vendor" />
-      <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view" />
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\model" />
-      <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\controller" />
     </key>
   </component>
   <component name="RunManager">
@@ -106,7 +107,7 @@
       <workItem from="1668491945698" duration="9008000" />
       <workItem from="1668670954518" duration="19726000" />
       <workItem from="1669012151329" duration="7065000" />
-      <workItem from="1669081397337" duration="22497000" />
+      <workItem from="1669081397337" duration="51946000" />
     </task>
     <servers />
   </component>
@@ -129,6 +130,9 @@
       <configuration name="index.php">
         <watch expression="$li" />
         <watch expression="$this-&gt;options['query']" />
+      </configuration>
+      <configuration name="PhpWebAppRunConfigurationType">
+        <watch expression="$t" />
       </configuration>
     </watches-manager>
   </component>

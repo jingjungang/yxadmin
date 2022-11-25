@@ -1,0 +1,59 @@
+.uploadImgBtn {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    position: relative;
+    background: url("../../images/takephotos.jpg") no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    margin-top:10px;
+    float:left;
+}
+.uploadImgBtn .uploadImg {
+    position: absolute;
+    right: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/*这是一个用做回显的盒子的样式*/
+.uppic .pic{
+    width: 100px;
+    height: 100px;
+    float:left;
+}
+.uppic .pic img {
+    width: 100px;
+    height: 100px;
+    float:left;
+    margin-left:1px;
+    margin-top:10px
+}
+.uppic .pic span{
+    background:url('../../images/takephotos.jpg') no-repeat;
+    width:20px;
+    height:20px;
+    color:#fff;
+    text-align:center;
+    border-radius:50%;
+    position:absolute;
+    margin-left:-15px;
+    margin-top:5px;
+    cursor: pointer;
+}
+
+.imgDiv {
+    display: inline-block;
+    position: relative;
+}
+
+.imgDiv .delete {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 50px;
+    height: 50px;
+}
