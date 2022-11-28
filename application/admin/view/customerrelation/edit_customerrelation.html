@@ -73,8 +73,8 @@
                         <div class="input-group col-sm-5">
                             <select data-placeholder="选择员工" class="chosen-select" multiple style="width:350px;"
                                     name="employeeid" id="employeeid">
-                                <volist name='hospital' id='ht'>
-                                    <option value="{$ht['id']}" <?php if($data['emplyoeeid']==$ht['id']){echo 'selected';} ?> >{$ht['name']}</option>
+                                <volist name='employee' id='et'>
+                                    <option value="{$et['id']}" <?php if($data['employeeid'] == $et['id']){echo 'selected';} ?> >{$et['name']}</option>
                                 </volist>
                             </select>
                         </div>
@@ -99,18 +99,20 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">照片(点击图片可删除)</label>
+                        <label class="col-sm-1 control-label" >照片:</label>
                         <div class="field-content uppic" id="uppic">
                             <div class="uploadImgBtn" id="uploadImgBtn">
                                 <input class="uploadImg" type="file" name="file[]" multiple id="file" accept="image/jpeg ,image/png,image/gif">
-
-                                    <?php $ar = explode(',', $data['pics']); foreach($ar as $val){ ?>
-                                        <a target="_blank" href="{$val}"><image src="{$val}" style="width: 45px;height: 45px"></image></a>
-                                    <?php } ?>
-
                             </div>
+                            <?php $ar = explode(',', $data['pics']); foreach($ar as $val){ ?>
+                                <div class="pic" onclick="del(this)"><image class="img_old" src="{$val}" data-id="{$val}" style="max-width: 120px;max-height: 120px"></image></div>
+                            <?php } ?>
+
+
                         </div>
+
                     </div>
+                    <div class="form-group"><span style="color: red;padding-left: 100px" >(点击图片可删除)</span></div>
 
                 </div>
             </div>
@@ -140,6 +142,7 @@
 <script>
     $(document).ready(function () {
 
+
         $('#cnMap').cxSelect({
             url: '/static/js/cxjs/cityData.min.json',
             selects: ['province', 'city', 'region'],
@@ -162,7 +165,15 @@
 
 
     function save() {
-
+        var li = $('.img_old');
+        var oldpics = '';
+        if(li.length>0){
+            var arr = new Array(li.length);
+            for(var i=0;i<li.length;i++){
+                arr[i] = li[i].dataset.id;
+            }
+            oldpics = arr.toString();
+        }
         if (!$("#cid").val()) {
 
             layer.msg('请选择客户名字', {
@@ -214,6 +225,7 @@
 
         var formData = new FormData(document.getElementById('customer_form'));
         var url = "{:url('admin/Customerrelation/editCustomerrelation')}";
+        formData.append('oldpics', oldpics);
 
         $.ajax({
             url: url,

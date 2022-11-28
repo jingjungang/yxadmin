@@ -105,12 +105,23 @@ class Customerrelation extends AdminBase
             return $this->fetch();
         }else{
             $data = $_POST;
-            $files = request()->file('file');
-            $len = count($files);
+            $oldpics = '';
+            if($_POST['oldpics']!=''){
+                $oldpics = $data['oldpics'];
+            }
+            $len = count($_FILES['file']['name']);
             if ($len > 0){
                 $data = $this->uploadToDB('file','customer','pics');
             }
             try{
+                if($oldpics!=''){
+                    if($data['pics']!=''){
+                        $data['pics'] = $oldpics.','. $data['pics'];
+                    }else{
+                        $data['pics'] = $oldpics;
+                    }
+                }
+                unset($data['oldpics']);
                 $result = $this->transaction->where('id',$data['id'])->update($data);
                 if($result){
                     $infos['code'] = 1;

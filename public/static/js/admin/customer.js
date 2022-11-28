@@ -54,3 +54,15 @@ $(document).ready(function () {
 
 
 })
+
+function del(element){
+    layer.confirm("你确定要删除吗？", {
+        btn: ['确定', '取消'] //按钮
+    }, function () {
+        element.remove();
+        layer.msg('ok', {
+            time: 1000,
+            icon: 1
+        });
+    });
+}
