@@ -109,7 +109,7 @@
       <workItem from="1669012151329" duration="7065000" />
       <workItem from="1669081397337" duration="51946000" />
       <workItem from="1669601518901" duration="1954000" />
-      <workItem from="1669619586389" duration="7331000" />
+      <workItem from="1669619586389" duration="22029000" />
     </task>
     <servers />
   </component>
@@ -132,6 +132,7 @@
       <configuration name="index.php">
         <watch expression="$li" />
         <watch expression="$this-&gt;options['query']" />
+        <watch expression="$_FILES['file']['name']" />
       </configuration>
       <configuration name="PhpWebAppRunConfigurationType">
         <watch expression="$t" />

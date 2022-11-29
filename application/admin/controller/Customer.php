@@ -4,7 +4,6 @@ namespace app\admin\controller;
 header("Content-Type: text/html;charset=utf-8");
 
 use think\Exception;
-use think\Cache;
 
 class Customer extends AdminBase
 {

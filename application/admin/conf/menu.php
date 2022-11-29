@@ -84,20 +84,28 @@ $menu = array(
 
         array(
             'name' => '积分管理',
-            'controller' => 'admin/Order',
+            'controller' => 'admin/rules',
             'icon' => 'fa-edit',
             'child' => array(
 
                 array(
-                    'name' => '学术会议',
+                    'name' => '积分规则',
 
-                    'action' => 'admin/Meetting/meettingList',
+                    'action' => 'admin/rules/RulesList',
 
                     "auth" => array(
-                        array("name" => '添加', 'action' => "admin/Article/addArticle"),
-                        array("name" => '删除', 'action' => "admin/Article/delArticle"),
-                        array("name" => '修改', 'action' => "admin/Article/updateArticle"),
+                        array("name" => '添加', 'action' => "admin/rules/addRules"),
+                        array("name" => '删除', 'action' => "admin/rules/delRules"),
+                        array("name" => '修改', 'action' => "admin/rules/updateRules"),
                     )
+                ),
+                array(
+                    'name' => '积分记录',
+                    'action' => 'admin/rules/rulesList'
+                ),
+                array(
+                    'name' => '积分统计',
+                    'action' => 'admin/rulestotal/rulestotalList'
                 )
 
             )

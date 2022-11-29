@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title></title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <css href="/static/css/admin/bootstrap.min14ed.css"/>
+    <css href="/static/css/admin/font-awesome.min93e3.css"/>
+    <css href="/static/css/admin/animate.min.css"/>
+    <css href="/static/css/admin/plugins/summernote/new_sumnote.css"/>
+    <css href="/static/css/admin/plugins/summernote/summernote-bs3.css"/>
+    <css href="/static/css/admin/plugins/chosen/chosen.css"/>
+    <css href="/static/css/admin/plugins/datapicker/datepicker3.css"/>
+    <css href="/static/css/admin/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"/>
+    <css href="/static/css/admin/style.min862f.css"/>
+    <link href="/static/css/admin/admincommon.css?v=20181116" rel='stylesheet' type='text/css'/>
+</head>
+
+<body class="gray-bg">
+
+<div id="myTabContent" class="tab-content">
+
+    <div class="wrapper wrapper-content tab-pane fade in active" id="home">
+        <form id="customer_form" class="form-horizontal" onsubmit="return false;">
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">会议主类型</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($data['maintype']==1){echo 'checked';}?> value="1" name="maintype" class="radio">学术会议
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($data['maintype']==2){echo 'checked';}?> value="2" name="maintype" class="radio">销售会议</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">详细类别</label>
+                        <div class="input-group col-sm-5">
+                            <select data-placeholder="选择" class="chosen-select" multiple style="width:350px;"
+                                    name="childtype" id="childtype">
+                                <option value="1" <?php if($data['childtype']==1){echo('selected');} ?> >科室会</option>
+                                <option value="2" <?php if($data['childtype']==2){echo('selected');} ?> >城市会</option>
+                                <option value="3" <?php if($data['childtype']==3){echo('selected');} ?> >全国会</option>
+                                <option value="4" <?php if($data['childtype']==4){echo('selected');} ?> >国际会</option>
+                                <option value="5" <?php if($data['childtype']==5){echo('selected');} ?> >培训会</option>
+                                <option value="6" <?php if($data['childtype']==6){echo('selected');} ?> >周例会</option>
+                                <option value="7" <?php if($data['childtype']==7){echo('selected');} ?> >月例会</option>
+                                <option value="8" <?php if($data['childtype']==8){echo('selected');} ?> >季例会</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">会议角色</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($data['role']==1){echo 'checked';}?> value="1" name="role" class="radio">组织
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($data['role']==2){echo 'checked';}?> value="2" name="role" class="radio">协助</label>
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($data['role']==3){echo 'checked';}?> value="3" name="role" class="radio">参与</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label"><span>积分</span></label>
+                        <div class="input-group col-sm-5">
+                            <input type="text" class="form-control" name="score" id="score"
+                                   onkeyup="if(/\D/.test(this.value)){alert('只能输入数字');this.value='';}"
+                                   maxlength="2" style="width:250px;" value="{$data['score']}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">判定标准</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($data['standed']==1){echo 'checked';}?> value="1" name="standed" class="radio">会议审核通过
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($data['standed']==2){echo 'checked';}?> value="2" name="standed" class="radio">组织员工名单审核通过</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">状态</label>
+                        <div class="radios">
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($data['status']==1){echo 'checked';}?> value="1" id="status1" name="status" class="radio">启用
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" <?php if($data['status']==2){echo 'checked';}?> value="2" id="status2" name="status" class="radio">禁用</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 col-sm-offset-2">
+                    <input type="hidden" value="update" name="handle_type"/>
+                    <input type="hidden" value="{$data['id']}" name="Rules_id"/>
+                    <button class="btn btn-primary" type="submit" onclick="save();">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<js href="/static/js/admin/jquery.min.js"/>
+<js href="/static/js/admin/bootstrap.min.js"/>
+<js href="/static/js/admin/content.min.js"/>
+<js href="/static/js/admin/plugins/chosen/chosen.jquery.js"/>
+<js href="/static/js/admin/plugins/summernote/new_sumnote.js"/>
+<js href="/static/js/admin/plugins/summernote/summernote-zh-CN.js"/>
+<js href="/static/js/admin/plugins/layui/layer/layer.js"/>
+<js href="/static/js/admin/plugins/datapicker/bootstrap-datepicker.js"/>
+<js href="/static/js/cxjs/jquery.cxselect.min.js"/>
+
+<script>
+    $(document).ready(function () {
+
+        $('#cnMap').cxSelect({
+            url: '/static/js/cxjs/cityData.min.json',
+            selects: ['province', 'city', 'region'],
+            nodata: 'none'
+        });
+
+        $(".mdate").datepicker();
+
+        var chosen = $(".chosen-select").chosen({
+            max_selected_options: 1,
+            width: "50%"
+        });
+        chosen.bind("chosen:maxselected", function () {
+            layer.msg('最多选1项', {
+                time: 800,
+                icon: 2
+            });
+        });
+    });
+
+
+    function save() {
+
+        var formData = new FormData(document.getElementById('customer_form'));
+        var url = "{:url('admin/Rules/editRules')}";
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            processData: false, // 异步传输 formData 时要加上  processData: false  contentType: false
+            contentType: false, // 否则会报 Illegal invocation 非法调用错误
+            data: formData,
+            success: function (data) {
+
+                if (data.code == 1) {
+
+                    layer.msg(data.msg, {
+                        time: 1000,
+                        icon: 6
+                    });
+                    window.parent.location.reload();
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                } else {
+
+                    layer.msg(data.msg, {
+                        time: 1000,
+                        icon: 5
+                    });
+                }
+            },
+            dataType: 'json'
+        });
+    }
+</script>
+</body>
+</html>

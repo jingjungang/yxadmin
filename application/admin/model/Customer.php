@@ -3,7 +3,6 @@
 namespace app\admin\model;
 
 use think\Model;
-use app\admin\controller\Upload;
 
 class Customer extends Model
 {
@@ -38,7 +37,6 @@ class Customer extends Model
             ->where($where)
             ->order('id', 'DESC')
             ->paginate($num, false, ['query' => $param]);
-
         $page = $Customer->render();// 获取分页显示
 
 

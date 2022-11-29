@@ -96,16 +96,68 @@ CREATE TABLE `yx_customer` (
   `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
   `birthday` varchar(100) DEFAULT NULL COMMENT '生日',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `yx_customer` */
 
 insert  into `yx_customer`(`id`,`wxid`,`name`,`sex`,`job`,`tel`,`title`,`status`,`addtime`,`hospitalid`,`depart`,`email`,`birthday`) values 
 (4,'12334','狄仁杰','女','护士','13198782655','主任医师','2','2022-11-14',9,'神经内科','734082037@qq.com','2022-11-28'),
 (5,'12334','歌尔','女','医生','88888888','医生','1','2022-11-17',15,'体检科','info@baiyu.cn (国际/国内销售)','2022-11-15'),
-(6,'dddddfa34211','证券','男','医生','13198782655','主任','1','2022-11-17',15,'皮肤科','734082037@qq.com','2022-11-22'),
+(6,'dddddfa34211','詹姆斯','男','医生','13198782655','主任','1','2022-11-17',15,'皮肤科','734082037@qq.com','2022-11-22'),
 (7,'dddddfa34211','信创','男','医生','789456123','主任医师','1','2022-11-17',15,'肝胆内科','45645464@163.com','2022-11-22'),
-(8,'dfsdfda343242','医药','男','医生','34234233423423','副主任医师','1','2022-11-17',9,'消化科','info@baiyu.cn (国际/国内）','2022-11-02');
+(8,'dfsdfda343242','医药','男','医生','34234233423423','副主任医师','1','2022-11-17',9,'消化科','info@baiyu.cn (国际/国内）','2022-11-02'),
+(9,'dfsdfda343242','张三','男','医生','13198782655','主任','1','2022-11-29',38,'神经内科','734082037@qq.com','2022-11-15');
+
+/*Table structure for table `yx_customerrelation` */
+
+DROP TABLE IF EXISTS `yx_customerrelation`;
+
+CREATE TABLE `yx_customerrelation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` int(11) DEFAULT NULL COMMENT '客户id',
+  `hid` int(11) DEFAULT NULL COMMENT '医院id',
+  `todo` varchar(100) DEFAULT NULL COMMENT '维护措施',
+  `attention` varchar(100) DEFAULT NULL COMMENT '维护目的',
+  `dates` varchar(100) DEFAULT NULL COMMENT '时间',
+  `pics` varchar(500) DEFAULT NULL COMMENT '照片',
+  `employeeid` int(11) DEFAULT NULL COMMENT '员工id',
+  `idea` varchar(200) DEFAULT NULL COMMENT '审核意见',
+  `status` int(11) DEFAULT NULL COMMENT '1待审2通过3不通过',
+  `addtime` varchar(30) DEFAULT NULL,
+  `flag` int(11) DEFAULT '0' COMMENT '1隐藏',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+/*Data for the table `yx_customerrelation` */
+
+insert  into `yx_customerrelation`(`id`,`cid`,`hid`,`todo`,`attention`,`dates`,`pics`,`employeeid`,`idea`,`status`,`addtime`,`flag`) values 
+(1,4,38,'节日拜访问候送礼','市场协访、会议邀请','2022-11-24','/upload/meetting/20221101/950223e3d5b7dd14c64c8bd1430113a2.jpg ',1,'可以',1,NULL,1),
+(8,5,4,'1','2','2022-11-01','/upload/customer/20221125/0ad026cfc8c402a8f287ac1596b2d121.jpg,/upload/customer/20221125/5f4d3767eed63e13a08e9ddb0deb8295.jpg,/upload/customer/20221125/23173f159845f70eb64c636c52f1afde.png',2,NULL,3,NULL,0),
+(9,6,1,'1','2','2022-11-22','/upload/customer/20221125/25d8ee72ba2ab2dfcd60180343502e85.jpg,/upload/customer/20221129/1fb8bc18672efe475d1355d28be50168.jpg,/upload/customer/20221129/9358830c8ff5d6c98e7116ea0a3ed7cd.jpg',1,NULL,2,NULL,0);
+
+/*Table structure for table `yx_doctor` */
+
+DROP TABLE IF EXISTS `yx_doctor`;
+
+CREATE TABLE `yx_doctor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL COMMENT '名字',
+  `sex` int(11) DEFAULT NULL COMMENT '1男2女',
+  `title` varchar(50) DEFAULT NULL COMMENT '职称',
+  `depart` varchar(30) DEFAULT NULL COMMENT '科室',
+  `phone` varchar(11) DEFAULT NULL COMMENT '手机',
+  `addtime` varchar(30) DEFAULT NULL,
+  `hid` int(11) DEFAULT NULL COMMENT '医院id',
+  PRIMARY KEY (`id`),
+  KEY `hid` (`hid`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*Data for the table `yx_doctor` */
+
+insert  into `yx_doctor`(`id`,`name`,`sex`,`title`,`depart`,`phone`,`addtime`,`hid`) values 
+(1,'王红',2,'主任医师','肝胆科','18782927645',NULL,38),
+(2,'李军',1,'副主任医师','血液科','13151654562',NULL,38),
+(3,'姜雨',2,'主任医师','内分泌科','13562563201',NULL,38);
 
 /*Table structure for table `yx_employee` */
 
@@ -156,30 +208,34 @@ CREATE TABLE `yx_hospital` (
   `area` varchar(50) DEFAULT NULL COMMENT '区',
   `address` varchar(200) DEFAULT NULL COMMENT '详细地址',
   `development` varchar(20) DEFAULT NULL COMMENT '开发情况：1空白2签约3开发4僵尸',
-  `divided` varchar(20) DEFAULT NULL COMMENT '是否是分院:1是2否',
+  `divided` int(11) DEFAULT NULL COMMENT '是否是分院:1是2否',
   `hostname` varchar(100) DEFAULT NULL COMMENT '主院名称',
   `add_time` varchar(30) DEFAULT NULL COMMENT '新增时间',
   `status` varchar(30) DEFAULT '1' COMMENT '状态1正常2作废',
   `details` varchar(200) DEFAULT NULL COMMENT '详细地址',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 /*Data for the table `yx_hospital` */
 
 insert  into `yx_hospital`(`id`,`code`,`name`,`othername`,`quality`,`level`,`province`,`city`,`area`,`address`,`development`,`divided`,`hostname`,`add_time`,`status`,`details`) values 
-(1,'BY20180821','南充市川北医学院附属第1医院','南充市川北医学院附属第1医院','公立','三级甲等','四川省','南充市','顺庆区','东顺大街453号','空白网点','2','无',NULL,'1',NULL),
-(4,'BY20180822','川北医学院附属第1医院','川北医学院附属第1医院','公立','三级甲等','山东','山东','顺庆区','东顺大街453号','空白网点','1','无',NULL,'1',NULL),
-(5,'BY20180823','南充市川北医学院附属第2医院','南充市川北医学院附属第2医院','公立','三级甲等','上海','上海','顺庆区','东顺大街453号','空白网点','2','无',NULL,'1',NULL),
-(6,'BY20180824','南充市川北医学院附属第3医院','南充市川北医学院附属第3医院','公立','三级甲等','河南','南充市','顺庆区','东顺大街453号','空白网点','1','无',NULL,'1',NULL),
-(7,'BY20180825','南充市川北医学院附属第4医院','南充市川北医学院附属第4医院','公立','三级甲等','河北','南充市','顺庆区','东顺大街453号','空白网点','2','无',NULL,'1',NULL),
-(8,'BY20180826','南充市川北医学院附属第5医院','南充市川北医学院附属第5医院','公立','三级甲等','台湾','南充市','顺庆区','东顺大街453号','空白网点','1','无',NULL,'1',NULL),
-(9,'BY20180827','川北医学院附属第2医院','川北医学院附属第2医院','公立','三级甲等','香港','南充市','顺庆区','东顺大街453号','空白网点','2','无',NULL,'1',NULL),
-(10,'BY20180828','南充市川北医学院附属第6医院','南充市川北医学院附属第6医院','公立','三级甲等','吉林','南充市','顺庆区','东顺大街453号','空白网点','1','无',NULL,'1',NULL),
-(11,'BY20180829','南充市川北医学院附属第7医院','南充市川北医学院附属第7医院','公立','三级甲等','内蒙古','南充市','顺庆区','东顺大街453号','空白网点','2','无',NULL,'1',NULL),
-(12,'BY20180830','南充市川北医学院附属第8医院','南充市川北医学院附属第8医院','公立','三级甲等','广东','南充市','顺庆区','东顺大街453号','空白网点','1','无',NULL,'1',NULL),
-(13,'BY20180820','南充市川北医学院附属第9医院','南充市川北医学院附属第9医院','公立','三级甲等','福建','南充市','顺庆区','东顺大街453号','空白网点','2','无',NULL,'1',NULL),
-(14,'BY20180831','川北医学院附属第3医院','川北医学院附属第3医院','公立','三级甲等','广西','南充市','顺庆区','东顺大街453号','空白网点','1','无',NULL,'2',NULL),
-(15,'BY20180832','南充市川北医学院附属第10医院','南充市川北医学院附属第10医院','公立','三级甲等','西藏','南充市','顺庆区','东顺大街453号','空白网点','2','无',NULL,'2',NULL);
+(1,'BY20180821','南充市川北医学院附属第1医院','测试1','公立','三级甲等','四川省','南充市','顺庆区','东顺大街453号','空白网点',2,'无','2022-11-23 10:11:15','1','11'),
+(4,'BY20180822','南充市川北医学院附属第2医院','测试2','公立','三级甲等','山东','山东','顺庆区','东顺大街453号','空白网点',1,'测试1','2022-11-23 10:11:16','1','22'),
+(5,'BY20180823','南充市川北医学院附属第3医院','测试3','公立','三级甲等','上海','上海','顺庆区','东顺大街453号','空白网点',0,'测试2','2022-11-23 10:11:16','1','33'),
+(6,'BY20180824','南充市川北医学院附属第3医院','南充市川北医学院附属第3医院','公立','三级甲等','河南','南充市','顺庆区','东顺大街453号','空白网点',1,'无',NULL,'1',NULL),
+(7,'BY20180825','南充市川北医学院附属第4医院','南充市川北医学院附属第4医院','公立','三级甲等','河北','南充市','顺庆区','东顺大街453号','空白网点',2,'无',NULL,'1',NULL),
+(8,'BY20180826','南充市川北医学院附属第5医院','南充市川北医学院附属第5医院','公立','三级甲等','台湾','南充市','顺庆区','东顺大街453号','空白网点',1,'无',NULL,'1',NULL),
+(9,'BY20180827','川北医学院附属第2医院','川北医学院附属第2医院','公立','三级甲等','香港','南充市','顺庆区','东顺大街453号','空白网点',2,'无',NULL,'1',NULL),
+(10,'BY20180828','南充市川北医学院附属第6医院','南充市川北医学院附属第6医院','公立','三级甲等','吉林','南充市','顺庆区','东顺大街453号','空白网点',1,'无',NULL,'1',NULL),
+(11,'BY20180829','南充市川北医学院附属第7医院','南充市川北医学院附属第7医院','公立','三级甲等','内蒙古','南充市','顺庆区','东顺大街453号','空白网点',2,'无',NULL,'1',NULL),
+(12,'BY20180830','南充市川北医学院附属第8医院','南充市川北医学院附属第8医院','公立','三级甲等','广东','南充市','顺庆区','东顺大街453号','空白网点',1,'无',NULL,'1',NULL),
+(13,'BY20180820','南充市川北医学院附属第9医院','南充市川北医学院附属第9医院','公立','三级甲等','福建','南充市','顺庆区','东顺大街453号','空白网点',2,'无',NULL,'1',NULL),
+(14,'BY20180831','川北医学院附属第3医院','川北医学院附属第3医院','公立','三级甲等','广西','南充市','顺庆区','东顺大街453号','空白网点',1,'无',NULL,'2',NULL),
+(15,'BY20180832','南充市川北医学院附属第10医院','南充市川北医学院附属第10医院','公立','三级甲等','西藏','南充市','顺庆区','东顺大街453号','空白网点',2,'无',NULL,'2',NULL),
+(19,'BY20180831','商业化产品','nickname','私立','三级甲等','河北省','秦皇岛市','北戴河区',NULL,'空白网点',1,'川北医学院附属第3医院',NULL,'1','酒店住宿'),
+(37,'SC20180822','南充市川北医学院附属第2医院','测试2','公立','三级甲等','山东省','济南市','','东顺大街453号','空白网点',1,'测试1','2022-11-23 10:19:22','1','22'),
+(36,'SC20180821','南充市川北医学院附属第1医院','测试1','公立','三级甲等','四川省','南充市','','东顺大街453号','空白网点',2,'无','2022-11-23 10:19:21','1','11'),
+(38,'SC20180823','南充市川北医学院附属第3医院','测试3','公立','三级甲等','上海市','浦东新区','顺庆区','东顺大街453号','空白网点',0,'测试2','2022-11-23 10:19:22','1','33');
 
 /*Table structure for table `yx_index_menu` */
 
@@ -404,7 +460,7 @@ CREATE TABLE `yx_meettingprocess` (
 insert  into `yx_meettingprocess`(`id`,`mid`,`mdate`,`start`,`end`,`theme`,`speaker`,`photo`,`ppt`,`addtime`) values 
 (6,7,'2022-09-22','09:30','12:00','今晚吃鸡','刘旭东','/upload/meetting/20221019/9b357f0e39f458e4549484c692ea78fc.jpg','/upload/meetting/20221019/c261bec41479bb97b94ba85ed13e196e.ppt','2022-10-19 14:05:11'),
 (7,7,'2022-09-23','13:00','17:30','洛杉矶鬼泣第十三届秋名山密室大逃亡','燕双飞','/upload/meetting/20221019/005354d4eb6b8e1fd4654fa89182de54.jpg',NULL,'2022-10-19 14:07:10'),
-(9,7,'2022-09-23','13:00','17:30','洛杉矶鬼泣第十三届秋名山密室大逃亡','燕双飞1','/upload/meetting/20221026/ef2bedab5829a2bee3a4939b8bcad1a0.jpg','/upload/meetting/20221026/e2fdfdb86ae2aeedde472c77a04f2bc1.ppt','2022-10-26 13:52:33');
+(9,7,'2022-09-23','13:00','17:30','洛杉矶鬼泣第十三届秋名山密室大逃亡','燕双飞1','/upload/meetting/20221124/d9d2138b5af49da91328e428a2b474ec.jpg','/upload/meetting/20221026/e2fdfdb86ae2aeedde472c77a04f2bc1.ppt','2022-11-24 11:44:29');
 
 /*Table structure for table `yx_meettingsale` */
 
@@ -503,6 +559,48 @@ insert  into `yx_role`(`role_id`,`role_name`,`role_describe`,`role_auth`,`role_s
 (1,'超级管理员','整站权限','all',0,'2018-07-21 22:02:45'),
 (2,'管理员','编辑查看部分权限','admin/Order,admin/Article/articleList,admin/Article/addArticle,admin/Article/updateArticle',0,'2018-07-18 22:08:13'),
 (6,'员工','','admin/Order,admin/Order',0,'2022-09-20 13:27:26');
+
+/*Table structure for table `yx_rules` */
+
+DROP TABLE IF EXISTS `yx_rules`;
+
+CREATE TABLE `yx_rules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `maintype` int(11) DEFAULT '1' COMMENT '1学术会议，2销售会议',
+  `childtype` int(11) DEFAULT '1' COMMENT '1科室会，2城市会，3全国会，4国际会，5培训会，6周例会，7月例会，8季例会',
+  `role` int(11) DEFAULT '1' COMMENT '1组织，2协助，3参与',
+  `score` int(11) DEFAULT '1' COMMENT '积分',
+  `standed` int(11) DEFAULT '1' COMMENT '1会议审核通过，2组织员工名单审核通过',
+  `status` int(11) DEFAULT '1' COMMENT '1启用2禁用',
+  `addtime` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+/*Data for the table `yx_rules` */
+
+insert  into `yx_rules`(`id`,`maintype`,`childtype`,`role`,`score`,`standed`,`status`,`addtime`) values 
+(4,1,1,1,2,2,1,'2022-11-29 13:08:25'),
+(3,1,7,1,3,1,1,'2022-11-29 11:51:02'),
+(5,2,4,3,3,1,1,'2022-11-29 14:33:48'),
+(6,1,3,2,5,2,2,'2022-11-29 14:35:12');
+
+/*Table structure for table `yx_rulesrecord` */
+
+DROP TABLE IF EXISTS `yx_rulesrecord`;
+
+CREATE TABLE `yx_rulesrecord` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mtype` int(11) DEFAULT NULL COMMENT '会议类型 1科室会，2城市会，3全国会，4国际会，5培训会，6周例会，7月例会，8季例会',
+  `address` varchar(100) DEFAULT NULL COMMENT '地址',
+  `mdate` varchar(50) DEFAULT NULL COMMENT '日期',
+  `employeeid` int(11) DEFAULT NULL COMMENT '员工id',
+  `role` int(11) DEFAULT NULL COMMENT '与会形式1组织 2协助 3参与',
+  `score` int(11) DEFAULT NULL COMMENT '积分',
+  `addtime` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Data for the table `yx_rulesrecord` */
 
 /*Table structure for table `yx_user` */
 

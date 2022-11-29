@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>积分规则</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+
+    <css href="/static/css/admin/bootstrap.min14ed.css"/>
+    <css href="/static/css/admin/font-awesome.min93e3.css"/>
+    <css href="/static/css/admin/plugins/dataTables/dataTables.bootstrap.css"/>
+    <css href="/static/css/admin/animate.min.css"/>
+    <css href="/static/css/admin/style.min862f.css"/>
+    <link href="/static/css/admin/admincommon.css?v=20180820" rel='stylesheet' type='text/css'/>
+</head>
+
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>积分规则</h5>
+                    <if condition="check_auth('admin/Rulesxs/addRules')">
+                        <button id="toggle_modal" class="btn btn-primary btn-circle" type="button"
+                                style="margin-bottom:0px;margin-left:10px;position:relative;top:-5px;" title="添加">
+                            <i class="fa fa-edit"></i>+
+                        </button>
+                    </if>
+                    <div class="ibox-tools">
+                        <a href="javascript:location.replace(location.href);" class="btn btn-primary btn-circle"
+                           type="button"
+                           style="margin-bottom:0px;margin-right:10px;position:relative;top:-5px;" title="刷新">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <table id="mytable"
+                           class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead align="center">
+                        <tr>
+
+                            <th style="text-align:center;">编号</th>
+                            <th style="text-align:center;">主类别</th>
+                            <th style="text-align:center;">子类别</th>
+                            <th style="text-align:center;">与会角色</th>
+                            <th style="text-align:center;">积分</th>
+                            <th style="text-align:center;">判断标准</th>
+                            <th style="text-align:center;">状态</th>
+                            <th style="text-align:center;">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="data" id="vo" key="i">
+                            <tr class="gradeX" id="Rules-{$vo['id']}">
+
+                                <td align="center">{$i}</td>
+                                <td align="center">
+                                    <if condition="$vo['maintype']==1"><span>学术会议</span>
+                                        <else/>
+                                        <span>销售会议</span>
+                                    </if>
+                                </td>
+                                <td align="center">
+                                    <if condition="$vo['childtype']==1"><span>科室会</span>
+                                        <elseif condition="$vo['childtype']==2"/>
+                                        <span>城市会</span>
+                                        <elseif condition="$vo['childtype']==3"/>
+                                        <span>全国会</span>
+                                        <elseif condition="$vo['childtype']==4"/>
+                                        <span>国际会</span>
+                                        <elseif condition="$vo['childtype']==5"/>
+                                        <span>培训会</span>
+                                        <elseif condition="$vo['childtype']==6"/>
+                                        <span>周例会</span>
+                                        <elseif condition="$vo['childtype']==7"/>
+                                        <span>月例会</span>
+                                        <else/>
+                                        <span>季例会</span>
+                                    </if>
+                                </td>
+                                <td align="center">
+                                    <if condition="$vo['role']==1"><span>组织</span>
+                                        <elseif condition="$vo['role']==2"/>
+                                        <span>协助</span>
+                                        <else/>
+                                        <span>参与</span>
+                                    </if>
+                                <td align="center">{$vo['score']}</td>
+                                <td align="center">
+                                    <if condition="$vo['standed']==1"><span>会议审核通过</span>
+                                        <else/>
+                                        <span>组织员工名单审核通过</span>
+                                    </if>
+                                <td align="center">
+                                    <if condition="$vo['status']==1"><span style="color: green">启用</span>
+                                        <else/>
+                                        <span style="color: red">禁用</span>
+                                    </if>
+                                </td>
+                                <td class="center" align="center">
+                                    <div class="btn-group">
+                                        <button data-toggle="dropdown"
+                                                class="btn btn-primary btn-xs dropdown-toggle"
+                                                aria-expanded="false">操作 <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <if condition="check_auth('admin/Rules/RulesDetails')">
+                                                <li><a href="javascript:;" data-id="{$vo['id']}"
+                                                       class="font-bold RulesDetails">编辑</a>
+                                                </li>
+                                            </if>
+                                            <if condition="check_auth('admin/Rules/delRules')">
+                                                <li data-id="{$vo['id']}" class="font-bold del-rules"><a
+                                                        href="javascript:;">禁用</a></li>
+                                            </if>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+
+                    </table>
+                    {$page}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display:none;" id="checkdiv">
+        <div style="display:inline-block">
+            <input type="radio" name="type" style="display: inline-block;">
+            <input type="radio" name="type" style="display: inline-block;">
+            <input type="radio" name="type" style="display: inline-block;">
+        </div>
+    </div>
+</div>
+<js href="/static/js/admin/jquery.min.js"/>
+<js href="/static/js/admin/bootstrap.min.js"/>
+<js href="/static/js/admin/content.min.js"/>
+<js href="/static/js/admin/plugins/layui/layer/layer.js"/>
+<script type="text/javascript" src="/static/js/admin/admincommon.js?v=20180820"></script>
+
+<script>
+    $(document).ready(function () {
+        //document.body.innerHTML = document.body.innerHTML.replace(/会议/g, '大大');
+        sessionStorage.setItem("TabNum", 0);
+
+        //  详情
+        $(".ibox-content").on('click', '.RulesDetails', function () {
+
+            var addIndex = layer.open({
+                title: '详情',
+                offset: ['120px', '220px'],
+                isOutAnim: true,
+                type: 2,
+                content: "{:url('admin/Rules/editRules')}?id=" + $(this).data('id'),
+                area: ['800px', '400px'],
+                maxmin: true
+            });
+
+            layer.full(addIndex);
+        })
+
+        // 删除
+        $(".ibox-content").on('click', '.del-rules', function () {
+            var Rules_id = $(this).data("id");
+            layer.confirm("你确定要删除吗？", {
+
+                btn: ['确定', '取消'] //按钮
+
+            }, function () {
+
+                $.post("{:url('admin/Rules/delRules')}", {
+                    id: Rules_id
+                }, function (data) {
+
+                    if (data.code == 1) {
+                        layer.msg(data.msg, {
+                            time: 1000,
+                            icon: 1
+                        });
+
+                        $("#Rules-" + Rules_id).remove();
+
+                    } else {
+
+                        layer.msg(data.msg, {
+                            time: 1000,
+                            icon: 2
+                        });
+
+                    }
+
+                }, 'json');
+
+            });
+        });
+
+
+        //  新增
+        $("#toggle_modal").on('click', function () {
+
+            var addIndex = layer.open({
+                title: '新增',
+                offset: ['120px', '220px'],
+                isOutAnim: true,
+                type: 2,
+                content: "{:url('admin/Rules/addRules')}?type=add",
+                area: ['800px', '400px'],
+                maxmin: true
+            });
+
+            layer.full(addIndex);
+
+        });
+
+    });
+
+    function searchTitle(obj) {
+        var keywords = $.trim($(obj).val());
+
+        if (keywords.length <= 0) {
+            window.location.replace(location.href);
+        }
+    }
+
+    // 隐藏恢复和彻底删除按钮
+    function hideButton() {
+        var num = $('.selectnum').val();
+        if (num == 3) {
+            document.getElementById('btn1').style.display = "inline-block";
+            document.getElementById('btn2').style.display = "inline-block";
+        } else {
+            document.getElementById('btn1').style.display = "none";
+            document.getElementById('btn2').style.display = "none";
+        }
+        return 1;
+
+    }
+
+
+</script>
+
+</body>
+</html>

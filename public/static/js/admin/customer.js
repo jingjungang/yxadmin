@@ -19,6 +19,19 @@ $(document).ready(function () {
                 layer.msg('图片超出限额～', {});
                 return;
             }
+            var old = $('.img_old');
+            var len1 = old.length;
+            var all = len1+len;
+            var all2 = len1+len+intP;
+            if(all>3){
+                layer.msg('图片超出限额～', {});
+                return;
+            }
+            if(all2>3){
+                layer.msg('图片超出限额～', {});
+                return;
+            }
+
             $.each(files, function (key, value) {//3、回显
                 //每次都只会遍历一个图片数据
                 var div = document.createElement("div"),
@@ -30,6 +43,7 @@ $(document).ready(function () {
                     }, function () {
                         var parentObj = div.parentNode;//获取div的父对象
                         parentObj.removeChild(div);//通过div的父对象把它删除
+                        intP = intP - 1;
                         layer.msg('ok', {
                             time: 1000,
                             icon: 1
