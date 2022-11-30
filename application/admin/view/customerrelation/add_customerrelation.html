@@ -72,8 +72,8 @@
                         <div class="input-group col-sm-5">
                             <select data-placeholder="选择员工" class="chosen-select" multiple style="width:350px;"
                                     name="employeeid" id="employeeid">
-                                <volist name='hospital' id='ht'>
-                                    <option value="{$ht['id']}">{$ht['name']}</option>
+                                <volist name='users' id='ht'>
+                                    <option value="{$ht['user_id']}">{$ht['user_nicename']}</option>
                                 </volist>
                             </select>
                         </div>

@@ -53,10 +53,10 @@ class Customerrelation extends AdminBase
         }else{
             $customer = db('customer')->field('id,name')->select();
         	$li = db('hospital')->field('id,name,code')->select();
-            $employee = db('employee')->field('id,name')->select();
+            $users = db('user')->field('user_id,user_nicename')->select();
             $this->assign("customer", $customer);
         	$this->assign("hospital", $li);
-            $this->assign("employee", $employee);
+            $this->assign("users", $users);
         	return $this->fetch();
         }
     }
@@ -97,10 +97,10 @@ class Customerrelation extends AdminBase
 
             $customer = db('customer')->field('id,name')->select();
             $li = db('hospital')->field('id,name,code')->select();
-            $employee = db('employee')->field('id,name')->select();
+            $users = db('user')->field('user_id,user_nicename')->select();
             $this->assign("customer", $customer);
             $this->assign("hospital", $li);
-            $this->assign("employee", $employee);
+            $this->assign("users", $users);
 
             return $this->fetch();
         }else{

@@ -73,8 +73,8 @@
                         <div class="input-group col-sm-5">
                             <select data-placeholder="选择员工" class="chosen-select" multiple style="width:350px;"
                                     name="employeeid" id="employeeid">
-                                <volist name='employee' id='et'>
-                                    <option value="{$et['id']}" <?php if($data['employeeid'] == $et['id']){echo 'selected';} ?> >{$et['name']}</option>
+                                <volist name='users' id='et'>
+                                    <option value="{$et['user_id']}" <?php if($data['employeeid'] == $et['user_id']){echo 'selected';} ?> >{$et['user_nicename']}</option>
                                 </volist>
                             </select>
                         </div>

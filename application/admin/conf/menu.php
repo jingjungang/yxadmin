@@ -101,7 +101,7 @@ $menu = array(
                 ),
                 array(
                     'name' => '积分记录',
-                    'action' => 'admin/rules/rulesList'
+                    'action' => 'admin/rulesrecord/RulesrecordList'
                 ),
                 array(
                     'name' => '积分统计',
@@ -119,9 +119,9 @@ $menu = array(
             'child' => array(
 
                 array(
-                    'name' => '学术会议',
+                    'name' => '费用管理',
 
-                    'action' => 'admin/Meetting/meettingList',
+                    'action' => 'admin/Article/articleList',
 
                     "auth" => array(
                         array("name" => '添加', 'action' => "admin/Article/addArticle"),

@@ -37,10 +37,10 @@ class Customerrelation extends Model
 
 
         $Customerrelation = Customerrelation::alias('a')
-            ->field('a.*,c.name as customer,c.id as cid,h.name as hospital,h.id as hid,e.name as employee,e.id as eid')
+            ->field('a.*,c.name as customer,c.id as cid,h.name as hospital,h.id as hid,e.user_nicename as employee,e.user_id as eid')
             ->join('customer c', 'c.id = a.cid', 'left')
             ->join('hospital h', 'h.id = a.hid', 'left')
-            ->join('employee e', 'e.id = a.employeeid', 'left')
+            ->join('user e', 'e.user_id = a.employeeid', 'left')
             ->where($where)
             ->order('a.id', 'DESC')
             ->paginate($num, false, ['query' => $param]);
