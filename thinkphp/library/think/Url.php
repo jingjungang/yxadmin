@@ -11,6 +11,8 @@
 
 namespace think;
 
+use InvalidArgumentException;
+
 class Url
 {
     // 生成URL地址的root
@@ -84,7 +86,7 @@ class Url
                 $suffix = $match[2];
             }
         } elseif (!empty($rule) && isset($name)) {
-            throw new \InvalidArgumentException('route name not exists:' . $name);
+            throw new InvalidArgumentException('route name not exists:' . $name);
         } else {
             // 检查别名路由
             $alias = Route::rules('alias');

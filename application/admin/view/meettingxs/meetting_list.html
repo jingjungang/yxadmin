@@ -175,18 +175,18 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <if condition="check_auth('admin/Meettingxs/updateMeetting')">
-                                                <li><a href="javascript:;" data-id="{$vo['id']}"
+                                                <li><a href="javascript:" data-id="{$vo['id']}"
                                                        class="font-bold edit-article">基本信息</a>
                                                 </li>
                                             </if>
                                             <if condition="check_auth('admin/Meettingxs/MeettingDetails')">
-                                                <li><a href="javascript:;" data-id="{$vo['id']}"
+                                                <li><a href="javascript:" data-id="{$vo['id']}"
                                                        class="font-bold MeettingDetails">详情</a>
                                                 </li>
                                             </if>
                                             <if condition="check_auth('admin/Meettingxs/delMeetting')">
                                                 <li data-id="{$vo['id']}" class="font-bold del-article"><a
-                                                        href="javascript:;">删除</a></li>
+                                                        href="javascript:">删除</a></li>
                                             </if>
                                         </ul>
                                     </div>

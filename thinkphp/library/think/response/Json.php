@@ -11,6 +11,8 @@
 
 namespace think\response;
 
+use Exception;
+use InvalidArgumentException;
 use think\Response;
 
 class Json extends Response
@@ -27,7 +29,7 @@ class Json extends Response
      * @access protected
      * @param mixed $data 要处理的数据
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     protected function output($data)
     {
@@ -36,11 +38,11 @@ class Json extends Response
             $data = json_encode($data, $this->options['json_encode_param']);
 
             if ($data === false) {
-                throw new \InvalidArgumentException(json_last_error_msg());
+                throw new InvalidArgumentException(json_last_error_msg());
             }
 
             return $data;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e->getPrevious()) {
                 throw $e->getPrevious();
             }

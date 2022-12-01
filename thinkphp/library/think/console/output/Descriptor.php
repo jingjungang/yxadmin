@@ -11,6 +11,7 @@
 
 namespace think\console\output;
 
+use InvalidArgumentException;
 use think\Console;
 use think\console\Command;
 use think\console\input\Argument as InputArgument;
@@ -51,7 +52,7 @@ class Descriptor
                 $this->describeConsole($object, $options);
                 break;
             default:
-                throw new \InvalidArgumentException(sprintf('Object of type "%s" is not describable.', get_class($object)));
+                throw new InvalidArgumentException(sprintf('Object of type "%s" is not describable.', get_class($object)));
         }
     }
 

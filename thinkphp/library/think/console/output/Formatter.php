@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace think\console\output;
 
+use InvalidArgumentException;
 use think\console\output\formatter\Stack as StyleStack;
 use think\console\output\formatter\Style;
 
@@ -87,12 +88,12 @@ class Formatter
      * 获取样式
      * @param string $name
      * @return Style
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function getStyle($name)
     {
         if (!$this->hasStyle($name)) {
-            throw new \InvalidArgumentException(sprintf('Undefined style: %s', $name));
+            throw new InvalidArgumentException(sprintf('Undefined style: %s', $name));
         }
 
         return $this->styles[strtolower($name)];
@@ -177,7 +178,7 @@ class Formatter
             } else {
                 try {
                     $style->setOption($match[1]);
-                } catch (\InvalidArgumentException $e) {
+                } catch (InvalidArgumentException $e) {
                     return false;
                 }
             }

@@ -11,6 +11,7 @@
 
 namespace think\cache\driver;
 
+use DateTime;
 use think\cache\Driver;
 
 /**
@@ -93,7 +94,7 @@ class Lite extends Driver
      * @access   public
      * @param string $name 缓存变量名
      * @param mixed $value 存储数据
-     * @param integer|\DateTime $expire 有效时间（秒）
+     * @param integer|DateTime $expire 有效时间（秒）
      * @return bool
      */
     public function set($name, $value, $expire = null)
@@ -101,7 +102,7 @@ class Lite extends Driver
         if (is_null($expire)) {
             $expire = $this->options['expire'];
         }
-        if ($expire instanceof \DateTime) {
+        if ($expire instanceof DateTime) {
             $expire = $expire->getTimestamp();
         } else {
             $expire = 0 === $expire ? 10 * 365 * 24 * 3600 : $expire;

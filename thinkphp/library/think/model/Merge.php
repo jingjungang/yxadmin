@@ -11,6 +11,7 @@
 
 namespace think\model;
 
+use Exception;
 use think\Db;
 use think\db\Query;
 use think\Model;
@@ -43,7 +44,7 @@ class Merge extends Model
      * @param mixed $data 主键值或者查询条件（闭包）
      * @param string|array $with 关联预查询
      * @param bool $cache 是否缓存
-     * @return \think\Model
+     * @return Model
      */
     public static function get($data = null, $with = [], $cache = false)
     {
@@ -55,8 +56,8 @@ class Merge extends Model
     /**
      * 附加查询表达式
      * @access protected
-     * @param \think\db\Query $query 查询对象
-     * @return \think\db\Query
+     * @param Query $query 查询对象
+     * @return Query
      */
     protected static function attachQuery($query)
     {
@@ -78,7 +79,7 @@ class Merge extends Model
     /**
      * 获取关联模型的字段 并解决混淆
      * @access protected
-     * @param \think\db\Query $query 查询对象
+     * @param Query $query 查询对象
      * @param string $name 模型名称
      * @param string $table 关联表名称
      * @param array $map 字段映射
@@ -146,7 +147,7 @@ class Merge extends Model
      * @param array $where 更新条件
      * @param string $sequence 自增序列名
      * @return false|int
-     * @throws \Exception
+     * @throws Exception
      */
     public function save($data = [], $where = [], $sequence = null)
     {
@@ -277,7 +278,7 @@ class Merge extends Model
 
             $this->origin = $this->data;
             return $result;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $db->rollback();
             throw $e;
         }
@@ -287,7 +288,7 @@ class Merge extends Model
      * 删除当前的记录 并删除关联数据
      * @access public
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
     public function delete()
     {
@@ -313,7 +314,7 @@ class Merge extends Model
             $this->trigger('after_delete', $this);
             $db->commit();
             return $result;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $db->rollback();
             throw $e;
         }

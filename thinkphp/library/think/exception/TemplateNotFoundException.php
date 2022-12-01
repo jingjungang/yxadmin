@@ -11,7 +11,9 @@
 
 namespace think\exception;
 
-class TemplateNotFoundException extends \RuntimeException
+use RuntimeException;
+
+class TemplateNotFoundException extends RuntimeException
 {
     protected $template;
 

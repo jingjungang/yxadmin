@@ -11,6 +11,7 @@
 
 namespace think\db;
 
+use Closure;
 use PDO;
 use think\Exception;
 
@@ -273,7 +274,7 @@ abstract class Builder
             foreach ($val as $field => $value) {
                 if ($value instanceof Expression) {
                     $str[] = ' ' . $key . ' ( ' . $value->getValue() . ' )';
-                } elseif ($value instanceof \Closure) {
+                } elseif ($value instanceof Closure) {
                     // 使用闭包查询
                     $query = new Query($this->connection);
                     call_user_func_array($value, [& $query]);
@@ -374,7 +375,7 @@ abstract class Builder
         $whereStr = '';
         if (in_array($exp, ['=', '<>', '>', '>=', '<', '<='])) {
             // 比较运算
-            if ($value instanceof \Closure) {
+            if ($value instanceof Closure) {
                 $whereStr .= $key . ' ' . $exp . ' ' . $this->parseClosure($value);
             } else {
                 $whereStr .= $key . ' ' . $exp . ' ' . $this->parseValue($value, $field);
@@ -402,7 +403,7 @@ abstract class Builder
             $whereStr .= $key . ' IS ' . $exp;
         } elseif (in_array($exp, ['NOT IN', 'IN'])) {
             // IN 查询
-            if ($value instanceof \Closure) {
+            if ($value instanceof Closure) {
                 $whereStr .= $key . ' ' . $exp . ' ' . $this->parseClosure($value);
             } else {
                 $value = array_unique(is_array($value) ? $value : explode(',', $value));
@@ -450,7 +451,7 @@ abstract class Builder
             $whereStr .= $key . ' ' . $exp . ' ' . $between;
         } elseif (in_array($exp, ['NOT EXISTS', 'EXISTS'])) {
             // EXISTS 查询
-            if ($value instanceof \Closure) {
+            if ($value instanceof Closure) {
                 $whereStr .= $exp . ' ' . $this->parseClosure($value);
             } else {
                 $whereStr .= $exp . ' (' . $value . ')';
@@ -662,7 +663,7 @@ abstract class Builder
         $type = $union['type'];
         unset($union['type']);
         foreach ($union as $u) {
-            if ($u instanceof \Closure) {
+            if ($u instanceof Closure) {
                 $sql[] = $type . ' ' . $this->parseClosure($u);
             } elseif (is_string($u)) {
                 $sql[] = $type . ' ( ' . $this->parseSqlTable($u) . ' )';

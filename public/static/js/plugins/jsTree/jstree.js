@@ -841,7 +841,7 @@
                             }
                         }, this));
                         if (end) {
-                            return;
+
                         }
                     }
                 }, this))

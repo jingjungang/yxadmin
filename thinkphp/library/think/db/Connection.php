@@ -11,6 +11,7 @@
 
 namespace think\db;
 
+use Error;
 use PDO;
 use PDOStatement;
 use think\Db;
@@ -19,6 +20,7 @@ use think\Debug;
 use think\Exception;
 use think\exception\PDOException;
 use think\Log;
+use Throwable;
 
 /**
  * Class Connection
@@ -321,7 +323,7 @@ abstract class Connection
     /**
      * 获取PDO对象
      * @access public
-     * @return \PDO|false
+     * @return PDO|false
      */
     public function getPdo()
     {
@@ -383,7 +385,7 @@ abstract class Connection
                 return $this->close()->query($sql, $bind, $master, $pdo);
             }
             throw new PDOException($e, $this->config, $this->getLastsql());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             if ($this->isBreak($e)) {
                 return $this->close()->query($sql, $bind, $master, $pdo);
             }
@@ -451,7 +453,7 @@ abstract class Connection
                 return $this->close()->execute($sql, $bind, $query);
             }
             throw new PDOException($e, $this->config, $this->getLastsql());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             if ($this->isBreak($e)) {
                 return $this->close()->execute($sql, $bind, $query);
             }
@@ -605,7 +607,7 @@ abstract class Connection
      * @return mixed
      * @throws PDOException
      * @throws \Exception
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function transaction($callback)
     {
@@ -620,7 +622,7 @@ abstract class Connection
         } catch (\Exception $e) {
             $this->rollback();
             throw $e;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->rollback();
             throw $e;
         }
@@ -655,7 +657,7 @@ abstract class Connection
                 return $this->close()->startTrans();
             }
             throw $e;
-        } catch (\Error $e) {
+        } catch (Error $e) {
             if ($this->isBreak($e)) {
                 --$this->transTimes;
                 return $this->close()->startTrans();

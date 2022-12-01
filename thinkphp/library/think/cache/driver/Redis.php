@@ -11,6 +11,9 @@
 
 namespace think\cache\driver;
 
+use BadFunctionCallException;
+use DateTime;
+use Exception;
 use think\cache\Driver;
 
 /**
@@ -41,7 +44,7 @@ class Redis extends Driver
     public function __construct($options = [])
     {
         if (!extension_loaded('redis')) {
-            throw new \BadFunctionCallException('not support: redis');
+            throw new BadFunctionCallException('not support: redis');
         }
         if (!empty($options)) {
             $this->options = array_merge($this->options, $options);
@@ -89,7 +92,7 @@ class Redis extends Driver
 
         try {
             $result = 0 === strpos($value, 'think_serialize:') ? unserialize(substr($value, 16)) : $value;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $result = $default;
         }
 
@@ -101,7 +104,7 @@ class Redis extends Driver
      * @access public
      * @param string $name 缓存变量名
      * @param mixed $value 存储数据
-     * @param integer|\DateTime $expire 有效时间（秒）
+     * @param integer|DateTime $expire 有效时间（秒）
      * @return boolean
      */
     public function set($name, $value, $expire = null)
@@ -109,7 +112,7 @@ class Redis extends Driver
         if (is_null($expire)) {
             $expire = $this->options['expire'];
         }
-        if ($expire instanceof \DateTime) {
+        if ($expire instanceof DateTime) {
             $expire = $expire->getTimestamp() - time();
         }
         if ($this->tag && !$this->has($name)) {

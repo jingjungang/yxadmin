@@ -11,6 +11,9 @@
 
 namespace think;
 
+use InvalidArgumentException;
+use LogicException;
+use RuntimeException;
 use think\process\exception\Failed as ProcessFailedException;
 use think\process\exception\Timeout as ProcessTimeoutException;
 use think\process\pipes\Pipes;
@@ -120,13 +123,13 @@ class Process
      * @param string|null $input 输入
      * @param int|float|null $timeout 超时时间
      * @param array $options proc_open的选项
-     * @throws \RuntimeException
+     * @throws RuntimeException
      * @api
      */
     public function __construct($commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = [])
     {
         if (!function_exists('proc_open')) {
-            throw new \RuntimeException('The Process class relies on proc_open, which is not available on your PHP installation.');
+            throw new RuntimeException('The Process class relies on proc_open, which is not available on your PHP installation.');
         }
 
         $this->commandline = $commandline;
@@ -177,13 +180,13 @@ class Process
      * 运行指令
      * @param callable|null $callback
      * @return self
-     * @throws \RuntimeException
+     * @throws RuntimeException
      * @throws ProcessFailedException
      */
     public function mustRun($callback = null)
     {
         if ($this->isSigchildEnabled() && !$this->enhanceSigchildCompatibility) {
-            throw new \RuntimeException('This PHP has been compiled with --enable-sigchild. You must use setEnhanceSigchildCompatibility() to use this method.');
+            throw new RuntimeException('This PHP has been compiled with --enable-sigchild. You must use setEnhanceSigchildCompatibility() to use this method.');
         }
 
         if (0 !== $this->run($callback)) {
@@ -196,17 +199,17 @@ class Process
     /**
      * 启动进程并写到 STDIN 输入后返回。
      * @param callable|null $callback
-     * @throws \RuntimeException
-     * @throws \RuntimeException
-     * @throws \LogicException
+     * @throws RuntimeException
+     * @throws RuntimeException
+     * @throws LogicException
      */
     public function start($callback = null)
     {
         if ($this->isRunning()) {
-            throw new \RuntimeException('Process is already running');
+            throw new RuntimeException('Process is already running');
         }
         if ($this->outputDisabled && null !== $callback) {
-            throw new \LogicException('Output has been disabled, enable it to allow the use of a callback.');
+            throw new LogicException('Output has been disabled, enable it to allow the use of a callback.');
         }
 
         $this->resetProcessData();
@@ -231,7 +234,7 @@ class Process
         $this->process = proc_open($commandline, $descriptors, $this->processPipes->pipes, $this->cwd, $this->env, $this->options);
 
         if (!is_resource($this->process)) {
-            throw new \RuntimeException('Unable to launch a new process.');
+            throw new RuntimeException('Unable to launch a new process.');
         }
         $this->status = self::STATUS_STARTED;
 
@@ -247,13 +250,13 @@ class Process
      * 重启进程
      * @param callable|null $callback
      * @return Process
-     * @throws \RuntimeException
-     * @throws \RuntimeException
+     * @throws RuntimeException
+     * @throws RuntimeException
      */
     public function restart($callback = null)
     {
         if ($this->isRunning()) {
-            throw new \RuntimeException('Process is already running');
+            throw new RuntimeException('Process is already running');
         }
 
         $process = clone $this;
@@ -288,7 +291,7 @@ class Process
         }
 
         if ($this->processInformation['signaled'] && $this->processInformation['termsig'] !== $this->latestSignal) {
-            throw new \RuntimeException(sprintf('The process has been signaled with signal "%s".', $this->processInformation['termsig']));
+            throw new RuntimeException(sprintf('The process has been signaled with signal "%s".', $this->processInformation['termsig']));
         }
 
         return $this->exitcode;
@@ -297,12 +300,12 @@ class Process
     /**
      * 获取PID
      * @return int|null
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function getPid()
     {
         if ($this->isSigchildEnabled()) {
-            throw new \RuntimeException('This PHP has been compiled with --enable-sigchild. The process identifier can not be retrieved.');
+            throw new RuntimeException('This PHP has been compiled with --enable-sigchild. The process identifier can not be retrieved.');
         }
 
         $this->updateStatus(false);
@@ -329,10 +332,10 @@ class Process
     public function disableOutput()
     {
         if ($this->isRunning()) {
-            throw new \RuntimeException('Disabling output while the process is running is not possible.');
+            throw new RuntimeException('Disabling output while the process is running is not possible.');
         }
         if (null !== $this->idleTimeout) {
-            throw new \LogicException('Output can not be disabled while an idle timeout is set.');
+            throw new LogicException('Output can not be disabled while an idle timeout is set.');
         }
 
         $this->outputDisabled = true;
@@ -343,12 +346,12 @@ class Process
     /**
      * 开启从底层过程获取输出和错误输出。
      * @return Process
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function enableOutput()
     {
         if ($this->isRunning()) {
-            throw new \RuntimeException('Enabling output while the process is running is not possible.');
+            throw new RuntimeException('Enabling output while the process is running is not possible.');
         }
 
         $this->outputDisabled = false;
@@ -368,14 +371,14 @@ class Process
     /**
      * 获取当前的输出管道
      * @return string
-     * @throws \LogicException
-     * @throws \LogicException
+     * @throws LogicException
+     * @throws LogicException
      * @api
      */
     public function getOutput()
     {
         if ($this->outputDisabled) {
-            throw new \LogicException('Output has been disabled.');
+            throw new LogicException('Output has been disabled.');
         }
 
         $this->requireProcessIsStarted(__FUNCTION__);
@@ -425,7 +428,7 @@ class Process
     public function getErrorOutput()
     {
         if ($this->outputDisabled) {
-            throw new \LogicException('Output has been disabled.');
+            throw new LogicException('Output has been disabled.');
         }
 
         $this->requireProcessIsStarted(__FUNCTION__);
@@ -475,7 +478,7 @@ class Process
     public function getExitCode()
     {
         if ($this->isSigchildEnabled() && !$this->enhanceSigchildCompatibility) {
-            throw new \RuntimeException('This PHP has been compiled with --enable-sigchild. You must use setEnhanceSigchildCompatibility() to use this method.');
+            throw new RuntimeException('This PHP has been compiled with --enable-sigchild. You must use setEnhanceSigchildCompatibility() to use this method.');
         }
 
         $this->updateStatus(false);
@@ -514,7 +517,7 @@ class Process
         $this->requireProcessIsTerminated(__FUNCTION__);
 
         if ($this->isSigchildEnabled()) {
-            throw new \RuntimeException('This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved.');
+            throw new RuntimeException('This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved.');
         }
 
         $this->updateStatus(false);
@@ -531,7 +534,7 @@ class Process
         $this->requireProcessIsTerminated(__FUNCTION__);
 
         if ($this->isSigchildEnabled()) {
-            throw new \RuntimeException('This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved.');
+            throw new RuntimeException('This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved.');
         }
 
         $this->updateStatus(false);
@@ -620,7 +623,7 @@ class Process
             if ('\\' === DS && !$this->isSigchildEnabled()) {
                 exec(sprintf('taskkill /F /T /PID %d 2>&1', $this->getPid()), $output, $exitCode);
                 if ($exitCode > 0) {
-                    throw new \RuntimeException('Unable to kill the process');
+                    throw new RuntimeException('Unable to kill the process');
                 }
             } else {
                 $pids = preg_split('/\s+/', `ps -o pid --no-heading --ppid {$this->getPid()}`);
@@ -719,7 +722,7 @@ class Process
     public function setIdleTimeout($timeout)
     {
         if (null !== $timeout && $this->outputDisabled) {
-            throw new \LogicException('Idle timeout can not be set while the output is disabled.');
+            throw new LogicException('Idle timeout can not be set while the output is disabled.');
         }
 
         $this->idleTimeout = $this->validateTimeout($timeout);
@@ -735,10 +738,10 @@ class Process
     public function setTty($tty)
     {
         if ('\\' === DS && $tty) {
-            throw new \RuntimeException('TTY mode is not supported on Windows platform.');
+            throw new RuntimeException('TTY mode is not supported on Windows platform.');
         }
         if ($tty && (!file_exists('/dev/tty') || !is_readable('/dev/tty'))) {
-            throw new \RuntimeException('TTY mode requires /dev/tty to be readable.');
+            throw new RuntimeException('TTY mode requires /dev/tty to be readable.');
         }
 
         $this->tty = (bool)$tty;
@@ -846,7 +849,7 @@ class Process
     public function setInput($input)
     {
         if ($this->isRunning()) {
-            throw new \LogicException('Input can not be set while the process is running.');
+            throw new LogicException('Input can not be set while the process is running.');
         }
 
         $this->input = Utils::validateInput(sprintf('%s::%s', __CLASS__, __FUNCTION__), $input);
@@ -1063,7 +1066,7 @@ class Process
         if (0.0 === $timeout) {
             $timeout = null;
         } elseif ($timeout < 0) {
-            throw new \InvalidArgumentException('The timeout value must be a valid positive integer or float number.');
+            throw new InvalidArgumentException('The timeout value must be a valid positive integer or float number.');
         }
 
         return $timeout;
@@ -1154,7 +1157,7 @@ class Process
     {
         if (!$this->isRunning()) {
             if ($throwException) {
-                throw new \LogicException('Can not send signal on a non running process.');
+                throw new LogicException('Can not send signal on a non running process.');
             }
 
             return false;
@@ -1162,7 +1165,7 @@ class Process
 
         if ($this->isSigchildEnabled()) {
             if ($throwException) {
-                throw new \RuntimeException('This PHP has been compiled with --enable-sigchild. The process can not be signaled.');
+                throw new RuntimeException('This PHP has been compiled with --enable-sigchild. The process can not be signaled.');
             }
 
             return false;
@@ -1170,7 +1173,7 @@ class Process
 
         if (true !== @proc_terminate($this->process, $signal)) {
             if ($throwException) {
-                throw new \RuntimeException(sprintf('Error while sending signal `%s`.', $signal));
+                throw new RuntimeException(sprintf('Error while sending signal `%s`.', $signal));
             }
 
             return false;
@@ -1188,7 +1191,7 @@ class Process
     private function requireProcessIsStarted($functionName)
     {
         if (!$this->isStarted()) {
-            throw new \LogicException(sprintf('Process must be started before calling %s.', $functionName));
+            throw new LogicException(sprintf('Process must be started before calling %s.', $functionName));
         }
     }
 
@@ -1199,7 +1202,7 @@ class Process
     private function requireProcessIsTerminated($functionName)
     {
         if (!$this->isTerminated()) {
-            throw new \LogicException(sprintf('Process must be terminated before calling %s.', $functionName));
+            throw new LogicException(sprintf('Process must be terminated before calling %s.', $functionName));
         }
     }
 }

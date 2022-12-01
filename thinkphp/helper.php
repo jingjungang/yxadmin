@@ -14,9 +14,12 @@
 //-------------------------
 
 use think\Cache;
+use think\Collection;
 use think\Config;
+use think\Controller;
 use think\Cookie;
 use think\Db;
+use think\db\Query;
 use think\Debug;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
@@ -26,8 +29,13 @@ use think\Log;
 use think\Model;
 use think\Request;
 use think\Response;
+use think\response\Json;
+use think\response\Jsonp;
+use think\response\Redirect;
+use think\response\Xml;
 use think\Session;
 use think\Url;
+use think\Validate;
 use think\View;
 
 if (!function_exists('load_trait')) {
@@ -162,7 +170,7 @@ if (!function_exists('model')) {
      * @param string $name Model名称
      * @param string $layer 业务层名称
      * @param bool $appendSuffix 是否添加类名后缀
-     * @return \think\Model
+     * @return Model
      */
     function model($name = '', $layer = 'model', $appendSuffix = false)
     {
@@ -176,7 +184,7 @@ if (!function_exists('validate')) {
      * @param string $name 验证器名称
      * @param string $layer 业务层名称
      * @param bool $appendSuffix 是否添加类名后缀
-     * @return \think\Validate
+     * @return Validate
      */
     function validate($name = '', $layer = 'validate', $appendSuffix = false)
     {
@@ -190,7 +198,7 @@ if (!function_exists('db')) {
      * @param string $name 操作的数据表名称（不含前缀）
      * @param array|string $config 数据库配置参数
      * @param bool $force 是否强制重新连接
-     * @return \think\db\Query
+     * @return Query
      */
     function db($name = '', $config = [], $force = false)
     {
@@ -204,7 +212,7 @@ if (!function_exists('controller')) {
      * @param string $name 资源地址
      * @param string $layer 控制层名称
      * @param bool $appendSuffix 是否添加类名后缀
-     * @return \think\Controller
+     * @return Controller
      */
     function controller($name, $layer = 'controller', $appendSuffix = false)
     {
@@ -454,7 +462,7 @@ if (!function_exists('json')) {
      * @param integer $code 状态码
      * @param array $header 头部
      * @param array $options 参数
-     * @return \think\response\Json
+     * @return Json
      */
     function json($data = [], $code = 200, $header = [], $options = [])
     {
@@ -469,7 +477,7 @@ if (!function_exists('jsonp')) {
      * @param integer $code 状态码
      * @param array $header 头部
      * @param array $options 参数
-     * @return \think\response\Jsonp
+     * @return Jsonp
      */
     function jsonp($data = [], $code = 200, $header = [], $options = [])
     {
@@ -484,7 +492,7 @@ if (!function_exists('xml')) {
      * @param integer $code 状态码
      * @param array $header 头部
      * @param array $options 参数
-     * @return \think\response\Xml
+     * @return Xml
      */
     function xml($data = [], $code = 200, $header = [], $options = [])
     {
@@ -499,7 +507,7 @@ if (!function_exists('redirect')) {
      * @param array|integer $params 额外参数
      * @param integer $code 状态码
      * @param array $with 隐式传参
-     * @return \think\response\Redirect
+     * @return Redirect
      */
     function redirect($url = [], $params = [], $code = 302, $with = [])
     {
@@ -575,7 +583,7 @@ if (!function_exists('collection')) {
     /**
      * 数组转换为数据集对象
      * @param array $resultSet 数据集数组
-     * @return \think\model\Collection|\think\Collection
+     * @return \think\model\Collection|Collection
      */
     function collection($resultSet)
     {
@@ -583,7 +591,7 @@ if (!function_exists('collection')) {
         if ($item instanceof Model) {
             return \think\model\Collection::make($resultSet);
         } else {
-            return \think\Collection::make($resultSet);
+            return Collection::make($resultSet);
         }
     }
 }

@@ -21,12 +21,12 @@ class Controller
     use Jump;
 
     /**
-     * @var \think\View 视图类实例
+     * @var View 视图类实例
      */
     protected $view;
 
     /**
-     * @var \think\Request Request 实例
+     * @var Request Request 实例
      */
     protected $request;
 

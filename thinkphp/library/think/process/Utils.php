@@ -9,6 +9,8 @@
 
 namespace think\process;
 
+use InvalidArgumentException;
+
 class Utils
 {
 
@@ -51,7 +53,7 @@ class Utils
      * @param string $caller
      * @param mixed $input
      * @return string
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public static function validateInput($caller, $input)
     {
@@ -62,7 +64,7 @@ class Utils
             if (is_scalar($input)) {
                 return (string)$input;
             }
-            throw new \InvalidArgumentException(sprintf('%s only accepts strings or stream resources.', $caller));
+            throw new InvalidArgumentException(sprintf('%s only accepts strings or stream resources.', $caller));
         }
         return $input;
     }

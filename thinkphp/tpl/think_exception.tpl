@@ -528,7 +528,7 @@ return implode(', ', $result);
     var LINE = <?php
     echo $line;
 
-    ?>;
+    ?>
 
     function $(selector, node) {
         var elements;

@@ -11,10 +11,16 @@
 
 namespace think\console;
 
+use Closure;
+use Exception;
+use InvalidArgumentException;
+use LogicException;
+use ReflectionFunction;
 use think\Console;
 use think\console\input\Argument;
 use think\console\input\Definition;
 use think\console\input\Option;
+use Traversable;
 
 class Command
 {
@@ -42,7 +48,7 @@ class Command
     /**
      * 构造方法
      * @param string|null $name 命令名称,如果没有设置则比如在 configure() 里设置
-     * @throws \LogicException
+     * @throws LogicException
      * @api
      */
     public function __construct($name = null)
@@ -56,7 +62,7 @@ class Command
         $this->configure();
 
         if (!$this->name) {
-            throw new \LogicException(sprintf('The command defined in "%s" cannot have an empty name.', get_class($this)));
+            throw new LogicException(sprintf('The command defined in "%s" cannot have an empty name.', get_class($this)));
         }
     }
 
@@ -108,12 +114,12 @@ class Command
      * @param Input $input
      * @param Output $output
      * @return null|int
-     * @throws \LogicException
+     * @throws LogicException
      * @see setCode()
      */
     protected function execute(Input $input, Output $output)
     {
-        throw new \LogicException('You must override the execute() method in the concrete command class.');
+        throw new LogicException('You must override the execute() method in the concrete command class.');
     }
 
     /**
@@ -139,7 +145,7 @@ class Command
      * @param Input $input
      * @param Output $output
      * @return int
-     * @throws \Exception
+     * @throws Exception
      * @see setCode()
      * @see execute()
      */
@@ -155,7 +161,7 @@ class Command
 
         try {
             $input->bind($this->definition);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if (!$this->ignoreValidationErrors) {
                 throw $e;
             }
@@ -182,19 +188,19 @@ class Command
      * 设置执行代码
      * @param callable $code callable(InputInterface $input, OutputInterface $output)
      * @return Command
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @see execute()
      */
     public function setCode(callable $code)
     {
         if (!is_callable($code)) {
-            throw new \InvalidArgumentException('Invalid callable provided to Command::setCode.');
+            throw new InvalidArgumentException('Invalid callable provided to Command::setCode.');
         }
 
-        if (PHP_VERSION_ID >= 50400 && $code instanceof \Closure) {
-            $r = new \ReflectionFunction($code);
+        if (PHP_VERSION_ID >= 50400 && $code instanceof Closure) {
+            $r = new ReflectionFunction($code);
             if (null === $r->getClosureThis()) {
-                $code = \Closure::bind($code, $this);
+                $code = Closure::bind($code, $this);
             }
         }
 
@@ -303,7 +309,7 @@ class Command
      * 设置指令名称
      * @param string $name
      * @return Command
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setName($name)
     {
@@ -389,12 +395,12 @@ class Command
      * 设置别名
      * @param string[] $aliases
      * @return Command
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setAliases($aliases)
     {
-        if (!is_array($aliases) && !$aliases instanceof \Traversable) {
-            throw new \InvalidArgumentException('$aliases must be an array or an instance of \Traversable');
+        if (!is_array($aliases) && !$aliases instanceof Traversable) {
+            throw new InvalidArgumentException('$aliases must be an array or an instance of \Traversable');
         }
 
         foreach ($aliases as $alias) {
@@ -459,12 +465,12 @@ class Command
     /**
      * 验证指令名称
      * @param string $name
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function validateName($name)
     {
         if (!preg_match('/^[^\:]++(\:[^\:]++)*$/', $name)) {
-            throw new \InvalidArgumentException(sprintf('Command name "%s" is invalid.', $name));
+            throw new InvalidArgumentException(sprintf('Command name "%s" is invalid.', $name));
         }
     }
 }

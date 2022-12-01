@@ -11,6 +11,9 @@
 
 namespace think\model\relation;
 
+use Closure;
+use PDOStatement;
+use think\Collection;
 use think\db\Query;
 use think\Exception;
 use think\Loader;
@@ -47,8 +50,8 @@ class MorphOne extends Relation
     /**
      * 延迟获取关联数据
      * @param string $subRelation 子关联名
-     * @param \Closure $closure 闭包查询条件
-     * @return false|\PDOStatement|string|\think\Collection
+     * @param Closure $closure 闭包查询条件
+     * @return false|PDOStatement|string|Collection
      */
     public function getRelation($subRelation = '', $closure = null)
     {
@@ -96,7 +99,7 @@ class MorphOne extends Relation
      * @param array $resultSet 数据集
      * @param string $relation 当前关联名
      * @param string $subRelation 子关联名
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @return void
      */
     public function eagerlyResultSet(&$resultSet, $relation, $subRelation, $closure)
@@ -141,7 +144,7 @@ class MorphOne extends Relation
      * @param Model $result 数据对象
      * @param string $relation 当前关联名
      * @param string $subRelation 子关联名
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @return void
      */
     public function eagerlyResult(&$result, $relation, $subRelation, $closure)
@@ -172,7 +175,7 @@ class MorphOne extends Relation
      * @param array $where 关联预查询条件
      * @param string $relation 关联名
      * @param string $subRelation 子关联
-     * @param bool|\Closure $closure 闭包
+     * @param bool|Closure $closure 闭包
      * @return array
      */
     protected function eagerlyMorphToOne($where, $relation, $subRelation = '', $closure = false)
@@ -252,7 +255,7 @@ class MorphOne extends Relation
     /**
      * 创建关联统计子查询
      * @access public
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @param string $name 统计数据别名
      * @return string
      */

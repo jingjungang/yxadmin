@@ -11,6 +11,8 @@
 
 namespace think\model\relation;
 
+use Closure;
+use PDOStatement;
 use think\db\Query;
 use think\Loader;
 use think\Model;
@@ -41,9 +43,9 @@ class BelongsTo extends OneToOne
     /**
      * 延迟获取关联数据
      * @param string $subRelation 子关联名
-     * @param \Closure $closure 闭包查询条件
+     * @param Closure $closure 闭包查询条件
      * @access public
-     * @return array|false|\PDOStatement|string|Model
+     * @return array|false|PDOStatement|string|Model
      */
     public function getRelation($subRelation = '', $closure = null)
     {
@@ -112,7 +114,7 @@ class BelongsTo extends OneToOne
      * @param array $resultSet 数据集
      * @param string $relation 当前关联名
      * @param string $subRelation 子关联名
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @return void
      */
     protected function eagerlySet(&$resultSet, $relation, $subRelation, $closure)
@@ -166,7 +168,7 @@ class BelongsTo extends OneToOne
      * @param Model $result 数据对象
      * @param string $relation 当前关联名
      * @param string $subRelation 子关联名
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @return void
      */
     protected function eagerlyOne(&$result, $relation, $subRelation, $closure)

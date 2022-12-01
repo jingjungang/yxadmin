@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace think\console\command\optimize;
 
+use ReflectionClass;
 use think\App;
 use think\console\Command;
 use think\console\Input;
@@ -90,7 +91,7 @@ class Schema extends Command
 
     protected function buildModelSchema($class)
     {
-        $reflect = new \ReflectionClass($class);
+        $reflect = new ReflectionClass($class);
         if (!$reflect->isAbstract() && $reflect->isSubclassOf('\think\Model')) {
             $table = $class::getTable();
             $dbName = $class::getConfig('database');

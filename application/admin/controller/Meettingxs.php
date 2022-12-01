@@ -3,8 +3,11 @@
 namespace app\admin\controller;
 header("Content-Type: text/html;charset=utf-8");
 
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\Cache;
+use think\exception\DbException;
 
 include('Upload.php');
 
@@ -154,8 +157,8 @@ class Meettingxs extends AdminBase
             $where = array('meettingid' => $Meetting['id']);
             $arr = db('meettingcustomer')
                 ->alias('a')
-                ->join('hospital h', 'a.hospitalid = h.id','left')
-                ->join('customer c', 'a.name = c.id','left')
+                ->join('hospital h', 'a.hospitalid = h.id', 'left')
+                ->join('customer c', 'a.name = c.id', 'left')
                 ->where($where)
                 ->field('h.name as hname,a.*,c.name')
                 ->order('id', 'DESC')
@@ -655,7 +658,6 @@ class Meettingxs extends AdminBase
     // 审核会议
     public function checkMeetting()
     {
-
         $data = $_POST;
         $flag = $data['flag'];
         $infos['code'] = 0;
@@ -664,8 +666,9 @@ class Meettingxs extends AdminBase
             if ($flag == 1) { //通过
                 $params['status'] = 2;
                 $res = $transaction->where('id in (' . $data['id'] . ')')->update($params);
-
-                if ($res) {
+                // 插入积分记录
+                $res2 = $this->addScore($data);
+                if ($res && $res2) {
                     $infos['code'] = 1;
                     $infos['msg'] = '操作成功';
                 } else {
@@ -704,13 +707,72 @@ class Meettingxs extends AdminBase
                 }
             }
         } catch (Exception $e) {
-            $temp = $transaction->getLastSql();
             $transaction->rollback(); //事务回滚
             $infos['code'] = 0;
             $infos['msg'] = $e->getMessage();
         }
 
         return $infos;
+    }
+
+    /**
+     * 积分添加
+     * @param $data array ids
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
+     */
+    private function addScore($data)
+    {
+        $list = db('meetting')->where('id in (' . $data['id'] . ')')->select();
+        $len = count($list);
+        $res = 0;
+        if ($len > 0) {
+            foreach ($list as $item) {
+                // 组织会议的员工（主管）
+                $type = $item['type2']; //会议类型
+                $infos = db('rules')->where(array('maintype' => 1, 'childtype' => $type, 'role' => 1))->find();
+                if ($infos) {
+                    $data['address'] = $item['province'] . '' . $item['city'];
+                    $data['mdate'] = date('Y-m', strtotime($item['mdate']));
+                    $data['employeeid'] = $item['uid'];
+                    $data['role'] = 1;  //与会形式1组织 2协助 3参与
+                    $data['status'] = 1;
+                    $data['mtype'] = $type;
+                    $data['score'] = $infos['score'];
+                    unset($data['flag']);
+                    $res = db('rulesrecord')->insert($data);
+                } else {
+                    $res = '2'; // 没有设置积分规则
+                }
+
+                // 每一个协助员工 meettingemployee
+                $infos = db('rules')->where(array('maintype' => 1, 'childtype' => $type, 'role' => 2))->find();
+                $users = db('meettingemployee')->where('meettingid in (' . $item['id'] . ')')->field('employeeid')->select();
+                if ($infos) {
+                    if ($users) {
+                        foreach ($users as $user) {
+                            $datas['address'] = $item['province'] . '' . $item['city'];
+                            $datas['mdate'] = date('Y-m', strtotime($item['mdate']));
+                            $datas['employeeid'] = $item['uid'];
+                            $datas['role'] = 2;  //与会形式1组织 2协助 3参与
+                            $datas['status'] = 1; //有效
+                            $datas['mtype'] = $type;
+                            if ($infos) {
+                                $datas['score'] = $infos['score'];
+                            }
+                            unset($data['flag']);
+                            $res = db('rulesrecord')->insert($datas);
+                        }
+                    } else {
+                        $res = '3'; // 没有员工协助
+                    }
+                } else {
+                    $res = '2'; // 没有设置积分规则
+                }
+            }
+        }
+        return $res;
     }
 
 }

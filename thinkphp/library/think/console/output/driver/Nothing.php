@@ -11,6 +11,7 @@
 
 namespace think\console\output\driver;
 
+use Exception;
 use think\console\Output;
 
 class Nothing
@@ -26,7 +27,7 @@ class Nothing
         // do nothing
     }
 
-    public function renderException(\Exception $e)
+    public function renderException(Exception $e)
     {
         // do nothing
     }

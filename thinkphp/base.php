@@ -9,6 +9,9 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+use think\Config;
+use think\Loader;
+
 define('THINK_VERSION', '5.0.24');
 define('THINK_START_TIME', microtime(true));
 define('THINK_START_MEM', memory_get_usage());
@@ -56,10 +59,10 @@ if (is_file(ROOT_PATH . '.env')) {
 }
 
 // 注册自动加载
-\think\Loader::register();
+Loader::register();
 
 // 注册错误和异常处理机制
 \think\Error::register();
 
 // 加载惯例配置文件
-\think\Config::set(include THINK_PATH . 'convention' . EXT);
+Config::set(include THINK_PATH . 'convention' . EXT);

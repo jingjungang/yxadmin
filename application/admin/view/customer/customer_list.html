@@ -121,18 +121,18 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <if condition="check_auth('admin/Customer/CustomerDetails')">
-                                                <li><a href="javascript:;" data-id="{$vo['id']}"
+                                                <li><a href="javascript:" data-id="{$vo['id']}"
                                                        class="font-bold CustomerDetails">编辑</a>
                                                 </li>
                                             </if>
                                             <if condition="check_auth('admin/Customer/innerMeettings')">
-                                                <li><a href="javascript:;" data-id="{$vo['id']}"
+                                                <li><a href="javascript:" data-id="{$vo['id']}"
                                                        class="font-bold innerMeettings">关联会议</a>
                                                 </li>
                                             </if>
                                             <if condition="check_auth('admin/Customer/delCustomer')">
                                                 <li data-id="{$vo['id']}" class="font-bold del-article"><a
-                                                        href="javascript:;">删除</a></li>
+                                                        href="javascript:">删除</a></li>
                                             </if>
                                         </ul>
                                     </div>

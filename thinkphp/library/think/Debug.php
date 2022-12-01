@@ -11,6 +11,7 @@
 
 namespace think;
 
+use think\debug\Html;
 use think\exception\ClassNotFoundException;
 use think\response\Redirect;
 
@@ -230,7 +231,7 @@ class Debug
             throw new ClassNotFoundException('class not exists:' . $class, $class);
         }
 
-        /** @var \think\debug\Console|\think\debug\Html $trace */
+        /** @var \think\debug\Console|Html $trace */
         $trace = new $class($config);
 
         if ($response instanceof Redirect) {

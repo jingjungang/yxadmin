@@ -11,6 +11,12 @@
 
 namespace think;
 
+use Closure;
+use InvalidArgumentException;
+use ReflectionClass;
+use ReflectionFunction;
+use ReflectionMethod;
+use ReflectionParameter;
 use think\exception\ClassNotFoundException;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
@@ -304,13 +310,13 @@ class App
     /**
      * 执行函数或者闭包方法 支持参数调用
      * @access public
-     * @param string|array|\Closure $function 函数或者闭包
+     * @param string|array|Closure $function 函数或者闭包
      * @param array $vars 变量
      * @return mixed
      */
     public static function invokeFunction($function, $vars = [])
     {
-        $reflect = new \ReflectionFunction($function);
+        $reflect = new ReflectionFunction($function);
         $args = self::bindParams($reflect, $vars);
 
         // 记录执行信息
@@ -330,10 +336,10 @@ class App
     {
         if (is_array($method)) {
             $class = is_object($method[0]) ? $method[0] : self::invokeClass($method[0]);
-            $reflect = new \ReflectionMethod($class, $method[1]);
+            $reflect = new ReflectionMethod($class, $method[1]);
         } else {
             // 静态方法
-            $reflect = new \ReflectionMethod($method);
+            $reflect = new ReflectionMethod($method);
         }
 
         $args = self::bindParams($reflect, $vars);
@@ -352,7 +358,7 @@ class App
      */
     public static function invokeClass($class, $vars = [])
     {
-        $reflect = new \ReflectionClass($class);
+        $reflect = new ReflectionClass($class);
         $constructor = $reflect->getConstructor();
         $args = $constructor ? self::bindParams($constructor, $vars) : [];
 
@@ -362,7 +368,7 @@ class App
     /**
      * 绑定参数
      * @access private
-     * @param \ReflectionMethod|\ReflectionFunction $reflect 反射类
+     * @param ReflectionMethod|ReflectionFunction $reflect 反射类
      * @param array $vars 变量
      * @return array
      */
@@ -392,7 +398,7 @@ class App
     /**
      * 获取参数值
      * @access private
-     * @param \ReflectionParameter $param 参数
+     * @param ReflectionParameter $param 参数
      * @param array $vars 变量
      * @param string $type 类别
      * @return array
@@ -410,7 +416,7 @@ class App
                 $result = $bind;
             } else {
                 if (method_exists($className, 'invoke')) {
-                    $method = new \ReflectionMethod($className, 'invoke');
+                    $method = new ReflectionMethod($className, 'invoke');
 
                     if ($method->isPublic() && $method->isStatic()) {
                         return $className::invoke(Request::instance());
@@ -428,7 +434,7 @@ class App
         } elseif ($param->isDefaultValueAvailable()) {
             $result = $param->getDefaultValue();
         } else {
-            throw new \InvalidArgumentException('method param miss:' . $name);
+            throw new InvalidArgumentException('method param miss:' . $name);
         }
 
         return $result;
@@ -440,7 +446,7 @@ class App
      * @param array $dispatch 调用信息
      * @param array $config 配置信息
      * @return Response|mixed
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected static function exec($dispatch, $config)
     {
@@ -476,7 +482,7 @@ class App
                 $data = $dispatch['response'];
                 break;
             default:
-                throw new \InvalidArgumentException('dispatch type not support');
+                throw new InvalidArgumentException('dispatch type not support');
         }
 
         return $data;
@@ -591,7 +597,7 @@ class App
             // 执行操作方法
             $call = [$instance, $action];
             // 严格获取当前操作方法名
-            $reflect = new \ReflectionMethod($instance, $action);
+            $reflect = new ReflectionMethod($instance, $action);
             $methodName = $reflect->getName();
             $suffix = $config['action_suffix'];
             $actionName = $suffix ? substr($methodName, 0, -strlen($suffix)) : $methodName;
@@ -614,10 +620,10 @@ class App
     /**
      * URL路由检测（根据PATH_INFO)
      * @access public
-     * @param \think\Request $request 请求实例
+     * @param Request $request 请求实例
      * @param array $config 配置信息
      * @return array
-     * @throws \think\Exception
+     * @throws Exception
      */
     public static function routeCheck($request, array $config)
     {

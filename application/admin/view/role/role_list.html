@@ -72,7 +72,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <a href="javascript:;" class="font-bold edit-role"
+                                                        <a href="javascript:" class="font-bold edit-role"
                                                            data-id="{$vo['role_id']}">修改</a>
                                                     </li>
                                                 </ul>
@@ -88,12 +88,12 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <if condition="check_auth('admin/Role/updateRoleAuth')">
-                                                    <li><a href="javascript:;" class="font-bold edit-role"
+                                                    <li><a href="javascript:" class="font-bold edit-role"
                                                            data-id="{$vo['role_id']}">修改</a></li>
                                                 </if>
 
                                                 <if condition="check_auth('admin/Role/delRole')">
-                                                    <li><a href="javascript:;" class="font-bold del-role"
+                                                    <li><a href="javascript:" class="font-bold del-role"
                                                            data-id="{$vo['role_id']}">删除</a></li>
                                                 </if>
 

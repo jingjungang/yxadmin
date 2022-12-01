@@ -11,6 +11,7 @@
 
 namespace think\process\pipes;
 
+use RuntimeException;
 use think\Process;
 
 class Windows extends Pipes
@@ -41,7 +42,7 @@ class Windows extends Pipes
             foreach ($this->files as $offset => $file) {
                 $this->fileHandles[$offset] = fopen($this->files[$offset], 'rb');
                 if (false === $this->fileHandles[$offset]) {
-                    throw new \RuntimeException('A temporary file could not be opened to write the process output to, verify that your TEMP environment variable is writable');
+                    throw new RuntimeException('A temporary file could not be opened to write the process output to, verify that your TEMP environment variable is writable');
                 }
             }
         }

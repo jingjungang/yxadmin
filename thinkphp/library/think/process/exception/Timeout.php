@@ -11,9 +11,11 @@
 
 namespace think\process\exception;
 
+use LogicException;
+use RuntimeException;
 use think\Process;
 
-class Timeout extends \RuntimeException
+class Timeout extends RuntimeException
 {
 
     const TYPE_GENERAL = 1;
@@ -55,7 +57,7 @@ class Timeout extends \RuntimeException
                 return $this->process->getIdleTimeout();
 
             default:
-                throw new \LogicException(sprintf('Unknown timeout type "%d".', $this->timeoutType));
+                throw new LogicException(sprintf('Unknown timeout type "%d".', $this->timeoutType));
         }
     }
 }

@@ -11,6 +11,8 @@
 
 namespace think\cache\driver;
 
+use DateTime;
+use Exception;
 use think\cache\Driver;
 
 /**
@@ -135,7 +137,7 @@ class File extends Driver
      * @access public
      * @param string $name 缓存变量名
      * @param mixed $value 存储数据
-     * @param integer|\DateTime $expire 有效时间（秒）
+     * @param integer|DateTime $expire 有效时间（秒）
      * @return boolean
      */
     public function set($name, $value, $expire = null)
@@ -143,7 +145,7 @@ class File extends Driver
         if (is_null($expire)) {
             $expire = $this->options['expire'];
         }
-        if ($expire instanceof \DateTime) {
+        if ($expire instanceof DateTime) {
             $expire = $expire->getTimestamp() - time();
         }
         $filename = $this->getCacheKey($name, true);
@@ -217,7 +219,7 @@ class File extends Driver
         $filename = $this->getCacheKey($name);
         try {
             return $this->unlink($filename);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
     }
 

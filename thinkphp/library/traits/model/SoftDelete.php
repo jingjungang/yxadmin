@@ -2,6 +2,7 @@
 
 namespace traits\model;
 
+use Closure;
 use think\Collection;
 use think\db\Query;
 use think\Model;
@@ -116,7 +117,7 @@ trait SoftDelete
         if (is_array($data) && key($data) !== 0) {
             $query->where($data);
             $data = null;
-        } elseif ($data instanceof \Closure) {
+        } elseif ($data instanceof Closure) {
             call_user_func_array($data, [& $query]);
             $data = null;
         }

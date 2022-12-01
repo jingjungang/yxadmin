@@ -63,7 +63,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/phpStudy/PHPTutorial/WWW/cpms-php-master/application/admin/view",
+    "last_opened_file_path": "D:/phpStudy/PHPTutorial/WWW/cpms-php-master/application/admin/controller",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php",
     "settings.editor.splitter.proportion": "0.27713814",
     "vue.rearranger.settings.migration": "true"
@@ -76,8 +77,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view" />
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\controller" />
+      <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view" />
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view\rulesrecord" />
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\model" />
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\public\static\images" />
@@ -110,12 +111,15 @@
       <workItem from="1669081397337" duration="51946000" />
       <workItem from="1669601518901" duration="1954000" />
       <workItem from="1669619586389" duration="23822000" />
-      <workItem from="1669786277863" duration="12472000" />
+      <workItem from="1669786277863" duration="34303000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -134,9 +138,11 @@
         <watch expression="$li" />
         <watch expression="$this-&gt;options['query']" />
         <watch expression="$_FILES['file']['name']" />
+        <watch expression="$arr" />
       </configuration>
       <configuration name="PhpWebAppRunConfigurationType">
         <watch expression="$t" />
+        <watch expression="$temp" />
       </configuration>
     </watches-manager>
   </component>

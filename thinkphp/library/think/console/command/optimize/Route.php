@@ -10,6 +10,8 @@
 // +----------------------------------------------------------------------
 namespace think\console\command\optimize;
 
+use Closure;
+use ReflectionFunction;
 use think\console\Command;
 use think\console\Input;
 use think\console\Output;
@@ -57,8 +59,8 @@ class Route extends Command
 
     protected function buildClosure(&$value)
     {
-        if ($value instanceof \Closure) {
-            $reflection = new \ReflectionFunction($value);
+        if ($value instanceof Closure) {
+            $reflection = new ReflectionFunction($value);
             $startLine = $reflection->getStartLine();
             $endLine = $reflection->getEndLine();
             $file = $reflection->getFileName();

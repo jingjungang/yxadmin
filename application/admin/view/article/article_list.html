@@ -78,9 +78,9 @@
                                 <td class="center" align="center">
 
                                     <switch name="$vo['article_status']">
-                                        <case value="0"><a href="javascript:;" style="color:#1ab394;">发布</a></case>
-                                        <case value="1"><a href="javascript:;" style="color:#ed5565;">删除</a></case>
-                                        <case value="2"><a href="javascript:;" style="color:#f8ac59;">草稿</a></case>
+                                        <case value="0"><a href="javascript:" style="color:#1ab394;">发布</a></case>
+                                        <case value="1"><a href="javascript:" style="color:#ed5565;">删除</a></case>
+                                        <case value="2"><a href="javascript:" style="color:#f8ac59;">草稿</a></case>
                                     </switch>
                                 </td>
                                 <td class="center" align="center">
@@ -90,13 +90,13 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <if condition="check_auth('admin/Article/updateArticle')">
-                                                <li><a href="javascript:;" data-id="{$vo['article_id']}"
+                                                <li><a href="javascript:" data-id="{$vo['article_id']}"
                                                        class="font-bold edit-article">修改</a>
                                                 </li>
                                             </if>
                                             <if condition="check_auth('admin/Article/delArticle')">
                                                 <li data-id="{$vo['article_id']}" class="font-bold del-article"><a
-                                                        href="javascript:;">删除</a></li>
+                                                        href="javascript:">删除</a></li>
                                             </if>
                                         </ul>
                                     </div>

@@ -11,6 +11,8 @@
 
 namespace think\process;
 
+use InvalidArgumentException;
+use LogicException;
 use think\Process;
 
 class Builder
@@ -157,7 +159,7 @@ class Builder
         $timeout = (float)$timeout;
 
         if ($timeout < 0) {
-            throw new \InvalidArgumentException('The timeout value must be a valid positive integer or float number.');
+            throw new InvalidArgumentException('The timeout value must be a valid positive integer or float number.');
         }
 
         $this->timeout = $timeout;
@@ -207,7 +209,7 @@ class Builder
     public function getProcess()
     {
         if (0 === count($this->prefix) && 0 === count($this->arguments)) {
-            throw new \LogicException('You must add() command arguments before calling getProcess().');
+            throw new LogicException('You must add() command arguments before calling getProcess().');
         }
 
         $options = $this->options;

@@ -11,6 +11,8 @@
 
 namespace think\console\output;
 
+use Exception;
+use RuntimeException;
 use think\console\Input;
 use think\console\Output;
 use think\console\output\question\Choice;
@@ -69,7 +71,7 @@ class Ask
             if ($this->question->isHidden()) {
                 try {
                     $ret = trim($this->getHiddenResponse($inputStream));
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     if (!$this->question->isHiddenFallback()) {
                         throw $e;
                     }
@@ -79,7 +81,7 @@ class Ask
             if (false === $ret) {
                 $ret = fgets($inputStream, 4096);
                 if (false === $ret) {
-                    throw new \RuntimeException('Aborted');
+                    throw new RuntimeException('Aborted');
                 }
                 $ret = trim($ret);
             }
@@ -212,7 +214,7 @@ class Ask
             shell_exec(sprintf('stty %s', $sttyMode));
 
             if (false === $value) {
-                throw new \RuntimeException('Aborted');
+                throw new RuntimeException('Aborted');
             }
 
             $value = trim($value);
@@ -230,12 +232,12 @@ class Ask
             return $value;
         }
 
-        throw new \RuntimeException('Unable to hide the response.');
+        throw new RuntimeException('Unable to hide the response.');
     }
 
     protected function validateAttempts($interviewer)
     {
-        /** @var \Exception $error */
+        /** @var Exception $error */
         $error = null;
         $attempts = $this->question->getMaxAttempts();
         while (null === $attempts || $attempts--) {
@@ -245,7 +247,7 @@ class Ask
 
             try {
                 return call_user_func($this->question->getValidator(), $interviewer());
-            } catch (\Exception $error) {
+            } catch (Exception $error) {
             }
         }
 

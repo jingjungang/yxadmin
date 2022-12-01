@@ -11,6 +11,7 @@
 
 namespace think\controller;
 
+use Exception;
 use think\App;
 use think\Request;
 use think\Response;
@@ -63,7 +64,7 @@ abstract class Rest
      * @access public
      * @param string $method 方法名
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function _empty($method)
     {
@@ -79,7 +80,7 @@ abstract class Rest
             return App::invokeMethod([$this, $fun]);
         } else {
             // 抛出异常
-            throw new \Exception('error action :' . $method);
+            throw new Exception('error action :' . $method);
         }
     }
 

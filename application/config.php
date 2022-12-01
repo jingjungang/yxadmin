@@ -165,6 +165,7 @@ return [
 
     'log' => [
         // 日志记录方式，内置 file socket 支持扩展
+        // 如果改为test则不记录日志，即可不写入任何日志。第二种方式是后面会提到的设置日志记录级别  File,test
         'type' => 'File',
         // 日志保存目录
         'path' => LOG_PATH,

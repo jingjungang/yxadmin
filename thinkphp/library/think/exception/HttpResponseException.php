@@ -11,9 +11,10 @@
 
 namespace think\exception;
 
+use RuntimeException;
 use think\Response;
 
-class HttpResponseException extends \RuntimeException
+class HttpResponseException extends RuntimeException
 {
     /**
      * @var Response

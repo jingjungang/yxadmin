@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 header("Content-Type: text/html;charset=utf-8");
 
+use PHPExcel_IOFactory;
 use think\Exception;
 use think\Cache;
 
@@ -203,10 +204,10 @@ class Hospital extends AdminBase
             //文件的扩展名
             $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
             if ($ext == 'xlsx') {
-                $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
+                $objReader = PHPExcel_IOFactory::createReader('Excel2007');
                 $objPHPExcel = $objReader->load($file_path, 'utf-8');
             } elseif ($ext == 'xls') {
-                $objReader = \PHPExcel_IOFactory::createReader('Excel5');
+                $objReader = PHPExcel_IOFactory::createReader('Excel5');
                 $objPHPExcel = $objReader->load($file_path, 'utf-8');
             }
 

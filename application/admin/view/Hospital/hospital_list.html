@@ -130,15 +130,15 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <if condition="check_auth('admin/Hospital/HospitalDetails')">
-                                                <li><a href="javascript:;" data-id="{$vo['id']}"
+                                                <li><a href="javascript:" data-id="{$vo['id']}"
                                                        class="font-bold HospitalDetails">编辑</a>
                                                 </li>
                                             </if>
                                             <li class="font-bold"><a data-id="{$vo['id']}"
-                                                    href="javascript:;" class="doctors">医院医生</a></li>
+                                                                     href="javascript:" class="doctors">医院医生</a></li>
                                             <if condition="check_auth('admin/Hospital/delHospital')">
                                                 <li data-id="{$vo['id']}" class="font-bold del-article"><a
-                                                        href="javascript:;">删除</a></li>
+                                                        href="javascript:">删除</a></li>
                                             </if>
                                         </ul>
                                     </div>

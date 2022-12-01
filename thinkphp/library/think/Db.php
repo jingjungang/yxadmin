@@ -11,6 +11,7 @@
 
 namespace think;
 
+use InvalidArgumentException;
 use think\db\Connection;
 use think\db\Query;
 
@@ -83,7 +84,7 @@ class Db
             $options = self::parseConfig($config);
 
             if (empty($options['type'])) {
-                throw new \InvalidArgumentException('Undefined db type');
+                throw new InvalidArgumentException('Undefined db type');
             }
 
             $class = false !== strpos($options['type'], '\\') ?

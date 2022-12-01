@@ -10,6 +10,10 @@
 // +----------------------------------------------------------------------
 namespace think\console\command\optimize;
 
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RuntimeException;
+use SplFileInfo;
 use think\App;
 use think\Config;
 use think\console\Command;
@@ -167,21 +171,21 @@ EOF;
     {
         if (is_string($path)) {
             if (is_file($path)) {
-                $path = [new \SplFileInfo($path)];
+                $path = [new SplFileInfo($path)];
             } elseif (is_dir($path)) {
 
-                $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
+                $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
 
                 $path = [];
 
-                /** @var \SplFileInfo $object */
+                /** @var SplFileInfo $object */
                 foreach ($objects as $object) {
                     if ($object->isFile() && $object->getExtension() == 'php') {
                         $path[] = $object;
                     }
                 }
             } else {
-                throw new \RuntimeException(
+                throw new RuntimeException(
                     'Could not scan for classes inside "' . $path .
                     '" which does not appear to be a file nor a folder'
                 );
@@ -190,7 +194,7 @@ EOF;
 
         $map = [];
 
-        /** @var \SplFileInfo $file */
+        /** @var SplFileInfo $file */
         foreach ($path as $file) {
             $filePath = $file->getRealPath();
 
@@ -238,7 +242,7 @@ EOF;
             if (isset($error['message'])) {
                 $message .= PHP_EOL . 'The following message may be helpful:' . PHP_EOL . $error['message'];
             }
-            throw new \RuntimeException(sprintf($message, $path));
+            throw new RuntimeException(sprintf($message, $path));
         }
 
         if (!preg_match('{\b(?:class|interface' . $extraTypes . ')\s}i', $contents)) {

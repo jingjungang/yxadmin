@@ -11,6 +11,8 @@
 
 namespace think;
 
+use Closure;
+
 class Hook
 {
     /**
@@ -118,7 +120,7 @@ class Hook
 
         $method = Loader::parseName($tag, 1, false);
 
-        if ($class instanceof \Closure) {
+        if ($class instanceof Closure) {
             $result = call_user_func_array($class, [& $params, $extra]);
             $class = 'Closure';
         } elseif (is_array($class)) {

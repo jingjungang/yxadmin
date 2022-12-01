@@ -11,6 +11,8 @@
 
 namespace think;
 
+use InvalidArgumentException;
+use think\db\Connection;
 use think\exception\ClassNotFoundException;
 
 class Loader
@@ -240,7 +242,7 @@ class Loader
             // Register directories for a new namespace.
             $length = strlen($prefix);
             if ('\\' !== $prefix[$length - 1]) {
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     "A non-empty PSR-4 prefix must end with a namespace separator."
                 );
             }
@@ -561,7 +563,7 @@ class Loader
      * @access public
      * @param mixed $config 数据库配置
      * @param bool|string $name 连接标识 true 强制重新连接
-     * @return \think\db\Connection
+     * @return Connection
      */
     public static function db($config = [], $name = false)
     {

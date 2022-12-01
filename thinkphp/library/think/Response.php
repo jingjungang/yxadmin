@@ -11,6 +11,7 @@
 
 namespace think;
 
+use InvalidArgumentException;
 use think\response\Json as JsonResponse;
 use think\response\Jsonp as JsonpResponse;
 use think\response\Redirect as RedirectResponse;
@@ -83,7 +84,7 @@ class Response
      * 发送数据到客户端
      * @access public
      * @return mixed
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function send()
     {
@@ -201,7 +202,7 @@ class Response
                 '__toString',
             ])
         ) {
-            throw new \InvalidArgumentException(sprintf('variable type error： %s', gettype($content)));
+            throw new InvalidArgumentException(sprintf('variable type error： %s', gettype($content)));
         }
 
         $this->content = (string)$content;
@@ -313,7 +314,7 @@ class Response
                     '__toString',
                 ])
             ) {
-                throw new \InvalidArgumentException(sprintf('variable type error： %s', gettype($content)));
+                throw new InvalidArgumentException(sprintf('variable type error： %s', gettype($content)));
             }
 
             $this->content = (string)$content;

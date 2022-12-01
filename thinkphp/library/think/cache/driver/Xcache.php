@@ -11,6 +11,8 @@
 
 namespace think\cache\driver;
 
+use BadFunctionCallException;
+use DateTime;
 use think\cache\Driver;
 
 /**
@@ -28,12 +30,12 @@ class Xcache extends Driver
      * 构造函数
      * @param array $options 缓存参数
      * @access public
-     * @throws \BadFunctionCallException
+     * @throws BadFunctionCallException
      */
     public function __construct($options = [])
     {
         if (!function_exists('xcache_info')) {
-            throw new \BadFunctionCallException('not support: Xcache');
+            throw new BadFunctionCallException('not support: Xcache');
         }
         if (!empty($options)) {
             $this->options = array_merge($this->options, $options);
@@ -70,7 +72,7 @@ class Xcache extends Driver
      * @access public
      * @param string $name 缓存变量名
      * @param mixed $value 存储数据
-     * @param integer|\DateTime $expire 有效时间（秒）
+     * @param integer|DateTime $expire 有效时间（秒）
      * @return boolean
      */
     public function set($name, $value, $expire = null)
@@ -78,7 +80,7 @@ class Xcache extends Driver
         if (is_null($expire)) {
             $expire = $this->options['expire'];
         }
-        if ($expire instanceof \DateTime) {
+        if ($expire instanceof DateTime) {
             $expire = $expire->getTimestamp() - time();
         }
         if ($this->tag && !$this->has($name)) {

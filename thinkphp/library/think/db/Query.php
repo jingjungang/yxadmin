@@ -11,7 +11,11 @@
 
 namespace think\db;
 
+use Closure;
+use DateTime;
+use LogicException;
 use PDO;
+use PDOStatement;
 use think\App;
 use think\Cache;
 use think\Collection;
@@ -1270,7 +1274,7 @@ class Query
      * 分析查询表达式
      * @access public
      * @param string $logic 查询逻辑 and or xor
-     * @param string|array|\Closure $field 查询字段
+     * @param string|array|Closure $field 查询字段
      * @param mixed $op 查询表达式
      * @param mixed $condition 查询条件
      * @param array $param 查询参数
@@ -1280,7 +1284,7 @@ class Query
     protected function parseWhereExp($logic, $field, $op, $condition, $param = [], $strict = false)
     {
         $logic = strtoupper($logic);
-        if ($field instanceof \Closure) {
+        if ($field instanceof Closure) {
             $this->options['where'][$logic][] = is_string($op) ? [$op, $field] : $field;
             return;
         }
@@ -1447,7 +1451,7 @@ class Query
      *                            var_page:分页变量,
      *                            list_rows:每页数量
      *                            type:分页类名
-     * @return \think\Paginator
+     * @return Paginator
      * @throws DbException
      */
     public function paginate($listRows = null, $simple = false, $config = [])
@@ -1618,14 +1622,14 @@ class Query
      * 查询缓存
      * @access public
      * @param mixed $key 缓存key
-     * @param integer|\DateTime $expire 缓存有效期
+     * @param integer|DateTime $expire 缓存有效期
      * @param string $tag 缓存标签
      * @return $this
      */
     public function cache($key = true, $expire = null, $tag = null)
     {
         // 增加快捷调用方式 cache(10) 等同于 cache(true, 10)
-        if ($key instanceof \DateTime || (is_numeric($key) && is_null($expire))) {
+        if ($key instanceof DateTime || (is_numeric($key) && is_null($expire))) {
             $expire = $key;
             $key = true;
         }
@@ -2081,7 +2085,7 @@ class Query
         foreach ($with as $key => $relation) {
             $subRelation = '';
             $closure = false;
-            if ($relation instanceof \Closure) {
+            if ($relation instanceof Closure) {
                 // 支持闭包查询过滤关联条件
                 $closure = $relation;
                 $relation = $key;
@@ -2131,7 +2135,7 @@ class Query
             }
             foreach ($relations as $key => $relation) {
                 $closure = $name = null;
-                if ($relation instanceof \Closure) {
+                if ($relation instanceof Closure) {
                     $closure = $relation;
                     $relation = $key;
                 } elseif (!is_int($key)) {
@@ -2452,7 +2456,7 @@ class Query
     /**
      * 执行查询但只返回PDOStatement对象
      * @access public
-     * @return \PDOStatement|string
+     * @return PDOStatement|string
      */
     public function getPdo()
     {
@@ -2473,8 +2477,8 @@ class Query
     /**
      * 查找记录
      * @access public
-     * @param array|string|Query|\Closure $data
-     * @return Collection|false|\PDOStatement|string
+     * @param array|string|Query|Closure $data
+     * @return Collection|false|PDOStatement|string
      * @throws DbException
      * @throws ModelNotFoundException
      * @throws DataNotFoundException
@@ -2483,7 +2487,7 @@ class Query
     {
         if ($data instanceof Query) {
             return $data->select();
-        } elseif ($data instanceof \Closure) {
+        } elseif ($data instanceof Closure) {
             call_user_func_array($data, [& $this]);
             $data = null;
         }
@@ -2522,7 +2526,7 @@ class Query
                 // 执行查询操作
                 $resultSet = $this->query($sql, $bind, $options['master'], $options['fetch_pdo']);
 
-                if ($resultSet instanceof \PDOStatement) {
+                if ($resultSet instanceof PDOStatement) {
                     // 返回PDOStatement对象
                     return $resultSet;
                 }
@@ -2620,8 +2624,8 @@ class Query
     /**
      * 查找单条记录
      * @access public
-     * @param array|string|Query|\Closure $data
-     * @return array|false|\PDOStatement|string|Model
+     * @param array|string|Query|Closure $data
+     * @return array|false|PDOStatement|string|Model
      * @throws DbException
      * @throws ModelNotFoundException
      * @throws DataNotFoundException
@@ -2630,7 +2634,7 @@ class Query
     {
         if ($data instanceof Query) {
             return $data->find();
-        } elseif ($data instanceof \Closure) {
+        } elseif ($data instanceof Closure) {
             call_user_func_array($data, [& $this]);
             $data = null;
         }
@@ -2685,7 +2689,7 @@ class Query
                 // 执行查询
                 $resultSet = $this->query($sql, $bind, $options['master'], $options['fetch_pdo']);
 
-                if ($resultSet instanceof \PDOStatement) {
+                if ($resultSet instanceof PDOStatement) {
                     // 返回PDOStatement对象
                     return $resultSet;
                 }
@@ -2744,8 +2748,8 @@ class Query
     /**
      * 查找多条记录 如果不存在则抛出异常
      * @access public
-     * @param array|string|Query|\Closure $data
-     * @return array|\PDOStatement|string|Model
+     * @param array|string|Query|Closure $data
+     * @return array|PDOStatement|string|Model
      * @throws DbException
      * @throws ModelNotFoundException
      * @throws DataNotFoundException
@@ -2758,8 +2762,8 @@ class Query
     /**
      * 查找单条记录 如果不存在则抛出异常
      * @access public
-     * @param array|string|Query|\Closure $data
-     * @return array|\PDOStatement|string|Model
+     * @param array|string|Query|Closure $data
+     * @return array|PDOStatement|string|Model
      * @throws DbException
      * @throws ModelNotFoundException
      * @throws DataNotFoundException
@@ -2777,7 +2781,7 @@ class Query
      * @param string $column 分批处理的字段名
      * @param string $order 排序规则
      * @return boolean
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function chunk($count, $callback, $column = null, $order = 'asc')
     {
@@ -2789,7 +2793,7 @@ class Query
 
         if (isset($options['order'])) {
             if (App::$debug) {
-                throw new \LogicException('chunk not support call order');
+                throw new LogicException('chunk not support call order');
             }
             unset($options['order']);
         }

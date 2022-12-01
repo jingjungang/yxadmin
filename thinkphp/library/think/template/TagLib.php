@@ -11,6 +11,7 @@
 
 namespace think\template;
 
+use stdClass;
 use think\Exception;
 
 /**
@@ -70,7 +71,7 @@ class TagLib
     /**
      * 构造函数
      * @access public
-     * @param \stdClass $template 模板引擎对象
+     * @param stdClass $template 模板引擎对象
      */
     public function __construct($template)
     {

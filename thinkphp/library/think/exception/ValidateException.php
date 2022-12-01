@@ -11,7 +11,9 @@
 
 namespace think\exception;
 
-class ValidateException extends \RuntimeException
+use RuntimeException;
+
+class ValidateException extends RuntimeException
 {
     protected $error;
 

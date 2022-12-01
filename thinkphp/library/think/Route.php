@@ -11,6 +11,7 @@
 
 namespace think;
 
+use Closure;
 use think\exception\HttpException;
 
 class Route
@@ -96,7 +97,7 @@ class Route
             foreach ($domain as $key => $item) {
                 self::domain($key, $item, $option, $pattern);
             }
-        } elseif ($rule instanceof \Closure) {
+        } elseif ($rule instanceof Closure) {
             // 执行闭包
             self::setDomain($domain);
             call_user_func_array($rule, []);
@@ -400,7 +401,7 @@ class Route
      * 注册路由分组
      * @access public
      * @param string|array $name 分组名称或者参数
-     * @param array|\Closure $routes 路由地址
+     * @param array|Closure $routes 路由地址
      * @param array $option 路由参数
      * @param array $pattern 变量规则
      * @return void
@@ -417,7 +418,7 @@ class Route
             $name = $currentGroup . ($name ? '/' . ltrim($name, '/') : '');
         }
         if (!empty($name)) {
-            if ($routes instanceof \Closure) {
+            if ($routes instanceof Closure) {
                 $currentOption = self::getGroup('option');
                 $currentPattern = self::getGroup('pattern');
                 self::setGroup($name, array_merge($currentOption, $option), array_merge($currentPattern, $pattern));
@@ -471,7 +472,7 @@ class Route
                 }
             }
 
-        } elseif ($routes instanceof \Closure) {
+        } elseif ($routes instanceof Closure) {
             // 闭包注册
             $currentOption = self::getGroup('option');
             $currentPattern = self::getGroup('pattern');
@@ -1358,7 +1359,7 @@ class Route
                 }
                 if (isset($m1[$key]) && isset($pattern[$name])) {
                     // 检查变量规则
-                    if ($pattern[$name] instanceof \Closure) {
+                    if ($pattern[$name] instanceof Closure) {
                         $result = call_user_func_array($pattern[$name], [$m1[$key]]);
                         if (false === $result) {
                             return false;
@@ -1441,7 +1442,7 @@ class Route
         if (isset($option['bind_model'])) {
             $bind = [];
             foreach ($option['bind_model'] as $key => $val) {
-                if ($val instanceof \Closure) {
+                if ($val instanceof Closure) {
                     $result = call_user_func_array($val, [$matches]);
                 } else {
                     if (is_array($val)) {
@@ -1486,7 +1487,7 @@ class Route
 
         // 检测路由after行为
         if (!empty($option['after_behavior'])) {
-            if ($option['after_behavior'] instanceof \Closure) {
+            if ($option['after_behavior'] instanceof Closure) {
                 $result = call_user_func_array($option['after_behavior'], []);
             } else {
                 foreach ((array)$option['after_behavior'] as $behavior) {
@@ -1504,7 +1505,7 @@ class Route
             }
         }
 
-        if ($route instanceof \Closure) {
+        if ($route instanceof Closure) {
             // 执行闭包
             $result = ['type' => 'function', 'function' => $route];
         } elseif (0 === strpos($route, '/') || strpos($route, '://')) {

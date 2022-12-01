@@ -11,9 +11,11 @@
 
 namespace think\process\exception;
 
+use InvalidArgumentException;
+use RuntimeException;
 use think\Process;
 
-class Failed extends \RuntimeException
+class Failed extends RuntimeException
 {
 
     private $process;
@@ -21,7 +23,7 @@ class Failed extends \RuntimeException
     public function __construct(Process $process)
     {
         if ($process->isSuccessful()) {
-            throw new \InvalidArgumentException('Expected a failed process, but the given process was successful.');
+            throw new InvalidArgumentException('Expected a failed process, but the given process was successful.');
         }
 
         $error = sprintf('The command "%s" failed.' . "\nExit Code: %s(%s)", $process->getCommandLine(), $process->getExitCode(), $process->getExitCodeText());

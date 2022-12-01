@@ -3,8 +3,11 @@
 namespace app\admin\controller;
 header("Content-Type: text/html;charset=utf-8");
 
+use think\db\exception\DataNotFoundException;
+use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\Cache;
+use think\exception\DbException;
 
 include('Upload.php');
 
@@ -127,8 +130,8 @@ class Meettingsale extends AdminBase
             if ($flag == 1) { //通过
                 $params['status'] = 2;
                 $res = $transaction->where('id in ('.$data['id'].')')->update($params);
-
-                if ($res) {
+                $res2 = $this->addScore($data);
+                if ($res&&$res2) {
                     $infos['code'] = 1;
                     $infos['msg'] = '操作成功';
                 }else{
@@ -174,6 +177,40 @@ class Meettingsale extends AdminBase
         }
 
         return $infos;
+    }
+
+    /**
+     * 积分添加
+     * @param $data
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
+     */
+    private function addScore($data)
+    {
+        $list =  db('meettingsale')->where('id in (' . $data['id'] . ')')->select();
+        $len = count($list);
+        $res = 0;
+        if ($len > 0) {
+            foreach ($list as $item) {
+                $type = $item['type2']; //会议类型
+                $infos = db('rules')->where(array('maintype' => 2, 'childtype' => $type))->find(); // maintype 2销售会议
+                if ($infos) {
+                    $data['address'] = $item['province'] . '' . $item['city'];
+                    $data['mdate'] = date('Y-m', strtotime($item['mdate']));
+                    $data['employeeid'] = $item['uid'];
+                    $data['role'] = 1;  //与会形式1组织 2协助 3参与
+                    $data['status'] = 1;
+                    $data['mtype'] = $type;
+                    $data['score'] = $infos['score'];
+                    unset($data['flag']);
+                    $res = db('rulesrecord')->insert($data);
+                } else {
+                    $res = '2'; // 没有设置积分规则
+                }
+            }
+        }
+        return $res;
     }
 
 }

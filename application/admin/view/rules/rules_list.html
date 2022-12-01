@@ -117,13 +117,13 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <if condition="check_auth('admin/Rules/RulesDetails')">
-                                                <li><a href="javascript:;" data-id="{$vo['id']}"
+                                                <li><a href="javascript:" data-id="{$vo['id']}"
                                                        class="font-bold RulesDetails">编辑</a>
                                                 </li>
                                             </if>
                                             <if condition="check_auth('admin/Rules/delRules')">
                                                 <li data-id="{$vo['id']}" class="font-bold del-rules"><a
-                                                        href="javascript:;">禁用</a></li>
+                                                        href="javascript:">禁用</a></li>
                                             </if>
                                         </ul>
                                     </div>

@@ -11,6 +11,9 @@
 
 namespace think\controller;
 
+use Exception;
+use Yar_Server;
+
 /**
  * ThinkPHP Yar控制器类
  */
@@ -30,11 +33,11 @@ abstract class Yar
 
         //判断扩展是否存在
         if (!extension_loaded('yar')) {
-            throw new \Exception('not support yar');
+            throw new Exception('not support yar');
         }
 
         //实例化Yar_Server
-        $server = new \Yar_Server($this);
+        $server = new Yar_Server($this);
         // 启动server
         $server->handle();
     }

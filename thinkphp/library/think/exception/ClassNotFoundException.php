@@ -11,7 +11,9 @@
 
 namespace think\exception;
 
-class ClassNotFoundException extends \RuntimeException
+use RuntimeException;
+
+class ClassNotFoundException extends RuntimeException
 {
     protected $class;
 

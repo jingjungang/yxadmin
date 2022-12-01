@@ -11,6 +11,10 @@
 
 namespace think\cache;
 
+use Closure;
+use Exception;
+use throwable;
+
 /**
  * 缓存基础类
  */
@@ -129,17 +133,17 @@ abstract class Driver
             try {
                 // 锁定
                 $this->set($name . '_lock', true);
-                if ($value instanceof \Closure) {
+                if ($value instanceof Closure) {
                     $value = call_user_func($value);
                 }
                 $this->set($name, $value, $expire);
                 // 解锁
                 $this->rm($name . '_lock');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // 解锁
                 $this->rm($name . '_lock');
                 throw $e;
-            } catch (\throwable $e) {
+            } catch (throwable $e) {
                 $this->rm($name . '_lock');
                 throw $e;
             }

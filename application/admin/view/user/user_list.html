@@ -77,7 +77,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <a href="javascript:;" class="font-bold edit-user"
+                                                        <a href="javascript:" class="font-bold edit-user"
                                                            data-id="{$vo['user_id']}">修改</a>
                                                     </li>
                                                 </ul>
@@ -93,11 +93,11 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <if condition="check_auth('admin/User/updateUser')">
-                                                    <li><a href="javascript:;" class="font-bold edit-user"
+                                                    <li><a href="javascript:" class="font-bold edit-user"
                                                            data-id="{$vo['user_id']}">修改</a></li>
                                                 </if>
                                                 <if condition="check_auth('admin/User/delUser')">
-                                                    <li><a href="javascript:;" class="font-bold del-user"
+                                                    <li><a href="javascript:" class="font-bold del-user"
                                                            data-id="{$vo['user_id']}">删除</a></li>
                                                 </if>
                                             </ul>

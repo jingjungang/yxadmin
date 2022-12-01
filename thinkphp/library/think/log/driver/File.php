@@ -11,6 +11,7 @@
 
 namespace think\log\driver;
 
+use Exception;
 use think\App;
 use think\Request;
 
@@ -100,7 +101,7 @@ class File
                     if (count($files) > $this->config['max_files']) {
                         unlink($files[0]);
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                 }
             } else {
                 $filename = date('Ym') . DIRECTORY_SEPARATOR . date('d') . $cli . '.log';
@@ -180,7 +181,7 @@ class File
         if (is_file($destination) && floor($this->config['file_size']) <= filesize($destination)) {
             try {
                 rename($destination, dirname($destination) . DIRECTORY_SEPARATOR . time() . '-' . basename($destination));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
             }
         }
     }

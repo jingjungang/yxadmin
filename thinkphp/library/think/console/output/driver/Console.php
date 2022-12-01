@@ -11,6 +11,9 @@
 
 namespace think\console\output\driver;
 
+use Exception;
+use InvalidArgumentException;
+use RuntimeException;
 use think\console\Output;
 use think\console\output\Formatter;
 
@@ -66,14 +69,14 @@ class Console
                     $message = strip_tags($this->formatter->format($message));
                     break;
                 default:
-                    throw new \InvalidArgumentException(sprintf('Unknown output type given (%s)', $type));
+                    throw new InvalidArgumentException(sprintf('Unknown output type given (%s)', $type));
             }
 
             $this->doWrite($message, $newline, $stream);
         }
     }
 
-    public function renderException(\Exception $e)
+    public function renderException(Exception $e)
     {
         $stderr = $this->openErrorStream();
         $decorated = $this->hasColorSupport($stderr);
@@ -346,7 +349,7 @@ class Console
             $stream = $this->stdout;
         }
         if (false === @fwrite($stream, $message . ($newline ? PHP_EOL : ''))) {
-            throw new \RuntimeException('Unable to write output.');
+            throw new RuntimeException('Unable to write output.');
         }
 
         fflush($stream);

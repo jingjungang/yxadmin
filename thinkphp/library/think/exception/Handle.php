@@ -11,6 +11,7 @@
 
 namespace think\exception;
 
+use Closure;
 use Exception;
 use think\App;
 use think\Config;
@@ -34,7 +35,7 @@ class Handle
     /**
      * Report or log an exception.
      *
-     * @param \Exception $exception
+     * @param Exception $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -78,12 +79,12 @@ class Handle
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Exception $e
+     * @param Exception $e
      * @return Response
      */
     public function render(Exception $e)
     {
-        if ($this->render && $this->render instanceof \Closure) {
+        if ($this->render && $this->render instanceof Closure) {
             $result = call_user_func_array($this->render, [$e]);
             if ($result) {
                 return $result;
@@ -195,7 +196,7 @@ class Handle
     /**
      * 获取错误编码
      * ErrorException则使用错误级别作为错误编码
-     * @param \Exception $exception
+     * @param Exception $exception
      * @return integer                错误编码
      */
     protected function getCode(Exception $exception)
@@ -210,7 +211,7 @@ class Handle
     /**
      * 获取错误信息
      * ErrorException则使用错误级别作为错误编码
-     * @param \Exception $exception
+     * @param Exception $exception
      * @return string                错误信息
      */
     protected function getMessage(Exception $exception)
@@ -235,7 +236,7 @@ class Handle
     /**
      * 获取出错文件内容
      * 获取错误的前9行和后9行
-     * @param \Exception $exception
+     * @param Exception $exception
      * @return array                 错误文件内容
      */
     protected function getSourceCode(Exception $exception)
@@ -259,7 +260,7 @@ class Handle
     /**
      * 获取异常扩展信息
      * 用于非调试模式html返回类型显示
-     * @param \Exception $exception
+     * @param Exception $exception
      * @return array                 异常类定义的扩展数据
      */
     protected function getExtendData(Exception $exception)

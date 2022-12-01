@@ -740,7 +740,7 @@ var mUtil = function () {
             el.parents().each(function () {
                 if ($(this).css('position') == 'fixed') {
                     result = true;
-                    return;
+
                 }
             });
 
@@ -4659,7 +4659,7 @@ jQuery.fn.extend({
                 if (Plugin.eventTrigger('linkClick', $(this)) === false) {
                     e.preventDefault();
                 }
-                ;
+
 
                 if (Plugin.getSubmenuMode() === 'dropdown' || Plugin.isConditionalSubmenuDropdown()) {
                     Plugin.handleSubmenuDropdownClose(e, $(this));
@@ -4860,7 +4860,7 @@ jQuery.fn.extend({
                 element.find('.m-menu__item--submenu.m-menu__item--hover').each(function () {
                     var el = $(this);
                     if (item.is(el) || el.find(item).length > 0 || item.find(el).length > 0) {
-                        return;
+
                     } else {
                         Plugin.hideSubmenuDropdown(el, true);
                     }

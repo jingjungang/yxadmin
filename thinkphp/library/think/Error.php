@@ -11,10 +11,12 @@
 
 namespace think;
 
+use Closure;
 use think\console\Output as ConsoleOutput;
 use think\exception\ErrorException;
 use think\exception\Handle;
 use think\exception\ThrowableError;
+use Throwable;
 
 class Error
 {
@@ -34,7 +36,7 @@ class Error
     /**
      * 异常处理
      * @access public
-     * @param \Exception|\Throwable $e 异常
+     * @param \Exception|Throwable $e 异常
      * @return void
      */
     public static function appException($e)
@@ -124,7 +126,7 @@ class Error
             } else {
                 $handle = new Handle;
 
-                if ($class instanceof \Closure) {
+                if ($class instanceof Closure) {
                     $handle->setRender($class);
                 }
 

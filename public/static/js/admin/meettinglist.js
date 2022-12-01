@@ -4,7 +4,7 @@
 function commitcheck(flag) {
 
     var che = document.getElementsByName("selectList");
-    var li = new Array();
+    var li = [];
     var index = 0;
     for (var i = 0; i < che.length; i++) {
         if (che[i].checked == true) {

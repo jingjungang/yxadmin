@@ -11,6 +11,8 @@
 
 namespace think\model\relation;
 
+use Closure;
+use PDOStatement;
 use think\Collection;
 use think\Db;
 use think\db\Query;
@@ -153,8 +155,8 @@ class BelongsToMany extends Relation
     /**
      * 延迟获取关联数据
      * @param string $subRelation 子关联名
-     * @param \Closure $closure 闭包查询条件
-     * @return false|\PDOStatement|string|\think\Collection
+     * @param Closure $closure 闭包查询条件
+     * @return false|PDOStatement|string|Collection
      */
     public function getRelation($subRelation = '', $closure = null)
     {
@@ -169,7 +171,7 @@ class BelongsToMany extends Relation
     /**
      * 重载select方法
      * @param null $data
-     * @return false|\PDOStatement|string|Collection
+     * @return false|PDOStatement|string|Collection
      */
     public function select($data = null)
     {
@@ -195,7 +197,7 @@ class BelongsToMany extends Relation
     /**
      * 重载find方法
      * @param null $data
-     * @return array|false|\PDOStatement|string|Model
+     * @return array|false|PDOStatement|string|Model
      */
     public function find($data = null)
     {
@@ -209,8 +211,8 @@ class BelongsToMany extends Relation
     /**
      * 查找多条记录 如果不存在则抛出异常
      * @access public
-     * @param array|string|Query|\Closure $data
-     * @return array|\PDOStatement|string|Model
+     * @param array|string|Query|Closure $data
+     * @return array|PDOStatement|string|Model
      */
     public function selectOrFail($data = null)
     {
@@ -220,8 +222,8 @@ class BelongsToMany extends Relation
     /**
      * 查找单条记录 如果不存在则抛出异常
      * @access public
-     * @param array|string|Query|\Closure $data
-     * @return array|\PDOStatement|string|Model
+     * @param array|string|Query|Closure $data
+     * @return array|PDOStatement|string|Model
      */
     public function findOrFail($data = null)
     {
@@ -275,7 +277,7 @@ class BelongsToMany extends Relation
      * @param array $resultSet 数据集
      * @param string $relation 当前关联名
      * @param string $subRelation 子关联名
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @return void
      */
     public function eagerlyResultSet(&$resultSet, $relation, $subRelation, $closure)
@@ -319,7 +321,7 @@ class BelongsToMany extends Relation
      * @param Model $result 数据对象
      * @param string $relation 当前关联名
      * @param string $subRelation 子关联名
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @return void
      */
     public function eagerlyResult(&$result, $relation, $subRelation, $closure)
@@ -342,7 +344,7 @@ class BelongsToMany extends Relation
      * 关联统计
      * @access public
      * @param Model $result 数据对象
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @return integer
      */
     public function relationCount($result, $closure)
@@ -359,7 +361,7 @@ class BelongsToMany extends Relation
     /**
      * 获取关联统计子查询
      * @access public
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @param string $name 统计数据别名
      * @return string
      */

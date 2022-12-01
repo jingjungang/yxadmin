@@ -11,6 +11,7 @@
 
 namespace think\console\output\driver;
 
+use Exception;
 use think\console\Output;
 
 class Buffer
@@ -44,7 +45,7 @@ class Buffer
         }
     }
 
-    public function renderException(\Exception $e)
+    public function renderException(Exception $e)
     {
         // do nothing
     }

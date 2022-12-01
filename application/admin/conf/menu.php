@@ -111,29 +111,6 @@ $menu = array(
             )
 
         ),
-
-        array(
-            'name' => '费用管理',
-            'controller' => 'admin/Order',
-            'icon' => 'fa-money',
-            'child' => array(
-
-                array(
-                    'name' => '费用管理',
-
-                    'action' => 'admin/Article/articleList',
-
-                    "auth" => array(
-                        array("name" => '添加', 'action' => "admin/Article/addArticle"),
-                        array("name" => '删除', 'action' => "admin/Article/delArticle"),
-                        array("name" => '修改', 'action' => "admin/Article/updateArticle"),
-                    )
-                )
-
-            )
-
-        ),
-
         array(
             'name' => '用户管理',
             'controller' => 'admin/User',
@@ -174,19 +151,6 @@ $menu = array(
             'controller' => 'admin/System',
             'icon' => 'fa-gear',
             'child' => array(
-
-                // array(
-                // 	'name'=>'系统设置',
-
-                // 	'action'=>'admin/System/systemSetup',
-
-                //    "auth"=>array(
-                //          array("name"=>'添加','action'=>"admin/System/add"),
-                //          array("name"=>'删除','action'=>"admin/System/delete"),
-                //          array("name"=>'编辑','action'=>"admin/System/edit"),
-                //     )
-                //  ),
-
                 array(
                     'name' => '首页菜单',
 
@@ -208,23 +172,7 @@ $menu = array(
                         array("name" => '添加', 'action' => "admin/System/addLog"),
                         array("name" => '删除', 'action' => "admin/System/delLog")
                     )
-                ),
-
-                array(
-                    'name' => '字体图标1',
-
-                    'action' => 'admin/System/fontIcon',
-
-                    "auth" => array()
-                ),
-
-                array(
-                    'name' => '字体图标2',
-
-                    'action' => 'admin/System/glyphIcon',
-
-                    "auth" => array()
-                ),
+                )
             )
 
         ),

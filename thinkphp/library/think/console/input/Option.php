@@ -11,6 +11,9 @@
 
 namespace think\console\input;
 
+use InvalidArgumentException;
+use LogicException;
+
 class Option
 {
 
@@ -32,7 +35,7 @@ class Option
      * @param int $mode 选项类型(可选类型为 self::VALUE_*)
      * @param string $description 描述
      * @param mixed $default 默认值 (类型为 self::VALUE_REQUIRED 或者 self::VALUE_NONE 的时候必须为null)
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($name, $shortcut = null, $mode = null, $description = '', $default = null)
     {
@@ -41,7 +44,7 @@ class Option
         }
 
         if (empty($name)) {
-            throw new \InvalidArgumentException('An option name cannot be empty.');
+            throw new InvalidArgumentException('An option name cannot be empty.');
         }
 
         if (empty($shortcut)) {
@@ -57,14 +60,14 @@ class Option
             $shortcut = implode('|', $shortcuts);
 
             if (empty($shortcut)) {
-                throw new \InvalidArgumentException('An option shortcut cannot be empty.');
+                throw new InvalidArgumentException('An option shortcut cannot be empty.');
             }
         }
 
         if (null === $mode) {
             $mode = self::VALUE_NONE;
         } elseif (!is_int($mode) || $mode > 15 || $mode < 1) {
-            throw new \InvalidArgumentException(sprintf('Option mode "%s" is not valid.', $mode));
+            throw new InvalidArgumentException(sprintf('Option mode "%s" is not valid.', $mode));
         }
 
         $this->name = $name;
@@ -73,7 +76,7 @@ class Option
         $this->description = $description;
 
         if ($this->isArray() && !$this->acceptValue()) {
-            throw new \InvalidArgumentException('Impossible to have an option mode VALUE_IS_ARRAY if the option does not accept a value.');
+            throw new InvalidArgumentException('Impossible to have an option mode VALUE_IS_ARRAY if the option does not accept a value.');
         }
 
         $this->setDefault($default);
@@ -136,19 +139,19 @@ class Option
     /**
      * 设置默认值
      * @param mixed $default 默认值
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function setDefault($default = null)
     {
         if (self::VALUE_NONE === (self::VALUE_NONE & $this->mode) && null !== $default) {
-            throw new \LogicException('Cannot set a default value when using InputOption::VALUE_NONE mode.');
+            throw new LogicException('Cannot set a default value when using InputOption::VALUE_NONE mode.');
         }
 
         if ($this->isArray()) {
             if (null === $default) {
                 $default = [];
             } elseif (!is_array($default)) {
-                throw new \LogicException('A default value for an array option must be an array.');
+                throw new LogicException('A default value for an array option must be an array.');
             }
         }
 

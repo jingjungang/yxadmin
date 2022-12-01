@@ -9,6 +9,8 @@
 
 namespace think;
 
+use InvalidArgumentException;
+use LogicException;
 use think\console\Command;
 use think\console\command\Help as HelpCommand;
 use think\console\Input;
@@ -17,6 +19,7 @@ use think\console\input\Definition as InputDefinition;
 use think\console\input\Option as InputOption;
 use think\console\Output;
 use think\console\output\driver\Buffer;
+use Traversable;
 
 class Console
 {
@@ -405,7 +408,7 @@ class Console
         $command->setConsole($this);
 
         if (null === $command->getDefinition()) {
-            throw new \LogicException(
+            throw new LogicException(
                 sprintf('Command class "%s" is not correctly initialized. You probably forgot to call the parent constructor.', get_class($command))
             );
         }
@@ -424,12 +427,12 @@ class Console
      * @access public
      * @param string $name 指令名称
      * @return Command
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function get($name)
     {
         if (!isset($this->commands[$name])) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf('The command "%s" does not exist.', $name)
             );
         }
@@ -489,7 +492,7 @@ class Console
      * @access public
      * @param string $namespace
      * @return string
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function findNamespace($namespace)
     {
@@ -515,13 +518,13 @@ class Console
                 $message .= implode("\n    ", $alternatives);
             }
 
-            throw new \InvalidArgumentException($message);
+            throw new InvalidArgumentException($message);
         }
 
         $exact = in_array($namespace, $namespaces, true);
 
         if (count($namespaces) > 1 && !$exact) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'The namespace "%s" is ambiguous (%s).',
                     $namespace,
@@ -537,7 +540,7 @@ class Console
      * @access public
      * @param string $name 名称或者别名
      * @return Command
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function find($name)
     {
@@ -564,7 +567,7 @@ class Console
                 $message .= implode("\n    ", $alternatives);
             }
 
-            throw new \InvalidArgumentException($message);
+            throw new InvalidArgumentException($message);
         }
 
         if (count($commands) > 1) {
@@ -580,7 +583,7 @@ class Console
         if (count($commands) > 1 && !$exact) {
             $suggestions = $this->getAbbreviationSuggestions(array_values($commands));
 
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf('Command "%s" is ambiguous (%s).', $name, $suggestions)
             );
         }
@@ -768,7 +771,7 @@ class Console
      * 查找可替代的建议
      * @access private
      * @param string $name 指令名称
-     * @param array|\Traversable $collection 建议集合
+     * @param array|Traversable $collection 建议集合
      * @return array
      */
     private function findAlternatives($name, $collection)

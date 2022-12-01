@@ -11,6 +11,10 @@
 
 namespace think;
 
+use Closure;
+use InvalidArgumentException;
+use think\exception\HttpResponseException;
+
 class Request
 {
     /**
@@ -177,7 +181,7 @@ class Request
      * 初始化
      * @access public
      * @param array $options 参数
-     * @return \think\Request
+     * @return Request
      */
     public static function instance($options = [])
     {
@@ -209,7 +213,7 @@ class Request
      * @param array $files
      * @param array $server
      * @param string $content
-     * @return \think\Request
+     * @return Request
      */
     public static function create($uri, $method = 'GET', $params = [], $cookie = [], $files = [], $server = [], $content = null)
     {
@@ -880,7 +884,7 @@ class Request
      * 获取上传的文件信息
      * @access public
      * @param string|array $name 名称
-     * @return null|array|\think\File
+     * @return null|array|File
      */
     public function file($name = '')
     {
@@ -1159,7 +1163,7 @@ class Request
                 if (is_scalar($data)) {
                     $data = (string)$data;
                 } else {
-                        throw new \InvalidArgumentException('variable type error：' . gettype($data));
+                        throw new InvalidArgumentException('variable type error：' . gettype($data));
                 }
         }
     }
@@ -1596,7 +1600,7 @@ class Request
                 // 关闭当前缓存
                 return;
             }
-            if ($key instanceof \Closure) {
+            if ($key instanceof Closure) {
                 $key = call_user_func_array($key, [$this]);
             } elseif (true === $key) {
                 foreach ($except as $rule) {
@@ -1636,11 +1640,11 @@ class Request
             if (strtotime($this->server('HTTP_IF_MODIFIED_SINCE')) + $expire > $_SERVER['REQUEST_TIME']) {
                 // 读取缓存
                 $response = Response::create()->code(304);
-                throw new \think\exception\HttpResponseException($response);
+                throw new HttpResponseException($response);
             } elseif (Cache::has($key)) {
                 list($content, $header) = Cache::get($key);
                 $response = Response::create($content)->header($header);
-                throw new \think\exception\HttpResponseException($response);
+                throw new HttpResponseException($response);
             } else {
                 $this->cache = [$key, $expire, $tag];
             }

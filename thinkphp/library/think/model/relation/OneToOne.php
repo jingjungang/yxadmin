@@ -11,6 +11,7 @@
 
 namespace think\model\relation;
 
+use Closure;
 use think\db\Query;
 use think\Exception;
 use think\Loader;
@@ -51,7 +52,7 @@ abstract class OneToOne extends Relation
      * @param Query $query 查询对象
      * @param string $relation 关联名
      * @param string $subRelation 子关联
-     * @param \Closure $closure 闭包条件
+     * @param Closure $closure 闭包条件
      * @param bool $first
      * @return void
      */
@@ -103,7 +104,7 @@ abstract class OneToOne extends Relation
      * @param array $resultSet
      * @param string $relation
      * @param string $subRelation
-     * @param \Closure $closure
+     * @param Closure $closure
      * @return mixed
      */
     abstract protected function eagerlySet(&$resultSet, $relation, $subRelation, $closure);
@@ -113,7 +114,7 @@ abstract class OneToOne extends Relation
      * @param Model $result
      * @param string $relation
      * @param string $subRelation
-     * @param \Closure $closure
+     * @param Closure $closure
      * @return mixed
      */
     abstract protected function eagerlyOne(&$result, $relation, $subRelation, $closure);
@@ -124,7 +125,7 @@ abstract class OneToOne extends Relation
      * @param array $resultSet 数据集
      * @param string $relation 当前关联名
      * @param string $subRelation 子关联名
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @return void
      */
     public function eagerlyResultSet(&$resultSet, $relation, $subRelation, $closure)
@@ -146,7 +147,7 @@ abstract class OneToOne extends Relation
      * @param Model $result 数据对象
      * @param string $relation 当前关联名
      * @param string $subRelation 子关联名
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @return void
      */
     public function eagerlyResult(&$result, $relation, $subRelation, $closure)
@@ -228,7 +229,7 @@ abstract class OneToOne extends Relation
      * 关联统计
      * @access public
      * @param Model $result 数据对象
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @return integer
      */
     public function relationCount($result, $closure)
@@ -299,7 +300,7 @@ abstract class OneToOne extends Relation
      * @param string $key 关联键名
      * @param string $relation 关联名
      * @param string $subRelation 子关联
-     * @param bool|\Closure $closure
+     * @param bool|Closure $closure
      * @return array
      */
     protected function eagerlyWhere($model, $where, $key, $relation, $subRelation = '', $closure = false)
@@ -326,7 +327,7 @@ abstract class OneToOne extends Relation
     /**
      * 创建关联统计子查询
      * @access public
-     * @param \Closure $closure 闭包
+     * @param Closure $closure 闭包
      * @param string $name 统计数据别名
      * @return string
      */

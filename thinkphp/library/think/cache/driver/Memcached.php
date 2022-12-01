@@ -11,6 +11,8 @@
 
 namespace think\cache\driver;
 
+use BadFunctionCallException;
+use DateTime;
 use think\cache\Driver;
 
 class Memcached extends Driver
@@ -34,7 +36,7 @@ class Memcached extends Driver
     public function __construct($options = [])
     {
         if (!extension_loaded('memcached')) {
-            throw new \BadFunctionCallException('not support: memcached');
+            throw new BadFunctionCallException('not support: memcached');
         }
         if (!empty($options)) {
             $this->options = array_merge($this->options, $options);
@@ -95,7 +97,7 @@ class Memcached extends Driver
      * @access public
      * @param string $name 缓存变量名
      * @param mixed $value 存储数据
-     * @param integer|\DateTime $expire 有效时间（秒）
+     * @param integer|DateTime $expire 有效时间（秒）
      * @return bool
      */
     public function set($name, $value, $expire = null)
@@ -103,7 +105,7 @@ class Memcached extends Driver
         if (is_null($expire)) {
             $expire = $this->options['expire'];
         }
-        if ($expire instanceof \DateTime) {
+        if ($expire instanceof DateTime) {
             $expire = $expire->getTimestamp() - time();
         }
         if ($this->tag && !$this->has($name)) {

@@ -154,7 +154,7 @@ class Output
         $this->handle->write($messages, $newline, $type);
     }
 
-    public function renderException(\Exception $e)
+    public function renderException(Exception $e)
     {
         $this->handle->renderException($e);
     }
