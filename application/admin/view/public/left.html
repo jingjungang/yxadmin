@@ -18,7 +18,7 @@
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li>
-                            <a class="J_menuItem" href="javascript:">修改密码</a>
+                            <a class="fixed" href="javascript:">修改密码</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -53,3 +53,72 @@
         </ul>
     </div>
 </nav>
+
+<div id="user-modal-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="user_form" action="" method="post" onsubmit="return false;">
+                <div class="modal-header">
+                    <span class="refresh-btn" onclick="refresh_form('user_form');"><i class="fa fa-refresh"></i></span>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label id="user_pass_tip">原来密码：</label>
+                                <input type="text" placeholder="输入密码" name="old_pass" value="" id="old_pass"
+                                       class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label id="confirm_pass_tip">现在密码：</label>
+                                <input type="text" placeholder="确认密码" name="now_pass" value="" id="now_pass"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="handle_type" name="handle_type" value="add"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary" onclick="userSubmit();">确定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<js href="/static/js/admin/jquery.min.js"/>
+<js href="/static/js/admin/plugins/layui/layer/layer.js"/>
+
+<script>
+    $(document).ready(function () {
+        $(".fixed").on('click', function () {
+            $("#user-modal-form").modal('show');
+        });
+    });
+
+    function userSubmit() {
+        if ($.trim($("input[name='now_pass']").val()) == '') {
+
+            layer.msg('密码不能为空', {time: 500, icon: 5});
+            return false;
+        }
+
+        let old = $("#now_pass").val();
+        let now = $("#old_pass").val();
+        $.post("{:url('admin/System/fixPassword')}", {
+            now_pass: now,
+            old_pass: old
+        }, function (data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {time: 1000, icon: 1});
+                $("#user-modal-form").modal('hide');
+            } else {
+                layer.msg(data.msg, {time: 1000, icon: 2});
+            }
+
+        });
+    }
+</script>

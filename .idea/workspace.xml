@@ -63,7 +63,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/phpStudy/PHPTutorial/WWW/cpms-php-master/application/admin/controller",
+    "last_opened_file_path": "D:/phpStudy/PHPTutorial/WWW/cpms-php-master/application/admin/view/system",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php",
     "settings.editor.splitter.proportion": "0.27713814",
@@ -77,11 +77,14 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view\system" />
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\controller" />
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view" />
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view\rulesrecord" />
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\model" />
-      <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\public\static\images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view\index" />
     </key>
   </component>
   <component name="RunManager">
@@ -112,6 +115,7 @@
       <workItem from="1669601518901" duration="1954000" />
       <workItem from="1669619586389" duration="23822000" />
       <workItem from="1669786277863" duration="34303000" />
+      <workItem from="1669957754864" duration="10764000" />
     </task>
     <servers />
   </component>

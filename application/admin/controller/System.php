@@ -4,6 +4,8 @@ namespace app\admin\controller;
 
 use think\Exception;
 use think\Db;
+use think\exception\PDOException;
+use app\common\util\PasswordHash;
 
 class System extends AdminBase
 {
@@ -13,39 +15,56 @@ class System extends AdminBase
         return $this->fetch();
     }
 
+
     /**
-     * 获取数据库所有表名称
-     * @return array|mixed
+     * 系统日志
+     * @param $flag 1当月 2所有
+     * @return mixed
      */
-    public function getTables()
+    public function systemLog()
     {
-        //创建SQL语句字符串
-        $sql = "SELECT table_name FROM information_schema.TABLES WHERE table_schema = ( SELECT DATABASE () )";
-
-        //执行插入操作
-        $affected = Db::query($sql);
-
-        //判断是否执行成功
-        if ($affected) {
-            return $affected;
-        } else {
-            return array();
+        $flag = 1; //1表示只读1个月的
+        $data = $_POST;
+        $currentdate = Date('Y-m', time()); //当前年月
+        if ($data) {
+            $currentdate = $data['mdate']; //指定年月
         }
+        $tables = $this->getTables();
+        foreach ($tables as $li) {
+            $arr[] = $li['table_name'];
+        }
+        $dir = ROOT_PATH . 'runtime\log\\';
+        if ($flag == 1) { //读取1个月的日志
+            $mdate = str_replace('-', '', $currentdate);
+            $filepath = $dir . $mdate;
+            $li = $this->readLog($filepath, $arr);
+        } else { //读取所有日志
+            $data = $this->getDirFileName();
+            $li = [];
+            foreach ($data as $item) {
+                if ($item != '.' && $item != '..') {
+                    $filepath = $dir . $item;
+                    if (count($li) > 0) {
+                        $temp = $this->readLog($filepath, $arr);
+                        if ($temp) {
+                            $li = array_merge($li, $temp);
+                        }
+                    } else {
+                        $li = $this->readLog($filepath, $arr);
+                    }
+                }
+            }
+        }
+//        $li->paginate();
+//        $page = $li->render();// 获取分页显示
+        $this->assign('data', $li);
+        $this->assign('currentdate', $currentdate);
 
+        return $this->fetch();
     }
 
     /**
-     * 返回文件名数组列表
-     * @return array
-     */
-    public function getDirFileName()
-    {
-        $dir = ROOT_PATH . 'runtime/log';
-        $data = scandir($dir);
-        return $data;
-    }
-
-    /**
+     * 读取日志文件
      * @param $fileN 文件路径
      * @param $tables 表名list
      * @return array
@@ -123,44 +142,71 @@ class System extends AdminBase
     }
 
     /**
-     * 系统日志
-     * @param $flag 1当月 2所有
-     * @return mixed
+     * 获取数据库所有表名称
+     * @return array|mixed
      */
-    public function systemLog()
+    public function getTables()
     {
-        $flag = 1;
-        $tables = $this->getTables();
-        foreach ($tables as $li) {
-            $arr[] = $li['table_name'];
-        }
-        $dir = ROOT_PATH . 'runtime\log\\';
-        if ($flag == 1) {
-            $mdate = Date('Y-m', time());
-            $mdate = str_replace('-','',$mdate);
-            $filepath = $dir . $mdate;
-            $li = $this->readLog($filepath, $arr);
+        //创建SQL语句字符串
+        $sql = "SELECT table_name FROM information_schema.TABLES WHERE table_schema = ( SELECT DATABASE () )";
+
+        //执行插入操作
+        $affected = Db::query($sql);
+
+        //判断是否执行成功
+        if ($affected) {
+            return $affected;
         } else {
-            $data = $this->getDirFileName();
-            $li = [];
-            foreach ($data as $item) {
-                if ($item != '.' && $item != '..') {
-                    $filepath = $dir . $item;
-                    if (count($li) > 0) {
-                        $temp = $this->readLog($filepath, $arr);
-                        if ($temp) {
-                            $li = array_merge($li, $temp);
-                        }
-                    } else {
-                        $li = $this->readLog($filepath, $arr);
-                    }
-                }
-            }
+            return array();
         }
-//        $li->paginate();
-//        $page = $li->render();// 获取分页显示
-        $this->assign('data', $li);
-        return $this->fetch();
+
+    }
+
+    /**
+     * 返回文件名数组列表
+     * @return array
+     */
+    public function getDirFileName()
+    {
+        $dir = ROOT_PATH . 'runtime/log';
+        $data = scandir($dir);
+        return $data;
+    }
+
+    /**
+     * 修改密码
+     * @return \think\response\Json
+     */
+    public function fixPassword()
+    {
+        $data = $_POST;
+        $result['code'] = 1;
+        $result['msg'] = '修改完成';
+        $user_id = session('user_id');
+        $userInfos = db('user')->where("user_id ='" . $user_id . "'")->field('user_pass,user_id')->find();
+
+        $hasher = new PasswordHash(8, true);
+        $chekcPass = $hasher->CheckPassword($data['old_pass'], $userInfos['user_pass']);
+        if (!$chekcPass) {
+            $result = ['code' => 2, 'msg' => '原密码不正确'];
+        }
+
+        $now_pass = $data['now_pass'];
+        $now_pass = $hasher->HashPassword($now_pass);
+        try {
+            $res = db('user')->where("user_id ='" . $user_id . "'")->update(['user_pass' => $now_pass]);
+        } catch (PDOException $e) {
+            $result['code'] = 0;
+            $result['msg'] = $e->getMessage();
+        } catch (Exception $e) {
+            $result['code'] = 0;
+            $result['msg'] = $e->getMessage();
+        }
+        if (!$res) {
+            $result['code'] = 0;
+            $result['msg'] = '修改失败';
+        }
+        return json($result);
     }
 
     public function fontIcon()
