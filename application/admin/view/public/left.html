@@ -106,8 +106,8 @@
             return false;
         }
 
-        let old = $("#now_pass").val();
-        let now = $("#old_pass").val();
+        let old = $("#old_pass").val();
+        let now = $("#now_pass").val();
         $.post("{:url('admin/System/fixPassword')}", {
             now_pass: now,
             old_pass: old

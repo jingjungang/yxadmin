@@ -137,7 +137,11 @@ class System extends AdminBase
                 }
             }
         }
-        fclose($handle);
+        try {
+            fclose($handle);
+        }catch(Exception $e){
+            
+        }
         return $arr;
     }
 
@@ -208,6 +212,7 @@ class System extends AdminBase
         }
         return json($result);
     }
+
 
     public function fontIcon()
     {
