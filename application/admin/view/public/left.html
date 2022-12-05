@@ -6,9 +6,15 @@
         <ul class="nav" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element" style="text-align:center;">
-                    <!-- <span><img alt="image" class="img-circle" src="/static/images/profile_small.jpg" /></span> -->
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"
-                          style="font-size:50px;color:#1ab394;text-shadow:1px 2px 2px #1c84c6;"></span>
+                    <input type="file" id="btn_file3" name="consignerRdFile" accept="image/jpg,image/jpeg,image/gif,image/png"
+                   style="display:none" >
+                   <if condition="$uimage ==''">
+                        <span><img alt="image" class="img-circle" id="img-circle2" src="/static/images/profile_small.jpg" style="width:50px;height:50px" /></span>
+                    <else/>
+                        <span><img alt="image" class="img-circle" id="img-circle2" src="{$uimage}" style="width:50px;height:50px" /></span>
+                    </if>
+                   <!--  <span class="glyphicon glyphicon-user" aria-hidden="true"
+                          style="font-size:50px;color:#1ab394;text-shadow:1px 2px 2px #1c84c6;"></span> -->
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
                             <span class="block m-t-xs"><strong class="font-bold">{$Request.session.user_login}</strong></span>
@@ -54,6 +60,40 @@
     </div>
 </nav>
 
+<div id="user-modal-form1" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="customer_form" action="" method="post" onsubmit="return false;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">修改头像</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                            <input type="file" id="btn_file1" multiple name="File[]" accept="image/jpg,image/jpeg,image/gif,image/png" style="display:none" >
+
+                                  <if condition="$uimage ==''">
+                                    <span><img alt="image" class="img-circle1" id="img-circle1" src="/static/images/profile_small.jpg" style="width:50px;height:50px" /></span>
+                                    <else/>
+                                    <span><img alt="image" class="img-circle1" id="img-circle1" src="{$uimage}" style="width:50px;height:50px" /></span>
+                                  </if>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="handle_type" name="handle_type" value="add"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary" onclick="fixpic();">确定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div id="user-modal-form" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -97,7 +137,63 @@
         $(".fixed").on('click', function () {
             $("#user-modal-form").modal('show');
         });
+        $(".img-circle").on('click', function () {
+            $("#user-modal-form1").modal('show');
+        });
+        $(".img-circle1").on('click', function () {
+            $("#btn_file1").click();
+        });
+
+        var fileUpload = document.getElementById("btn_file1")
+        fileUpload.addEventListener('change', function(e){
+            user_imgchanged("btn_file1","img-circle1");
+        });
+
     });
+
+    function user_imgchanged(imgselect, imgshow) {
+        var img = document.getElementById(imgshow);
+        var url = null;
+        var fileObj = document.getElementById(imgselect).files[0];
+        if (window.createObjcectURL != undefined) {
+            url = window.createOjcectURL(fileObj);
+        } else if (window.URL != undefined) {
+            url = window.URL.createObjectURL(fileObj);
+        } else if (window.webkitURL != undefined) {
+            url = window.webkitURL.createObjectURL(fileObj);
+        }
+        img.src = url;
+    }
+
+    function fixpic(){
+        var formData = new FormData(document.getElementById('customer_form'));
+        var url = "{:url('admin/System/fixpic')}";
+        $.ajax({
+            url: url,
+            type: 'post',
+            processData: false, // 异步传输 formData 时要加上  processData: false  contentType: false
+            contentType: false, // 否则会报 Illegal invocation 非法调用错误
+            data: formData,
+            success: function (data) {
+                if (data.code == 1) {
+                    layer.msg(data.msg, {
+                        time: 1000,
+                        icon: 6
+                    });
+                    user_imgchanged("btn_file1","img-circle2");
+                    $("#user-modal-form1").modal('hide');
+                } else {
+
+                    layer.msg(data.msg, {
+                        time: 1000,
+                        icon: 5
+                    });
+                }
+            },
+            dataType: 'json'
+        });
+    }
+
 
     function userSubmit() {
         if ($.trim($("input[name='now_pass']").val()) == '') {
@@ -106,8 +202,8 @@
             return false;
         }
 
-        let old = $("#old_pass").val();
-        let now = $("#now_pass").val();
+        var old = $("#old_pass").val();
+        var now = $("#now_pass").val();
         $.post("{:url('admin/System/fixPassword')}", {
             now_pass: now,
             old_pass: old

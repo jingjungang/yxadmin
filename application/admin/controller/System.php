@@ -283,4 +283,28 @@ class System extends AdminBase
 
         return $menus;
     }
+
+
+    public function fixpic(){
+        $mod = db('user');
+        $mod->startTrans(); // 开启事务
+        try{
+            $data = $this->uploadToDB('File','avatar','image');
+            $param['image'] = $data['image'];
+            $result = $mod->where('user_id',session('user_id'))->update($param);
+            if($result){
+                $infos['code'] = 1;
+                $infos['msg'] = '保存成功';
+            }else{
+                $infos['code'] = 0;
+                $infos['msg'] = '保存失败';
+            }
+        }catch(Exception $e){
+            $this->transaction->rollback(); // 事务回滚
+            $infos['code'] = 0;
+            $infos['msg'] = $e->getMessage();
+        }
+        $mod->commit(); // 关闭事务
+        return $infos;
+    }
 }

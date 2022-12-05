@@ -16,6 +16,7 @@ class Index extends AdminBase
         include APP_PATH . "admin/conf/menu.php";
 
         $this->assign("menu", $menu['admin']);
+        $this->assign("uimage", session('uimage'));
 
         return $this->fetch();
     }
@@ -88,6 +89,7 @@ class Index extends AdminBase
                 session('user_status', $checkLogin['user_status']);
                 session('user_role', $checkLogin['user_role']);
                 session('role_name', $roleInfo['role_name']);
+                session('uimage', $checkLogin['image']);
 
                 return json(['code' => 1, 'msg' => '登入成功', 'jumpUrl' => "index"]);
 
