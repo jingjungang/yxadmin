@@ -285,6 +285,9 @@ class System extends AdminBase
     }
 
 
+    /**
+    * 修改头像
+    */
     public function fixpic(){
         $mod = db('user');
         $mod->startTrans(); // 开启事务

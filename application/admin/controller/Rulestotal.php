@@ -37,6 +37,20 @@ class Rulestotal extends AdminBase
         $this->assign('page', $page);
         $this->assign('data', $li_meetting);
 
+        //yx_meettingrecordtype
+        $result = db('meettingrecordtype')->select();
+        $this->assign('li_totals', $result);
+        $sum_meetting = 0;
+        $sum_score = 0;
+        if($result){
+            foreach($result as $item){
+                $sum_meetting = $sum_meetting+ $item['num'];
+                $sum_score = $sum_score+ $item['scores'];
+            }
+        }
+        $this->assign('sum_meetting', $sum_meetting);
+        $this->assign('sum_score', $sum_score);
+
         return $this->fetch();
     }
 }
