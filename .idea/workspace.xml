@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b81cb8c3-a24e-484d-8e27-908f8b2c34a6" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Meetting.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Meetting.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Index.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/Index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/System.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/controller/System.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/index/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/index/welcome.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/public/left.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/admin/view/public/left.html" afterDir="false" />
-    </list>
-    <ignored path="$PROJECT_DIR$/vendor/PHPExcel/PHPExcel/" />
-    <ignored path="$PROJECT_DIR$/vendor/composer/" />
-    <ignored path="$PROJECT_DIR$/vendor/socket/composer/" />
-    <ignored path="$PROJECT_DIR$/vendor/socket/workerman/" />
-    <ignored path="$PROJECT_DIR$/vendor/topthink/think-captcha/" />
-    <ignored path="$PROJECT_DIR$/vendor/topthink/think-helper/" />
-    <ignored path="$PROJECT_DIR$/vendor/topthink/think-image/" />
-    <ignored path="$PROJECT_DIR$/vendor/topthink/think-installer/" />
-    <ignored path="$PROJECT_DIR$/vendor/topthink/think-migration/" />
-    <ignored path="$PROJECT_DIR$/vendor/topthink/think-mongo/" />
-    <ignored path="$PROJECT_DIR$/vendor/topthink/think-queue/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
+    <list default="true" id="b81cb8c3-a24e-484d-8e27-908f8b2c34a6" name="变更" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,23 +9,7 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-  </component>
-  <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="left.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/application/admin/view/public/left.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="13" column="106" lean-forward="true" selection-start-line="13" selection-start-column="106" selection-end-line="13" selection-end-column="106" />
-              <folding>
-                <element signature="n#style#0;n#img#0;n#span#0;n#if#0;n#div#0;n#li#0;n#ul#0;n#div#1;n#nav#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#span#1;n#if#0;n#div#0;n#li#0;n#ul#0;n#div#1;n#nav#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <execution />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -81,7 +44,10 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="PhpDebugGeneral" xdebug_debug_port="9003" listening_started="true" notify_if_session_was_finished_without_being_paused="false" />
+  <component name="PhpDebugGeneral" xdebug_debug_port="9003" listening_started="true" notify_if_session_was_finished_without_being_paused="false">
+    <xdebug_debug_ports port="9003" />
+    <xdebug_debug_ports port="9003" />
+  </component>
   <component name="PhpServers">
     <servers>
       <server host="localhost" id="e3eeaaf6-3197-40d3-bb8a-074a7527147c" name="yxadmin" port="8089" />
@@ -162,11 +128,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
-    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view\system" />
@@ -179,22 +146,12 @@
       <recent name="D:\phpStudy\PHPTutorial\WWW\cpms-php-master\application\admin\view\index" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
-    <configuration name="yxadmin" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="yxadmin" start_url="/admin/index/login.html" />
+    <configuration name="yxadmin" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="yxadmin" start_url="/admin/index/login.html">
+      <method v="2" />
+    </configuration>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="应用程序级" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -222,6 +179,8 @@
       <workItem from="1669786277863" duration="34303000" />
       <workItem from="1669957754864" duration="10764000" />
       <workItem from="1670224739006" duration="6178000" />
+      <workItem from="1670378366926" duration="1358000" />
+      <workItem from="1670465321528" duration="5000" />
     </task>
     <servers />
   </component>
@@ -253,7 +212,7 @@
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
@@ -263,26 +222,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <option name="time" value="10" />
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="index.php">
         <watch expression="$li" />

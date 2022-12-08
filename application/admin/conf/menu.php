@@ -118,7 +118,7 @@ $menu = array(
             'child' => array(
 
                 array(
-                    'name' => '管理员列表',
+                    'name' => '用户列表',
 
                     'action' => 'admin/User/userList',
 
